@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codemagic.LabSys.dao.PlanMapper" >
+  <resultMap id="BaseResultMap" type="codemagic.LabSys.model.Plan" >
+    <id column="plan_id" property="planId" jdbcType="INTEGER" />
+    <result column="plan_title" property="planTitle" jdbcType="VARCHAR" />
+    <result column="plan_publiser" property="planPubliser" jdbcType="INTEGER" />
+    <result column="plan_details" property="planDetails" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    plan_id, plan_title, plan_publiser, plan_details
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from plan
+    where plan_id = #{planId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from plan
+    where plan_id = #{planId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="codemagic.LabSys.model.Plan" >
+    insert into plan (plan_id, plan_title, plan_publiser, 
+      plan_details)
+    values (#{planId,jdbcType=INTEGER}, #{planTitle,jdbcType=VARCHAR}, #{planPubliser,jdbcType=INTEGER}, 
+      #{planDetails,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="codemagic.LabSys.model.Plan" >
+    insert into plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="planTitle != null" >
+        plan_title,
+      </if>
+      <if test="planPubliser != null" >
+        plan_publiser,
+      </if>
+      <if test="planDetails != null" >
+        plan_details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planId != null" >
+        #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="planTitle != null" >
+        #{planTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="planPubliser != null" >
+        #{planPubliser,jdbcType=INTEGER},
+      </if>
+      <if test="planDetails != null" >
+        #{planDetails,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="codemagic.LabSys.model.Plan" >
+    update plan
+    <set >
+      <if test="planTitle != null" >
+        plan_title = #{planTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="planPubliser != null" >
+        plan_publiser = #{planPubliser,jdbcType=INTEGER},
+      </if>
+      <if test="planDetails != null" >
+        plan_details = #{planDetails,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where plan_id = #{planId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.Plan" >
+    update plan
+    set plan_title = #{planTitle,jdbcType=VARCHAR},
+      plan_publiser = #{planPubliser,jdbcType=INTEGER},
+      plan_details = #{planDetails,jdbcType=VARCHAR}
+    where plan_id = #{planId,jdbcType=INTEGER}
+  </update>
+</mapper>
