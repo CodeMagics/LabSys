@@ -25,5 +25,40 @@ public class UserServiceImpl implements UserService {
 		user=this.userMapper.selectByPrimaryKey(id);
 		return user;
 	}
+	
+	@SuppressWarnings("finally")
+	public User checkUser(String loginName, String passWord) {
+		User result = null;
+		try {
+			User record = new User();
+			record.setUserAccount(loginName);
+			record.setUserPassword(passWord);
+			
+			result = userMapper.checkUser(record);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally{
+			return result;
+		}
+	}
+	
+	
+	@SuppressWarnings("finally")
+	public User login(String loginName, String passWord) {
+		User user = null;
+		try {
+			User record = new User();
+			record.setUserAccount(loginName);
+			record.setUserPassword(passWord);
+			user = userMapper.selectByNameAndPwd(record);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return user;
+		}
+	}
+	
 
 }

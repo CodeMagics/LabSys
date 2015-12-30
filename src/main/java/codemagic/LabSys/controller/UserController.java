@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.UserService;
 
 @Controller
+@RequestMapping("/userController")
 public class UserController {
 	private UserService userService;
 
@@ -27,30 +29,35 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@SuppressWarnings({ "finally", "unchecked" })
-	@RequestMapping("/selectUserById")
-	public ModelAndView selectUserById(int id, HttpServletRequest request,HttpServletResponse response) {
-	    	ModelAndView mav = new ModelAndView();
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
+	@RequestMapping("/login")
+	public ModelAndView login(String loginname, String password,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
-		@SuppressWarnings("rawtypes")
 		Map map = new HashMap();
 		try {
-			User user= new User();
-			user=this.userService.findUserById(id);
+			User user = userService.login(loginname,password);
 			if(user != null){
-				map.put("result", Boolean.TRUE);
-				
-			}else{
+			map.put("result", Boolean.TRUE);
+			map.put("message", "登陆成功！");
+			map.put("user", user);
+			
+			} else {
 				map.put("result", Boolean.FALSE);
+				map.put("message", "登陆失败！");
 			}
 			
+			
 		} catch (Exception e) {
-			map.put("result", Boolean.FALSE);
+			
 			e.printStackTrace();
-		}finally{
+		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
 			return mav;
 		}
 	}
+
 }

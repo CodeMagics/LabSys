@@ -9,4 +9,8 @@ public interface UserService {
 	 * @return
 	 */
 	public User findUserById(int id);
+	
+	public User checkUser(String loginName, String passWord);
+
+	public User login(String loginName, String passWord);
 }

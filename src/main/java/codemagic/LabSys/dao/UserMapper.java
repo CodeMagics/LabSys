@@ -14,4 +14,14 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    /*
+     * 输入用户信息
+     * return 判断用户是否存在
+     */
+    User checkUser(User record);
+    /*
+     * 输入用户名和密码
+     * @return 用户
+     */
+   	User selectByNameAndPwd(User record);
 }

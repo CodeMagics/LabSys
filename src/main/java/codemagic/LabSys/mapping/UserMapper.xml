@@ -114,4 +114,25 @@
       user_e-mail = #{userEMail,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+  
+  <!-- 自己的sql代码 -->
+  
+  
+	<select id="checkUser" resultMap="BaseResultMap"
+		parameterType="codemagic.LabSys.model.User">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where user_account = #{userAccount,jdbcType=VARCHAR}
+		and user_password = #{userPassword,jdbcType=VARCHAR}
+	</select>
+	
+		<select id="selectByNameAndPwd" resultMap="BaseResultMap"
+		parameterType="codemagic.LabSys.model.User">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where user_account = #{userAccount,jdbcType=VARCHAR}
+		and user_password = #{userPassword,jdbcType=VARCHAR}
+	</select>
 </mapper>
