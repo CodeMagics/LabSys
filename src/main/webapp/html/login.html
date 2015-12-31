@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>login</title>   
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" />
+        <!--CSS Style-->
+        <link rel="stylesheet" type="text/css" href="../css/login.css">
+              
+    </head>
+    <body>
+        <div class="container">
+            <header class="container_title">
+                <h1 class="form-signin-heading">实验室学习与交流系统</h1>
+            </header>
+
+            <div class="content-body form-signin">              
+                <ul>
+                   <li>          
+                      <label for="user">用户名</label>
+                      <input type="text" id ="loginname" class="form-control myinput"
+                      placeholder="请输入用户名" >
+                   </li>
+                   <li>
+                      <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                      <input type="password"  id="password" class="form-control myinput" required placeholder="请输入密码">
+                   </li>
+                   <li class="checkcode">
+                      <label for="captcha">验证码</label>
+                      <input type="text" id="identyCode" class="form-control myinput" required
+                      placeholder="验证码" />
+                     <!-- <img alt="验证码" src="../captcha" class="code" id="check_img">-->
+                     <input type="text" onselectstart="return false" oncopy="return false" onpaste="return false" readonly="readonly" id="checkCode" onclick="createCode()" class="code myinput" 
+                style="border:solid 1px blue;font-weight:bold;font-style:italic;text-align:center;width: 66px;height:30px;background-color: #CDB5CD;color:#FF0000;" />
+                      <span id="checkCode">看不清楚</span>         
+                   </li>            
+                </ul>          
+                
+                <button class="btn btn-lg btn-primary btn-block "  id="login">登录</button>                       
+            </div>
+        </div>        
+        
+        <script type="text/javascript" src="../javascript/jquery-1.7.2.js"></script>
+        <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+        <script type="text/javascript" src="../js/login.js"></script>
+    </body>
+</html>
