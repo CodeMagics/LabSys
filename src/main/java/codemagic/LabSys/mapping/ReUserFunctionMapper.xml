@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codemagic.LabSys.dao.ReUserFunctionMapper" >
+  <resultMap id="BaseResultMap" type="codemagic.LabSys.model.ReUserFunction" >
+    <id column="reuf_id" property="reufId" jdbcType="INTEGER" />
+    <result column="reuf_function" property="reufFunction" jdbcType="INTEGER" />
+    <result column="reuf_user" property="reufUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    reuf_id, reuf_function, reuf_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from reuserfunction
+    where reuf_id = #{reufId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reuserfunction
+    where reuf_id = #{reufId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="codemagic.LabSys.model.ReUserFunction" >
+    insert into reuserfunction (reuf_id, reuf_function, reuf_user
+      )
+    values (#{reufId,jdbcType=INTEGER}, #{reufFunction,jdbcType=INTEGER}, #{reufUser,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="codemagic.LabSys.model.ReUserFunction" >
+    insert into reuserfunction
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reufId != null" >
+        reuf_id,
+      </if>
+      <if test="reufFunction != null" >
+        reuf_function,
+      </if>
+      <if test="reufUser != null" >
+        reuf_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reufId != null" >
+        #{reufId,jdbcType=INTEGER},
+      </if>
+      <if test="reufFunction != null" >
+        #{reufFunction,jdbcType=INTEGER},
+      </if>
+      <if test="reufUser != null" >
+        #{reufUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="codemagic.LabSys.model.ReUserFunction" >
+    update reuserfunction
+    <set >
+      <if test="reufFunction != null" >
+        reuf_function = #{reufFunction,jdbcType=INTEGER},
+      </if>
+      <if test="reufUser != null" >
+        reuf_user = #{reufUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where reuf_id = #{reufId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.ReUserFunction" >
+    update reuserfunction
+    set reuf_function = #{reufFunction,jdbcType=INTEGER},
+      reuf_user = #{reufUser,jdbcType=INTEGER}
+    where reuf_id = #{reufId,jdbcType=INTEGER}
+  </update>
+</mapper>

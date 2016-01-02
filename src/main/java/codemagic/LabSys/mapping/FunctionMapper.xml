@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codemagic.LabSys.dao.FunctionMapper" >
+  <resultMap id="BaseResultMap" type="codemagic.LabSys.model.Function" >
+    <id column="func_id" property="funcId" jdbcType="INTEGER" />
+    <result column="func_name" property="funcName" jdbcType="VARCHAR" />
+    <result column="func_pareId" property="funcPareid" jdbcType="INTEGER" />
+    <result column="func_url" property="funcUrl" jdbcType="VARCHAR" />
+    <result column="func_type" property="funcType" jdbcType="VARCHAR" />
+    <result column="func_ordinal" property="funcOrdinal" jdbcType="INTEGER" />
+    <result column="func_description" property="funcDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    func_id, func_name, func_pareId, func_url, func_type, func_ordinal, func_description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from function
+    where func_id = #{funcId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from function
+    where func_id = #{funcId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="codemagic.LabSys.model.Function" >
+    insert into function (func_id, func_name, func_pareId, 
+      func_url, func_type, func_ordinal, 
+      func_description)
+    values (#{funcId,jdbcType=INTEGER}, #{funcName,jdbcType=VARCHAR}, #{funcPareid,jdbcType=INTEGER}, 
+      #{funcUrl,jdbcType=VARCHAR}, #{funcType,jdbcType=VARCHAR}, #{funcOrdinal,jdbcType=INTEGER}, 
+      #{funcDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="codemagic.LabSys.model.Function" >
+    insert into function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        func_id,
+      </if>
+      <if test="funcName != null" >
+        func_name,
+      </if>
+      <if test="funcPareid != null" >
+        func_pareId,
+      </if>
+      <if test="funcUrl != null" >
+        func_url,
+      </if>
+      <if test="funcType != null" >
+        func_type,
+      </if>
+      <if test="funcOrdinal != null" >
+        func_ordinal,
+      </if>
+      <if test="funcDescription != null" >
+        func_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        #{funcId,jdbcType=INTEGER},
+      </if>
+      <if test="funcName != null" >
+        #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="funcPareid != null" >
+        #{funcPareid,jdbcType=INTEGER},
+      </if>
+      <if test="funcUrl != null" >
+        #{funcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="funcType != null" >
+        #{funcType,jdbcType=VARCHAR},
+      </if>
+      <if test="funcOrdinal != null" >
+        #{funcOrdinal,jdbcType=INTEGER},
+      </if>
+      <if test="funcDescription != null" >
+        #{funcDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="codemagic.LabSys.model.Function" >
+    update function
+    <set >
+      <if test="funcName != null" >
+        func_name = #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="funcPareid != null" >
+        func_pareId = #{funcPareid,jdbcType=INTEGER},
+      </if>
+      <if test="funcUrl != null" >
+        func_url = #{funcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="funcType != null" >
+        func_type = #{funcType,jdbcType=VARCHAR},
+      </if>
+      <if test="funcOrdinal != null" >
+        func_ordinal = #{funcOrdinal,jdbcType=INTEGER},
+      </if>
+      <if test="funcDescription != null" >
+        func_description = #{funcDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where func_id = #{funcId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.Function" >
+    update function
+    set func_name = #{funcName,jdbcType=VARCHAR},
+      func_pareId = #{funcPareid,jdbcType=INTEGER},
+      func_url = #{funcUrl,jdbcType=VARCHAR},
+      func_type = #{funcType,jdbcType=VARCHAR},
+      func_ordinal = #{funcOrdinal,jdbcType=INTEGER},
+      func_description = #{funcDescription,jdbcType=VARCHAR}
+    where func_id = #{funcId,jdbcType=INTEGER}
+  </update>
+  <!-- 自己的方法 -->
+   <select id="selectListUserType" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+
+    SELECT <include refid="Base_Column_List" />
+     FROM reuserfunction,function 
+    WHERE reuserfunction.reuf_user= #{userType,jdbcType=INTEGER} 
+    and reuserfunction.reuf_function=func_id;
+  </select>
+  
+</mapper>
