@@ -8,6 +8,8 @@ public class Plan {
     private Integer planPubliser;
 
     private String planDetails;
+    
+    private String planDate;
 
     public Integer getPlanId() {
         return planId;
@@ -20,7 +22,7 @@ public class Plan {
     public String getPlanTitle() {
         return planTitle;
     }
-
+    
     public void setPlanTitle(String planTitle) {
         this.planTitle = planTitle == null ? null : planTitle.trim();
     }
@@ -39,5 +41,14 @@ public class Plan {
 
     public void setPlanDetails(String planDetails) {
         this.planDetails = planDetails == null ? null : planDetails.trim();
+    }
+    
+
+    public String getPlanDate() {
+        return planDate;
+    }
+    
+    public void setPlanDate(String planDate) {
+        this.planDate = planDate==null?null:planDate.trim();
     }
 }
