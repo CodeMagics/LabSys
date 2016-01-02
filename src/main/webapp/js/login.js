@@ -2,7 +2,7 @@ $(document).ready(function (){
 	createCode();
 	document.onkeydown = function(e){    
 	    var ev = document.all ? window.event : e;  
-	    if(ev.keyCode==13) {    // 如（ev.ctrlKey && ev.keyCode==13）为ctrl+Center 触发  
+	    if(ev.keyCode==13) {    
 	        //要处理的事件  
 	    	document.getElementById("login").click(); //调用登录按钮的登录事件  
 	    }
@@ -56,7 +56,6 @@ var code ; //在全局 定义验证码
 function createCode()  
 {   
 	$("#identyCode").val("");
-	//alert("++++++++++");
   code = "";  
   var codeLength = 4;//验证码的长度  
   var checkCode = document.getElementById("checkCode");  
