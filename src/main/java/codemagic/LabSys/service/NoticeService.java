@@ -16,7 +16,7 @@ public interface NoticeService {
 	 * @param userid
 	 * @return
 	 */
-	public List<Notice> SelectList(int userid);
+	public List<Notice> SelectList(int userId);
 	
 	/**
 	 * 发布公告
@@ -31,5 +31,7 @@ public interface NoticeService {
 	 * @param notice
 	 * @return
 	 */
-	public boolean Updata(int noticeid, Notice notice);
+	public boolean Updata(Notice notice);
+	
+	public boolean Delete(int noticeId);
 }

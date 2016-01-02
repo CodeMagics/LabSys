@@ -1,5 +1,7 @@
 package codemagic.LabSys.dao;
 
+import java.util.List;
+
 import codemagic.LabSys.model.Notice;
 
 public interface NoticeMapper {
@@ -14,4 +16,8 @@ public interface NoticeMapper {
     int updateByPrimaryKeySelective(Notice record);
 
     int updateByPrimaryKey(Notice record);
+    
+    List<Notice> selectAll();
+    
+    List<Notice> selectByPublisher(Integer userId);
 }
