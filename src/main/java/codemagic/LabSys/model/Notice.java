@@ -9,7 +9,16 @@ public class Notice {
 
     private String noticeTitle;
 
-    public Integer getNoticeId() {
+    private String noticeDate;
+    public String getNoticeDate() {
+		return noticeDate;
+	}
+
+	public void setNoticeDate(String noticeDate) {
+		this.noticeDate = noticeDate;
+	}
+
+	public Integer getNoticeId() {
         return noticeId;
     }
 

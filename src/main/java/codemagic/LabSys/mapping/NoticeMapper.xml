@@ -6,9 +6,10 @@
     <result column="notice_publisher" property="noticePublisher" jdbcType="INTEGER" />
     <result column="notice_details" property="noticeDetails" jdbcType="VARCHAR" />
     <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+     <result column="notice_date" property="noticeDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    notice_id, notice_publisher, notice_details, notice_title
+    notice_id, notice_publisher, notice_details, notice_title,notice_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Notice" >
     insert into notice (notice_id, notice_publisher, notice_details, 
-      notice_title)
+      notice_title,notice_date)
     values (#{noticeId,jdbcType=INTEGER}, #{noticePublisher,jdbcType=INTEGER}, #{noticeDetails,jdbcType=VARCHAR}, 
-      #{noticeTitle,jdbcType=VARCHAR})
+      #{noticeTitle,jdbcType=VARCHAR},#{noticeDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Notice" >
     insert into notice
@@ -76,7 +77,8 @@
     update notice
     set notice_publisher = #{noticePublisher,jdbcType=INTEGER},
       notice_details = #{noticeDetails,jdbcType=VARCHAR},
-      notice_title = #{noticeTitle,jdbcType=VARCHAR}
+      notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_date=#{noticeDate,jdbcType=VARCHAR}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
 </mapper>
