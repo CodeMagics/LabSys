@@ -1,5 +1,5 @@
-var copyright = "<span style=text-align:center>QQ在线交流：<a target=blank href='tencent://message/?uin=3076134635&Site=yige.org&Menu=yes'><img border='0' SRC='../images/qq.gif' alt='点击这里给我发消息'></a>" +
-		"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线信息反馈：<a href='userFeedBack.html'><img src='../images/feedback.jpg' alt='点击这里在线留言'></img></a></span>"
+var copyright = "<span style=text-align:center>QQ在线交流：<a target=blank href='tencent://message/?uin=3076134635&Site=yige.org&Menu=yes'><img border='0' SRC='' alt='点击这里给我发消息'></a>" +
+		"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线信息反馈：<a href='userFeedBack.html'><img src='' alt='点击这里在线留言'></img></a></span>"
 	+"<p>系统版权由西南科技大学学生工作处（部）开发</p><p>版权所有&nbsp;&nbsp;&nbsp;©2014&nbsp;&nbsp;&nbsp;西南科技大学学生工作部（处）</p>"
 	+ "<ul class=\"footer-links\"><li>当前版本：&nbsp;&nbsp; v1.18 &nbsp;&nbsp;&nbsp;系统更新时间：2014年09月16日&nbsp;&nbsp;&nbsp;&nbsp;西南科技大学学生资助系统</li>"
 	+ "<li class='muted'>·</li></ul>"
@@ -12,12 +12,7 @@ var funUrl;
 $(document).ready(
 		function() {
 			$("#copyright").empty().append(copyright);
-			var Request = new Object();
-			Request = GetRequest1();
-			if (Request != null) {
-				pareid = Request['pareid'];
-				funid = Request['funid'];
-			}
+			
 			// 获取用户权限
 			$.ajax({
 				type : "post",
@@ -34,66 +29,27 @@ $(document).ready(
 							alert("用户已经退出，请重新登录！");
 							window.location.href = "login.html";
 						} else {
-							$("#current_user").empty().append(msg.user.userName);
+							$("#current_user").empty().append(msg.user.userAccount);
 						}
 						
 						var navigation = "";
+						var nav1 = "";
 						//alert(msg.functionList[0].funcName);
 						for(i=0;i<msg.functionList.length;i++)
 							{
+							
 							navigation+= "<div class='panel panel-default'>" + "<div class='panel-heading'>"
-							+ "<h4 class='panel-title'>" + "<a  data-toggle='collapse' data-toggle='collapse'"
-							+ "data-parent='#accordion' href='#collapse" +msg.functionList[i].funcName + "'>" + msg.functionList[i].funcName + "</a>"
+							+ "<h4 class='panel-title'>" + "<a href='" + msg.functionList[i].funcUrl + "'"  + ">" 
+							+ msg.functionList[i].funcName + "</a>"
 							+ "</h4>" + "</div>";
 							
+							nav1 += "<a href='" + msg.functionList[i].funcUrl + "'"  + ">" 
+							+ msg.functionList[i].funcName + "</a>";
 							
 							}
 						$("#navigation").empty().append(navigation);
-						$.each(msg.functionList, function(key, val) {
 							
-							var nav = ""; 
-							var nav1 = "";
-							var nav2 = "";
-							nav = "<div class='panel panel-default'>" + "<div class='panel-heading'>"
-									+ "<h4 class='panel-title'>" + "<a  data-toggle='collapse' data-toggle='collapse'"
-									+ "data-parent='#accordion' href='#collapse" + val.funcId + "'>" + val.funcName + "</a>"
-									+ "</h4>" + "</div>";
-							if (pareid != null || pareid != "") {
-								
-								if (val.id == pareid)
-								{
-								pareName=val.name;
-								nav += "<div id='collapse" + val.funcId + "' class='panel-collapse in'>";
-								}
-								else
-									nav += "<div id='collapse" + val.funcId + "' class='panel-collapse collapse'>";
-							} else
-								nav += "<div id='collapse" + val.funcId + "' class='panel-collapse collapse'>";
-							nav += "<div class='panel-body'>"
-									+ "<ul class='nav nav-pills nav-stacked' style='max-width: 300px;'>";
-							$.each(val.columns, function(k, v) {
-								if (funid != null || funid != "") {
-									if (funid == v.funcId)
-									{
-										
-										funName = v.funcName;funUrl = v.funcUrl;
-										nav1 += "<li style='background-color:#E6E6FA'><a href='" + v.funcUrl + "'"  + ">" + "<b id='li"+ v.funcId+"'>"
-												+ v.funcName + "</b>" + "</a></li>";
-									}
-									else
-										nav1 += "<li><a href='" + v.funcUrl + "'  id='li" + v.funcId + "'>"
-												+ v.funcName + "</a></li>";
-								} else
-									nav1 += "<li><a href='" + v.funcUrl + "'  id='li" + v.funcId + "'>" + v.funcName
-											+ "</a></li>";
-							});
-							nav2 = "</ul>" + "</div>" + "</div>" + "</div>"; 
-							navigation += nav + nav1 + nav2;
-						});
-						$("#navigation").empty().append(navigation);
-						if (msg.user.userType == 1) {
-							
-						}
+						
 					} else {
 						alert(msg.message);
 						window.location.href = "login.html";
@@ -145,7 +101,7 @@ $(document).ready(
 												$.ajax({
 													type : "post",
 													contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-													url : '/zzxt/userController/editPassword.do',
+													url : '/LabSys/userController/editPassword.do',
 													async : false,
 													data : {
 														password : password,
@@ -155,7 +111,7 @@ $(document).ready(
 														if (msg.result == true) {
 
 															alert("修改成功！");
-															$('#changePassword').modal('hide');
+															window.location.href="login.html";
 														} else {
 															alert(msg.message);
 														}
@@ -193,7 +149,7 @@ $(document).ready(
 				$("#inputPassword1").val("");
 				$("#inputPassword2").val("");
 				$("#inputPassword3").val("");
-				//$('#changePassword').modal('hide');
+				
 
 			});
 

@@ -13,4 +13,6 @@ public interface UserService {
 	public User checkUser(String loginName, String passWord);
 
 	public User login(String loginName, String passWord);
+	
+	public  void EditInfoByUserId(int userId,String password );
 }
