@@ -6,34 +6,35 @@ import codemagic.LabSys.model.Plan;
 
 public interface PlanService {
 
-	/**
-	 * 添加学习计划
-	 * @return
-	 */
-	boolean addPlan(Plan plan);
+    /**
+     * 添加学习计划
+     * @param record 学习计划
+     * @return
+     */
+	boolean AddPlan(Plan record);
 	/**
 	 * 删除学习计划
 	 * @param planid
 	 * @return
 	 */
-	 boolean deletePlan(int planid);
+	 boolean DeletePlan(int planId);
 	/**
 	 * 查看学习计划
 	 * @param planid
 	 * @return
 	 */
-	 Plan checkPlan(int planid);
+	 Plan CheckPlan(int planId);
 	/**
 	 * 显示学习计划列表
 	 * @param userid
 	 * @return
 	 */
-	 List<Plan> showList(int  userid);
+	 List<Plan> ShowList(int  userId);
 	/**
 	 * 修改学习列表
 	 * @param planid
 	 * @return
 	 */
-	 boolean updatePlan(int planid);
+	 boolean UpdatePlan(Plan record);
 
 }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codemagic.LabSys.dao.StudentMapper" >
+  <resultMap id="BaseResultMap" type="codemagic.LabSys.model.Student" >
+    <id column="stud_id" property="studId" jdbcType="INTEGER" />
+    <result column="stud_num" property="studNum" jdbcType="INTEGER" />
+    <result column="stud_class" property="studClass" jdbcType="VARCHAR" />
+    <result column="stud_userId" property="studUserid" jdbcType="INTEGER" />
+    <result column="stud_major" property="studMajor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stud_id, stud_num, stud_class, stud_userId,stud_major
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stud_id = #{studId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where stud_id = #{studId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="codemagic.LabSys.model.Student" >
+    insert into student (stud_id, stud_num, stud_class, 
+      stud_userId)
+    values (#{studId,jdbcType=INTEGER}, #{studNum,jdbcType=INTEGER}, #{studClass,jdbcType=VARCHAR}, 
+      #{studUserid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="codemagic.LabSys.model.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studId != null" >
+        stud_id,
+      </if>
+      <if test="studNum != null" >
+        stud_num,
+      </if>
+      <if test="studClass != null" >
+        stud_class,
+      </if>
+      <if test="studUserid != null" >
+        stud_userId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studId != null" >
+        #{studId,jdbcType=INTEGER},
+      </if>
+      <if test="studNum != null" >
+        #{studNum,jdbcType=INTEGER},
+      </if>
+      <if test="studClass != null" >
+        #{studClass,jdbcType=VARCHAR},
+      </if>
+      <if test="studUserid != null" >
+        #{studUserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="codemagic.LabSys.model.Student" >
+    update student
+    <set >
+      <if test="studNum != null" >
+        stud_num = #{studNum,jdbcType=INTEGER},
+      </if>
+      <if test="studClass != null" >
+        stud_class = #{studClass,jdbcType=VARCHAR},
+      </if>
+      <if test="studUserid != null" >
+        stud_userId = #{studUserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where stud_id = #{studId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.Student" >
+    update student
+    set stud_num = #{studNum,jdbcType=INTEGER},
+      stud_class = #{studClass,jdbcType=VARCHAR},
+      stud_userId = #{studUserid,jdbcType=INTEGER}
+    where stud_id = #{studId,jdbcType=INTEGER}
+  </update>
+  <!-- 自己的方法 -->
+  <select id="selectByStudUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stud_userId = #{studUserid,jdbcType=INTEGER}
+  </select>
+  
+  <update id="updateByStudUserId" parameterType="java.lang.Integer" >
+    update student,user
+    set stud_num = #{studNum,jdbcType=INTEGER},
+      stud_class = #{studClass,jdbcType=VARCHAR},
+      stud_major = #{studMajor,jdbcType=VARCHAR},
+      user_realname = #{userRealname,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_e-mail = #{userEMail,jdbcType=VARCHAR}
+    where stud_userId = #{studId,jdbcType=INTEGER} and 
+    user.user_id=#{studId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

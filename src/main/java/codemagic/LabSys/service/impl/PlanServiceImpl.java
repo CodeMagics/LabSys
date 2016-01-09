@@ -1,5 +1,6 @@
 package codemagic.LabSys.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import codemagic.LabSys.service.PlanService;
 public class PlanServiceImpl implements PlanService {
 	private PlanMapper planMapper;
 	
-	public boolean addPlan(Plan record) {
+	public boolean AddPlan(Plan record) {
 		// TODO Auto-generated method stub
 		try{
 			planMapper.insert(record);
@@ -23,10 +24,10 @@ public class PlanServiceImpl implements PlanService {
 		return false;
 	}
 
-	public boolean deletePlan(int planid) {
+	public boolean DeletePlan(int planId) {
 		// TODO Auto-generated method stub
 		try{
-			planMapper.deleteByPrimaryKey(planid);
+			planMapper.deleteByPrimaryKey(planId);
 			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -35,11 +36,11 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@SuppressWarnings("finally")
-	public Plan checkPlan(int planid) {
+	public Plan CheckPlan(int planId) {
 		// TODO Auto-generated method stub
-		Plan plan = null;
+		Plan plan = new Plan();
 		try{
-			planMapper.selectByPrimaryKey(planid);
+			planMapper.selectByPrimaryKey(planId);
 
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -49,12 +50,12 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@SuppressWarnings({ "finally" })
-	public List<Plan> showList(int userid) {
+	public List<Plan> ShowList(int userId) {
 		// TODO Auto-generated method stub
-		List<Plan> plans = null;
+		List<Plan> plans = new ArrayList<Plan>();
 		try {
 
-			plans = planMapper.selectByPublisherID(userid);
+			plans = planMapper.selectByPublisherID(userId);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,11 +64,9 @@ public class PlanServiceImpl implements PlanService {
 		}
 	}
 
-	public boolean updatePlan(int planid) {
+	public boolean UpdatePlan(Plan record) {
 		// TODO Auto-generated method stub
 		try {
-			//临时变量，待数据库稳定后删除修改
-            Plan record = null;
 			planMapper.updateByPrimaryKey(record);
 			return true;
 		} catch (Exception e) {

@@ -61,4 +61,21 @@ public class UserServiceImpl implements UserService {
 	}
 	
 
+    @SuppressWarnings("finally")
+    public void EditInfoByUserId(int userId, String password) {
+        User user = new User();
+        try {
+            user = userMapper.selectByPrimaryKey(userId);
+            user.setUserPassword(password);
+            //userMapper.updateByPrimaryKeySelective(user);
+            userMapper.updateByUserid(userId,password);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return;
+        }
+
+    }
+
 }

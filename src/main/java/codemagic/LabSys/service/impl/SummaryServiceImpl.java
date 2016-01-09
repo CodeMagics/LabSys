@@ -1,5 +1,6 @@
 package codemagic.LabSys.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import codemagic.LabSys.service.SummaryService;
 public class SummaryServiceImpl implements SummaryService {
 
 	private SummaryMapper summaryMapper;
-	public boolean addsummary(Summary record) {
+	public boolean AddSummary(Summary record) {
 		// TODO Auto-generated method stub
 		try{
 			summaryMapper.insert(record);
@@ -23,20 +24,19 @@ public class SummaryServiceImpl implements SummaryService {
 		return false;
 	}
 	
-	public boolean deletesummary(int summaryid) {
+	public boolean DeleteSummary(int summaryId) {
 		// TODO Auto-generated method stub
 		try{
-			summaryMapper.deleteByPrimaryKey(summaryid);
+			summaryMapper.deleteByPrimaryKey(summaryId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 
-	public boolean updatesummary(int summaryid) {
+	public boolean UpdateSummary(Summary record) {
 		// TODO Auto-generated method stub
 		try{
-			Summary record=null;
 			summaryMapper.updateByPrimaryKey(record);
 			return true;
 		}catch (Exception e) {
@@ -46,11 +46,11 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	@SuppressWarnings("finally")
-	public Summary checksummary(int summaryid) {
+	public Summary CheckSummary(int summaryId) {
 		// TODO Auto-generated method stub
-		Summary summary = null;
+		Summary summary = new Summary();
 		try{
-			summary = summaryMapper.selectByPrimaryKey(summaryid);
+			summary = summaryMapper.selectByPrimaryKey(summaryId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -59,11 +59,11 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 	
 	@SuppressWarnings("finally")
-	public List<Summary> showList(int userid) {
+	public List<Summary> ShowList(int userId) {
 		// TODO Auto-generated method stub
-		List<Summary> summarylsit = null;
+		List<Summary> summarylsit = new ArrayList<Summary>();
 		try{
-			summarylsit = summaryMapper.selectByPublisherID(userid);
+			summarylsit = summaryMapper.selectByPublisherID(userId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{

@@ -1,5 +1,7 @@
 package codemagic.LabSys.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,22 +28,22 @@ public class PlanController {
 	}
 	/**
 	 * 根据当前用户ID查看该用户的学习计划列表
-	 * @param userid 用户ID
+	 * @param userId 用户ID
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView showList(int userid,
+	public ModelAndView showList(int userId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			List<Plan> plans = planService.showList(userid);
-			if(plans != null){
+			List<Plan> planList = planService.ShowList(userId);
+			if(planList != null){
 			map.put("result", Boolean.TRUE);
-			map.put("plans", plans);
+			map.put("planList", planList);
 			
 			} else {
 				map.put("result", Boolean.FALSE);
@@ -67,14 +69,21 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/publishplan")
-	public ModelAndView publishplan(Plan record,
+	public ModelAndView publishplan(int planPubliser,String planTitle,String planDetails,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			boolean result=planService.addPlan(record);
-			if(result != true){
+			Plan record = new Plan();
+			boolean successed;
+			record.setPlanPubliser(planPubliser);
+			record.setPlanTitle(planTitle);
+			record.setPlanDetails(planDetails);
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			record.setPlanDate(df.format(new Date()));
+			successed = planService.AddPlan(record);
+			if(successed != true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "创建成功！");
 			
@@ -101,13 +110,13 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/checkplan")
-	public ModelAndView checkplan(int planid,
+	public ModelAndView checkplan(int planId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Plan plan=planService.checkPlan(planid);
+			Plan plan=planService.CheckPlan(planId);
 			if(plan != null){
 			map.put("result", Boolean.TRUE);
 			map.put("plan", plan);
@@ -132,15 +141,21 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/updateplan")
-	public ModelAndView updateplan(int planid,
+	public ModelAndView updateplan(int planId, String planTitle, String planDetails,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			
-			boolean result = planService.updatePlan(planid);
-			if(result == true){
+			boolean successed;
+			Plan record = new Plan();
+			record.setPlanId(planId);
+			record.setPlanTitle(planTitle);
+			record.setPlanDetails(planDetails);
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			record.setPlanDate(df.format(new Date()));
+			successed = planService.UpdatePlan(record);
+			if(successed == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "修改成功！");
 			
@@ -165,13 +180,13 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/deleteplan")
-	public ModelAndView deleteplan(int planid,
+	public ModelAndView deleteplan(int planId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			boolean result = planService.deletePlan(planid);
+			boolean result = planService.DeletePlan(planId);
 			if(result == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "删除成功！");
