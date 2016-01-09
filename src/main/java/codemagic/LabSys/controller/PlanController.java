@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import codemagic.LabSys.model.Plan;
+import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.PlanService;
 
 @Controller
@@ -37,13 +39,14 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView showList(int userId,
-			HttpServletRequest request) {
+	public ModelAndView showList(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 		try {
-			List<Plan> planList = planService.ShowList(userId);
+			List<Plan> planList = planService.ShowList(user.getUserId());
 			if(planList != null){
 			map.put("result", Boolean.TRUE);
 			map.put("planList", planList);
@@ -72,15 +75,17 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/publishplan")
-	public ModelAndView publishplan(int planPubliser,String planTitle,String planDetails,
+	public ModelAndView publishplan(String planTitle,String planDetails,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
+		HttpSession session = request.getSession();
+		User planPubliser = (User) session.getAttribute("user");
 		try {
 			Plan record = new Plan();
 			boolean successed;
-			record.setPlanPubliser(planPubliser);
+			record.setPlanPubliser(planPubliser.getUserId());
 			record.setPlanTitle(planTitle);
 			record.setPlanDetails(planDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
