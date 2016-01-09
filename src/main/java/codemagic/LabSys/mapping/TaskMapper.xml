@@ -91,13 +91,21 @@
     select 
     <include refid="Base_Column_List" />
     from task
-    where task_publisher = #{taskPublisher,jdbcType=INTEGER}
+    where task_publiser = #{taskPubliser,jdbcType=INTEGER}
     ORDER BY task_id DESC
   </select>
-    <select id="selectPublisher" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select user_realname
+  
+  <resultMap id="newtMap" type="codemagic.LabSys.model.Task" >
+     <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="new_List" >
+    user_realname
+  </sql>
+    <select id="selectPublisher" resultMap="newtMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="new_List" />
     from task,user
     where task_id = #{taskId,jdbcType=INTEGER}
-    and task.task_publisher = user.user_id
+    and task.task_publiser = user.user_id
   </select>
 </mapper>

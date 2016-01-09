@@ -68,7 +68,10 @@ public class TaskServiceImpl implements TaskService{
 		// TODO Auto-generated method stub4Task task = null;
 		String publisher = null;
 		try{
-			publisher = taskMapper.selectPublisher(taskId);
+			Task task=null;
+			task= taskMapper.selectPublisher(taskId);
+			publisher=task.getUserRealname();
+			System.out.println(publisher+"/////////////////////////////");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{

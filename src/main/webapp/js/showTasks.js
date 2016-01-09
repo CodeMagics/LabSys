@@ -44,7 +44,7 @@ function  showOnePageAnnouncement(page,type){
 }
 
 function showDetail(id){
-	window.location.href = "seeAnnouncementDetail.html?id="+id;
+	window.location.href = "seeTaskDetail.html?id="+id;
 }
 
 function modify(id){
