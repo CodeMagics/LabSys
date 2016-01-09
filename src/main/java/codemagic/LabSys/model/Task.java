@@ -8,7 +8,9 @@ public class Task {
     private Integer taskPubliser;
 
     private String taskDetails;
-
+    
+    private String taskDate;
+ 
     public Integer getTaskId() {
         return taskId;
     }
@@ -40,4 +42,12 @@ public class Task {
     public void setTaskDetails(String taskDetails) {
         this.taskDetails = taskDetails == null ? null : taskDetails.trim();
     }
+    
+    public String getTaskDate() {
+ 		return taskDate;
+ 	}
+
+ 	public void setTaskDate(String taskDate) {
+ 		this.taskDate = taskDate;
+ 	}
 }

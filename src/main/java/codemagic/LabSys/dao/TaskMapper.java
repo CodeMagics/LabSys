@@ -1,5 +1,7 @@
 package codemagic.LabSys.dao;
 
+import java.util.List;
+
 import codemagic.LabSys.model.Task;
 
 public interface TaskMapper {
@@ -14,4 +16,8 @@ public interface TaskMapper {
     int updateByPrimaryKeySelective(Task record);
 
     int updateByPrimaryKey(Task record);
+    
+    List<Task> selectAll();
+    
+    List<Task> selectByPublisher(Integer userId);
 }

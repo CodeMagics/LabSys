@@ -6,9 +6,10 @@
     <result column="plan_title" property="planTitle" jdbcType="VARCHAR" />
     <result column="plan_publiser" property="planPubliser" jdbcType="INTEGER" />
     <result column="plan_details" property="planDetails" jdbcType="VARCHAR" />
+    <result column="plan_date" property="planDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    plan_id, plan_title, plan_publiser, plan_details
+    plan_id, plan_title, plan_publiser, plan_details, plan_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Plan" >
     insert into plan (plan_id, plan_title, plan_publiser, 
-      plan_details)
+      plan_details, plan_date)
     values (#{planId,jdbcType=INTEGER}, #{planTitle,jdbcType=VARCHAR}, #{planPubliser,jdbcType=INTEGER}, 
-      #{planDetails,jdbcType=VARCHAR})
+      #{planDetails,jdbcType=VARCHAR}, #{planDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Plan" >
     insert into plan
@@ -75,8 +76,8 @@
   <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.Plan" >
     update plan
     set plan_title = #{planTitle,jdbcType=VARCHAR},
-      plan_publiser = #{planPubliser,jdbcType=INTEGER},
-      plan_details = #{planDetails,jdbcType=VARCHAR}
+      plan_details = #{planDetails,jdbcType=VARCHAR},
+      plan_date = #{planDate,jdbcType=VARCHAR}
     where plan_id = #{planId,jdbcType=INTEGER}
   </update>
 </mapper>
