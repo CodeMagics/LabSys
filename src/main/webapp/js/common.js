@@ -63,7 +63,6 @@ $(document).ready(
 			$("#inputPassword1").val("");// 上面出现的当前密码清空
 
 			$("#changePWD").click(function() {
-
 				var currentpassword = $("#inputPassword1").val();
 				$.ajax({
 					type : "post",

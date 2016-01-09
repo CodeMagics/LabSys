@@ -21,6 +21,6 @@ public interface StudentMapper {
     /*
      * 
      */
-    boolean updateByStudUserId(Integer studId,String userRealname,Integer studNum,String studMajor,
+    int updateByStudUserId(Integer studId,String userRealname,Integer studNum,String studMajor,
 			String studClass,String userEMail, String userPhone);
 }

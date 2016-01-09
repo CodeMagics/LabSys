@@ -7,8 +7,11 @@ window.onload=function(){
 
 	
 	ShowPersonalInfo();
+	$("#upadte").click(function(){
+	
+	});
 	$("#saveIfo").click(function(){
-		alert($("#name").val());
+		
 		save();
 	});
 
@@ -44,6 +47,38 @@ function checkValue(str) {
 }
 
 
+function ShowInfo() {
+	$.ajax({
+		type : "post",
+		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		url : '/LabSys/studentController/readStudentByStudNumber.do',
+		async : false,
+		data : {
+
+		},
+		dataType : 'json',
+		success : function(msg) {
+		
+			if (msg.result == true) {
+				
+				$("#studClass").html(msg.student.studClass);// 班级
+				$("#name").html(msg.student.userRealname);// 姓名
+				$("#num").html(msg.student.studNum);// 学号
+				$("#major").html(msg.student.studMajor);// 专业
+				$("#phone").html(msg.student.userPhone);// 电话
+				$("#email").html(msg.student.userEMail);// 邮箱
+
+				
+			
+			} else {
+				alert(msg.message);
+			}
+		},
+		error : function(msg) {
+			alert("网络超时！");
+		}
+	});
+}
 
 
 function ShowPersonalInfo() {
@@ -92,10 +127,10 @@ var phone = $("#phone").val();
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			url : '/LabSys/studentController/updateInfo.do',
+			url : '/LabSys/studentController/updateStudent.do',
 			async : false,
 			data : {
-				name : name,
+				name:name,
 				num : num,
 				major:major,
 				studClass:studClass,

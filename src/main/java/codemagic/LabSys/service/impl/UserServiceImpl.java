@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
             user = userMapper.selectByPrimaryKey(userId);
             user.setUserPassword(password);
             //userMapper.updateByPrimaryKeySelective(user);
-            userMapper.updateByUserid(userId,password);
+            userMapper.updateByUserid(password,userId);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -76,6 +76,23 @@ public class UserServiceImpl implements UserService {
             return;
         }
 
+    }
+    
+    public boolean updateUser(User user){
+    	boolean result=false;
+    	 try {
+             int temp= userMapper.updateByPrimaryKey(user);
+             if(temp==1){
+            	 result=true;
+             }
+            
+         } catch (Exception e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         } finally {
+             return result;
+         }
+    	
     }
 
 }

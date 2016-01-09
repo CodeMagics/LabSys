@@ -40,7 +40,10 @@ public class StudentServiceImpl implements StudentService {
 		boolean result = false;
 		try {
 		    
-			result = studentMapper.updateByStudUserId(id,name,num,major,StudClass,email,phone);
+			int type = studentMapper.updateByStudUserId(id,name,num,major,StudClass,email,phone);
+			if(type==1){
+				result=true;
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

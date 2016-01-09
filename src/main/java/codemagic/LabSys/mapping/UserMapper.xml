@@ -99,7 +99,7 @@
         user_phone = #{userPhone,jdbcType=VARCHAR},
       </if>
       <if test="userEMail != null" >
-        user_e-mail = #{userEMail,jdbcType=VARCHAR},
+        user_email = #{userEMail,jdbcType=VARCHAR},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
@@ -111,7 +111,7 @@
       user_realname = #{userRealname,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=INTEGER},
       user_phone = #{userPhone,jdbcType=VARCHAR},
-      user_e-mail = #{userEMail,jdbcType=VARCHAR}
+      user_email = #{userEMail,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
   
@@ -139,9 +139,9 @@
 	 <update id="updateByUserid"  >
      update user
    
-      user_password = #{userPassword,jdbcType=VARCHAR}
+      set user_password = #{param1,jdbcType=VARCHAR}
   
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{param2,jdbcType=INTEGER}
   </update>
 	
 	
