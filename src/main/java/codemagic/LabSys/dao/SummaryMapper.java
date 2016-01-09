@@ -1,5 +1,7 @@
 package codemagic.LabSys.dao;
 
+import java.util.List;
+
 import codemagic.LabSys.model.Summary;
 
 public interface SummaryMapper {
@@ -14,4 +16,6 @@ public interface SummaryMapper {
     int updateByPrimaryKeySelective(Summary record);
 
     int updateByPrimaryKey(Summary record);
+
+	List<Summary> selectByPublisherID(int userid);
 }
