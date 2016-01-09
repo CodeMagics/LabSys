@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import codemagic.LabSys.model.Summary;
 import codemagic.LabSys.service.SummaryService;
 
+@Controller
+@RequestMapping("/summaryController")
 public class SummaryController {
 	private SummaryService summaryService;
 
