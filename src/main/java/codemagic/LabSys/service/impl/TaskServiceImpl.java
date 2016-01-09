@@ -49,6 +49,19 @@ public class TaskServiceImpl implements TaskService{
 			return list;
 		}
 	}
+	
+	@SuppressWarnings("finally")
+	public Task SelectByid(int taskId) {
+		// TODO Auto-generated method stub
+		Task task = null;
+		try{
+			task = taskMapper.selectByPrimaryKey(taskId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return task;
+		}
+	}
 
 	public boolean Publish(Task task) {
 		// TODO Auto-generated method stub

@@ -19,6 +19,8 @@ public interface TaskService {
 	 */
 	public List<Task> SelectList(int userId);
 	
+	public Task SelectByid(int taskId);
+	
 	/**
 	 * 发布任务
 	 * @param task
