@@ -10,8 +10,18 @@ public class Task {
     private String taskDetails;
     
     private String taskDate;
+    
+    private String userRealname;
  
-    public Integer getTaskId() {
+    public String getUserRealname() {
+		return userRealname;
+	}
+
+	public void setUserRealname(String userRealname) {
+		this.userRealname = userRealname;
+	}
+
+	public Integer getTaskId() {
         return taskId;
     }
 

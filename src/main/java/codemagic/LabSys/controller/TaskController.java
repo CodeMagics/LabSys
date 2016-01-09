@@ -127,6 +127,10 @@ public class TaskController {
 		try {
 			Task task = taskService.SelectByid(Integer.parseInt(id));
 			if(task!=null){
+			String publisher = taskService.SelectPublisher(Integer.parseInt(id));
+			if(publisher!=null){
+			map.put("publisher", publisher);
+			}
 			map.put("result", Boolean.TRUE);
 			map.put("task", task);	
 			} else {
@@ -157,6 +161,7 @@ public class TaskController {
 			if(publisher!=null){
 			map.put("result", Boolean.TRUE);
 			map.put("publisher", publisher);
+			System.out.println(publisher+"********????/");
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
