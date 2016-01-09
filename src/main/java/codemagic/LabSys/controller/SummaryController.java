@@ -18,12 +18,13 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import codemagic.LabSys.model.Summary;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.SummaryService;
+import codemagic.LabSys.service.UserService;
 
 @Controller
 @RequestMapping("/summaryController")
 public class SummaryController {
 	private SummaryService summaryService;
-
+    private UserService userService;
 	public SummaryService getsummaryService() {
 		return summaryService;
 	}
@@ -153,7 +154,7 @@ public class SummaryController {
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
+	@SuppressWarnings({ "finally", "unchecked", "rawtypes", "unused" })
 	@RequestMapping("/checksummary")
 	public ModelAndView CheckSummary(int summaryId,
 			HttpServletRequest request) {
@@ -163,10 +164,11 @@ public class SummaryController {
 		try {
 			Summary summary = new Summary();
 			summary = summaryService.CheckSummary(summaryId);
+			User user = userService.findUserById(summary.getSumPubliser());
 			if(summary != null){
 			map.put("result", Boolean.TRUE);
 			map.put("summary", summary);
-			
+			map.put("sumpublisher", user);
 			} else {
 				map.put("result", Boolean.FALSE);
 			}

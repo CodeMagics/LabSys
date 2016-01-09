@@ -18,12 +18,13 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import codemagic.LabSys.model.Plan;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.PlanService;
+import codemagic.LabSys.service.UserService;
 
 @Controller
 @RequestMapping("/planController")
 public class PlanController {
 	private PlanService planService;
-
+    private UserService userService;
 	public PlanService getPlanService() {
 		return planService;
 	}
@@ -116,7 +117,7 @@ public class PlanController {
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
+	@SuppressWarnings({ "finally", "unchecked", "rawtypes", "unused" })
 	@RequestMapping("/checkplan")
 	public ModelAndView checkplan(int planId,
 			HttpServletRequest request) {
@@ -125,9 +126,11 @@ public class PlanController {
 		Map map = new HashMap();
 		try {
 			Plan plan=planService.CheckPlan(planId);
-			if(plan != null){
+			User user = userService.findUserById(plan.getPlanPubliser());
+			if(plan != null){	
 			map.put("result", Boolean.TRUE);
 			map.put("plan", plan);
+			map.put("planPublisher", user);
 			
 			} else {
 				map.put("result", Boolean.FALSE);
