@@ -17,5 +17,5 @@ public interface PlanMapper {
 
     int updateByPrimaryKey(Plan record);
 
-	List<Plan> selectByPublisherID(int userid);
+	List<Plan> selectByPublisherID(Integer userid);
 }

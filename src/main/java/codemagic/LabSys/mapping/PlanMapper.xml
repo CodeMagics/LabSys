@@ -80,4 +80,11 @@
       plan_date = #{planDate,jdbcType=VARCHAR}
     where plan_id = #{planId,jdbcType=INTEGER}
   </update>
+   <select id="selectByPublisherID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from plan
+    where plan_publiser = #{planPubliser,jdbcType=INTEGER}
+    ORDER BY plan_id DESC
+  </select>
 </mapper>

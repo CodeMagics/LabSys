@@ -14,78 +14,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
-import codemagic.LabSys.model.Plan;
-import codemagic.LabSys.service.PlanService;
+import codemagic.LabSys.model.Summary;
+import codemagic.LabSys.service.SummaryService;
 
 @Controller
-@RequestMapping("/planController")
-public class PlanController {
-	private PlanService planService;
+@RequestMapping("/summaryController")
+public class SummaryController {
+	private SummaryService summaryService;
 
-	public PlanService getPlanService() {
-		return planService;
+	public SummaryService getsummaryService() {
+		return summaryService;
 	}
 	@Autowired
-	public void setUserService(PlanService planService) {
-		this.planService = planService;
+	public void setUserService(SummaryService summaryService) {
+		this.summaryService = summaryService;
 	}
 	/**
-	 * 根据当前用户ID查看该用户的学习计划列表
-	 * @param userId 用户ID
-	 * @param request
-	 * @return
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
-	@RequestMapping("/showList")
-	public ModelAndView showList(int userId,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		MappingJacksonJsonView view = new MappingJacksonJsonView();
-		Map map = new HashMap();
-		try {
-			List<Plan> planList = planService.ShowList(userId);
-			if(planList != null){
-			map.put("result", Boolean.TRUE);
-			map.put("planList", planList);
-			
-			} else {
-				map.put("result", Boolean.FALSE);
-				map.put("message", "没有任何学习计划！");
-			}
-			
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		} finally {
-			view.setAttributesMap(map);
-			mav.setView(view);
-			return mav;
-		}
-		
-	}
-	/**
-	 * 创建新的学习计划
-	 * @param record
+	 * 创建新的学习总结
+	 * @param userId  用户编号
+	 * @param summaryTitle  总结标题
+	 * @param summaryDetails  总结详情
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
-	@RequestMapping("/publishplan")
-	public ModelAndView publishplan(int planPubliser,String planTitle,String planDetails,
+	@RequestMapping("/publishsummary")
+	public ModelAndView PublishSummary(int sumPubliser,String sumTitle,String sumDetails, 
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Plan record = new Plan();
 			boolean successed;
-			record.setPlanPubliser(planPubliser);
-			record.setPlanTitle(planTitle);
-			record.setPlanDetails(planDetails);
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			record.setPlanDate(df.format(new Date()));
-			successed = planService.AddPlan(record);
+			Summary record = new Summary();
+			record.setSumPubliser(sumPubliser);
+			record.setSumTitle(sumTitle);
+			record.setSumDetails(sumDetails);
+			successed = summaryService.AddSummary(record);
 			if(successed != true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "创建成功！");
@@ -95,7 +60,6 @@ public class PlanController {
 				map.put("message", "创建失败！");
 			}
 			
-			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -105,27 +69,29 @@ public class PlanController {
 			return mav;
 		}
 	}
+	
 	/**
-	 * 查看一个学习计划
-	 * @param planid 学习计划编号
+	 * 删除一个学习总结
+	 * @param summaryid 学习总结编号
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
-	@RequestMapping("/checkplan")
-	public ModelAndView checkplan(int planId,
+	@RequestMapping("/deletesummary")
+	public ModelAndView DeleteSummary(int summaryId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Plan plan=planService.CheckPlan(planId);
-			if(plan != null){
+			boolean result = summaryService.DeleteSummary(summaryId);
+			if(result == true){
 			map.put("result", Boolean.TRUE);
-			map.put("plan", plan);
+			map.put("message", "删除成功！");
 			
 			} else {
 				map.put("result", Boolean.FALSE);
+				map.put("message", "删除失败！");
 			}
 		} catch (Exception e) {
 			
@@ -136,28 +102,29 @@ public class PlanController {
 			return mav;
 		}
 	}
+	
 	/**
-	 * 更新修改一个学习计划
-	 * @param planid 学习计划编号
+	 * 修改一个学习计划
+	 * @param summaryid 学习总结编号
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
-	@RequestMapping("/updateplan")
-	public ModelAndView updateplan(int planId, String planTitle, String planDetails,
+	@RequestMapping("/updatesummary")
+	public ModelAndView UpdateSummary(int sumId, String sumTitle,String sumDetails, 
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Plan record = new Plan();
-			record.setPlanId(planId);
-			record.setPlanTitle(planTitle);
-			record.setPlanDetails(planDetails);
+			Summary record = new Summary();
+			record.setSumId(sumId);
+			record.setSumTitle(sumTitle);
+			record.setSumDetails(sumDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			record.setPlanDate(df.format(new Date()));
-			successed = planService.UpdatePlan(record);
+			record.setSumDate(df.format(new Date()));
+			successed = summaryService.UpdateSummary(record);
 			if(successed == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "修改成功！");
@@ -175,29 +142,63 @@ public class PlanController {
 			return mav;
 		}
 	}
+	
 	/**
-	 * 删除一个学习计划
-	 * @param planid 学习计划编号
+	 * 查看一个学习计划
+	 * @param summaryid 学习计划编号
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
-	@RequestMapping("/deleteplan")
-	public ModelAndView deleteplan(int planId,
+	@RequestMapping("/checksummary")
+	public ModelAndView CheckSummary(int summaryId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			boolean result = planService.DeletePlan(planId);
-			if(result == true){
+			Summary summary = new Summary();
+			summary = summaryService.CheckSummary(summaryId);
+			if(summary != null){
 			map.put("result", Boolean.TRUE);
-			map.put("message", "删除成功！");
+			map.put("summary", summary);
 			
 			} else {
 				map.put("result", Boolean.FALSE);
-				map.put("message", "删除失败！");
 			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			view.setAttributesMap(map);
+			mav.setView(view);
+			return mav;
+		}
+	}
+	
+	/**
+	 * 根据当前用户ID查看该用户的学习计划列表
+	 * @param userid 用户ID
+	 * @param request
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
+	@RequestMapping("/showList")
+	public ModelAndView ShowList(int userId,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		MappingJacksonJsonView view = new MappingJacksonJsonView();
+		Map map = new HashMap();
+		try {
+			List<Summary> summarys = summaryService.ShowList(userId);
+			if(summarys != null){
+			map.put("result", Boolean.TRUE);
+			map.put("summarys", summarys);
+			
+			} else {
+				map.put("result", Boolean.FALSE);
+				map.put("message", "没有任何学习计划！");
+			}	
 		} catch (Exception e) {
 			
 			e.printStackTrace();

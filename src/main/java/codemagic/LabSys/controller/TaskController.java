@@ -119,6 +119,37 @@ public class TaskController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
+	@RequestMapping("/SelectById")
+	public ModelAndView SelectById(String Id, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		MappingJacksonJsonView view = new MappingJacksonJsonView();
+		Map map = new HashMap();
+		try {
+			Task task = taskService.SelectByid(Integer.parseInt(Id));
+			if(task!=null){
+			map.put("result", Boolean.TRUE);
+			map.put("task", task);
+			
+	
+			
+			} else {
+				map.put("result", Boolean.FALSE);
+				map.put("message", "获取失败！");
+			}
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			view.setAttributesMap(map);
+			mav.setView(view);
+			return mav;
+		}
+	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Publish")
 	public ModelAndView Publish(int taskPublisher, String taskDetails, String taskTitle, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
