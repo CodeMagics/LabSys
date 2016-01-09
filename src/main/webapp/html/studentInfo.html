@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
+<link rel="shortcut icon" href="../images/favicon.png">
 
 <title>实验室学习与交流系统</title>
 
@@ -14,7 +15,7 @@
 <!-- Bootstrap theme -->
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
-<link href="../css/bootstrap-theme.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
 <link href="../css/docs.css" rel="stylesheet">
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/github.min.css" rel="stylesheet">
@@ -24,6 +25,7 @@
 <script src="../javascript/bootstrap.min.js"></script>
 <script src="../javascript/holder.min.js"></script>
 <script src="../js/common.js"></script>
+<script src="../js/seeStuDetail.js"></script>
 </head>
 
 <body>
@@ -32,23 +34,27 @@
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="index.html">实验室学习与交流系统</a>
+				<a class="navbar-brand" href="index.html">西南科技大学学生资助系统</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span id="current_user">学生用户</span>
-						</a>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span
+							id="current_user">学生用户</span> </a>
 						<ul class="dropdown-menu">
 							<li class="divider"></li>
 							<li class="dropdown-header">系统帮助</li>
-							<li><a href="about.html"><span class="glyphicon glyphicon-book"></span>关于系统</a></li>
-							<li><a href="help.html"><span class="glyphicon glyphicon-print"></span>使用说明</a></li>
+							<li><a href="about.html"><span
+									class="glyphicon glyphicon-book"></span>关于系统</a></li>
+							<li><a href="help.html"><span
+									class="glyphicon glyphicon-print"></span>使用说明</a></li>
 							<li class="divider"></li>
 							<li class="dropdown-header">基本功能</li>
-							<li><a href="#" data-toggle="modal" data-target="#changePassword"><span class="glyphicon glyphicon-cog"></span>修改密码</a></li>
-							<li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
+							<li><a href="#" data-toggle="modal"
+								data-target="#changePassword"><span
+									class="glyphicon glyphicon-cog"></span>修改密码</a></li>
+							<li><a href="#" id="logout"><span
+									class="glyphicon glyphicon-log-out"></span>退出</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -61,10 +67,9 @@
 
 				<div class="page-header">
 					<small><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;&nbsp;当前位置导航：&nbsp;&nbsp;&nbsp;&nbsp;
-						<span id="location">
-							<a href="index.html">首页</a>
-						</span>
-					</small>
+						<span id="location"> <a href="#">首页</a>&gt;<a href="#">使用说明</a>&gt;<a
+							href="#">学生信息</a>
+					</span> </small>
 				</div>
 			</div>
 
@@ -72,32 +77,79 @@
 			<!-- 左侧导航栏    -->
 			<div class="col-md-3">
 				<div class="bs-example">
-					<div id="navigation" class="panel-group">
-						
-					</div>
+					<div id="navigation" class="panel-group"></div>
 				</div>
 			</div>
 			<div class="col-md-9">
 				<div class="bs-Shaozhou">
-					
-					<div class="panel panel-success">
-						<div class="panel-heading">
-							<h3 class="panel-title"><a href="showAnnouncements.html?type=4"> 实验室通知</a></h3>
+					<h2 align="center">学生详细信息</h2>
+
+					<ul id="myTab" class="nav nav-tabs" role="tablist">
+						<li class="active"><a data-toggle="tab" role="tab"
+							href="#personal">个人信息</a></li>
+						<li class=""><a data-toggle="tab" role="tab" href="#Reward">获奖情况</a>
+						</li>
+						<li class=""><a data-toggle="tab" role="tab" href="#parents">家庭成员</a>
+						</li>
+						<li class=""><a data-toggle="tab" role="tab" href="#learing">学习情况</a>
+						</li>
+						<li class="dropdown"><a href="#" id="myTabDrop1"
+							class="dropdown-toggle" data-toggle="dropdown">详细资料 <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu"
+								aria-labelledby="myTabDrop1">
+								<li class=""><a href="#lookIfoDeatil" tabindex="-1"
+									role="tab" data-toggle="tab" onclick="javascript:showInformation()">查看</a></li>
+								<li class=""><a href="#infoDeatil" tabindex="-1" role="tab"
+									data-toggle="tab">修改</a></li>
+							</ul></li>
+							<li class=""><a data-toggle="tab" role="tab" href="#support" onclick="javascript:showallsupport()">资助情况</a>
+						</li>
+
+					</ul>
+					<div id="myTabContent" class="tab-content">
+						<div id="personal" class="tab-pane fade active in">
+							<!-- 个人信息添加 -->
+							<hr />
+							<p align=center style="color: blue; font-size: 25px;">个人信息</p>
+							<table class="table table-striped table-bordered"
+								id="stuPersonal">
+
+							</table>
 						</div>
-						<div class="panel-body" id="gongshi">
-							<ol>
-							  <li>
-							  	<a href="#"> <span class="glyphicon glyphicon-folder-close"></span>&nbsp;</a>
-							  </li>
-							  <li>
-							  	<a href="#"> <span class="glyphicon glyphicon-folder-open"></span>&nbsp;实验室最新通知</a>
-							  </li>
-							  <li>
-							  	<a href="#"> <span class="glyphicon glyphicon-folder-open"></span>&nbsp;实验室最新通知</a>
-							  </li>
-							</ol>
-							<p class="text-right"><a href="#">更多&gt;&gt;</a></p>
+						<div id="lookIfoDeatil" class="tab-pane fade">
+							<!-- 详细信息添加 -->
+							<hr />
+							<p align=center style="color: blue; font-size: 25px;">个人详细资料</p>
+							<table class="table table-striped table-bordered" id="stuInfo">
+
+							</table>
 						</div>
+						
+						<div id="parents" class="tab-pane fade">
+							<!-- 父母信息添加于此 -->
+							<hr />
+							<p align=center style="color: blue; font-size: 25px;">父母信息</p>
+							<table class="table table-striped table-bordered" id="stuParents">
+
+							</table>
+						</div>
+
+						<div id="learing" class="tab-pane fade">
+							<!-- 学习情况添加于此 -->
+							<hr />
+							<p align=center style="color: blue; font-size: 25px;">学习情况</p>
+							<table class="table table-striped table-bordered" id="stuLearing">
+
+							</table>
+						</div>
+					</div>
+
+				<div align="center">
+						<button type="button" class="btn btn-info"
+							onclick="javascript: history.go(-1);">
+							<span class="glyphicon glyphicon-arrow-left"></span> 返回
+						</button>
 					</div>
 				</div>
 			</div>
@@ -154,9 +206,7 @@
 		<p class="pull-right">
 			<a href="#">回到页面顶部</a>
 		</p>
-		<div class="container" id="copyright">
-			
-		</div>
+		<div class="container" id="copyright"></div>
 	</footer>
 </body>
 </html>
