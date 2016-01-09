@@ -17,5 +17,5 @@ public interface SummaryMapper {
 
     int updateByPrimaryKey(Summary record);
 
-	List<Summary> selectByPublisherID(int userid);
+	List<Summary> selectByPublisherID(Integer userid);
 }

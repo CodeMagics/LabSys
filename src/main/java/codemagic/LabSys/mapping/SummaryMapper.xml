@@ -80,4 +80,11 @@
       sum_date = #{sumDate,jdbcType=VARCHAR}
     where sum_id = #{sumId,jdbcType=INTEGER}
   </update>
+  <select id="selectByPublisherID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from summary
+    where sum_publiser = #{sumPubliser,jdbcType=INTEGER}
+    ORDER BY sum_id DESC
+  </select>
 </mapper>
