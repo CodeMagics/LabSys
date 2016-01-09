@@ -1,5 +1,8 @@
 $(document).ready(function (){
 	onload();
+	$("#addTask").click(function(){
+		window.location.href="publishInfo.html";
+	});
 });
 
 function  showOnePageAnnouncement(page,type){

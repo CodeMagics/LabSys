@@ -120,12 +120,12 @@ public class TaskController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/SelectById")
-	public ModelAndView SelectById(String Id, HttpServletRequest request) {
+	public ModelAndView SelectById(String id, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Task task = taskService.SelectByid(Integer.parseInt(Id));
+			Task task = taskService.SelectByid(Integer.parseInt(id));
 			if(task!=null){
 			map.put("result", Boolean.TRUE);
 			map.put("task", task);
@@ -151,16 +151,19 @@ public class TaskController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Publish")
-	public ModelAndView Publish(int taskPublisher, String taskDetails, String taskTitle, HttpServletRequest request) {
+	public ModelAndView Publish(String title,String content,  HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
+		HttpSession session = request.getSession();
+	    User user = (User) session.getAttribute("user");
+		int taskPublisher=user.getUserId();
 		try {
 			boolean successed;
 			Task task = new Task();
 			task.setTaskPubliser(taskPublisher);
-			task.setTaskDetails(taskDetails);
-			task.setTaskTitle(taskTitle);
+			task.setTaskDetails(content);
+			task.setTaskTitle(title);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			task.setTaskDate(df.format(new Date()));
 			successed = taskService.Publish(task);
@@ -186,16 +189,16 @@ public class TaskController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Updata")
-	public ModelAndView Updata(int taskId, String taskDetails, String taskTitle, HttpServletRequest request) {
+	public ModelAndView Updata(String id, String title, String content, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
 			boolean successed;
 			Task task = new Task();
-			task.setTaskId(taskId);
-			task.setTaskDetails(taskDetails);
-			task.setTaskTitle(taskTitle);
+			task.setTaskId(Integer.parseInt(id));
+			task.setTaskDetails(content);
+			task.setTaskTitle(title);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			task.setTaskDate(df.format(new Date()));
 			successed = taskService.Updata(task);
