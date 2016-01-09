@@ -27,7 +27,6 @@ public interface NoticeService {
 	
 	/**
 	 * 修改公告
-	 * @param noticeid
 	 * @param notice
 	 * @return
 	 */

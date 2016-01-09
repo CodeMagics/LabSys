@@ -80,4 +80,18 @@
       task_date = #{taskDate,jdbcType=VARCHAR}
     where task_id = #{taskId,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from task
+    ORDER BY task_id DESC
+  </select>
+  <select id="selectByPublisher" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from task
+    where task_publisher = #{taskPublisher,jdbcType=INTEGER}
+    ORDER BY task_id DESC
+  </select>
 </mapper>

@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
-import codemagic.LabSys.model.Notice;
-import codemagic.LabSys.service.NoticeService;
+import codemagic.LabSys.model.Task;
+import codemagic.LabSys.service.TaskService;
 
-public class NoticeController {
-	private NoticeService noticeService;
+public class TaskController {
+	private TaskService taskService;
 
-	public NoticeService getNoticeService() {
-		return noticeService;
+	public TaskService getTaskService() {
+		return taskService;
 	}
 	@Autowired
-	public void setNoticeService(NoticeService noticeService) {
-		this.noticeService = noticeService;
+	public void setTaskService(TaskService taskService) {
+		this.taskService = taskService;
 	}
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/ShowList")
@@ -33,14 +33,14 @@ public class NoticeController {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			List<Notice> notices = noticeService.ShowList();
-			if(!notices.isEmpty()){
+			List<Task> tasks = taskService.ShowList();
+			if(!tasks.isEmpty()){
 			map.put("result", Boolean.TRUE);
-			map.put("notices", notices);
+			map.put("tasks", tasks);
 			
 			} else {
 				map.put("result", Boolean.FALSE);
-				map.put("message", "没有公告！");
+				map.put("message", "没有任务！");
 			}
 			
 			
@@ -61,14 +61,14 @@ public class NoticeController {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			List<Notice> notices = noticeService.SelectList(userId);
-			if(!notices.isEmpty()){
+			List<Task> tasks = taskService.SelectList(userId);
+			if(!tasks.isEmpty()){
 			map.put("result", Boolean.TRUE);
-			map.put("notices", notices);
+			map.put("tasks", tasks);
 			
 			} else {
 				map.put("result", Boolean.FALSE);
-				map.put("message", "没有公告！");
+				map.put("message", "没有任务！");
 			}
 			
 			
@@ -84,19 +84,19 @@ public class NoticeController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Publish")
-	public ModelAndView Publish(int noticePublisher, String noticeDetails, String noticeTitle, HttpServletRequest request) {
+	public ModelAndView Publish(int taskPublisher, String taskDetails, String taskTitle, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Notice notice = new Notice();
-			notice.setNoticePublisher(noticePublisher);
-			notice.setNoticeDetails(noticeDetails);
-			notice.setNoticeTitle(noticeTitle);
+			Task task = new Task();
+			task.setTaskPubliser(taskPublisher);
+			task.setTaskDetails(taskDetails);
+			task.setTaskTitle(taskTitle);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			notice.setNoticeDate(df.format(new Date()));
-			successed = noticeService.Publish(notice);
+			task.setTaskDate(df.format(new Date()));
+			successed = taskService.Publish(task);
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "发布成功");
@@ -119,19 +119,19 @@ public class NoticeController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Updata")
-	public ModelAndView Updata(int noticeId, String noticeDetails, String noticeTitle, HttpServletRequest request) {
+	public ModelAndView Updata(int taskId, String taskDetails, String taskTitle, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Notice notice = new Notice();
-			notice.setNoticeId(noticeId);
-			notice.setNoticeDetails(noticeDetails);
-			notice.setNoticeTitle(noticeTitle);
+			Task task = new Task();
+			task.setTaskId(taskId);
+			task.setTaskDetails(taskDetails);
+			task.setTaskTitle(taskTitle);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			notice.setNoticeDate(df.format(new Date()));
-			successed = noticeService.Updata(notice);
+			task.setTaskDate(df.format(new Date()));
+			successed = taskService.Updata(task);
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "更新成功");
@@ -154,13 +154,13 @@ public class NoticeController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Delete")
-	public ModelAndView Delete(int noticeId, HttpServletRequest request) {
+	public ModelAndView Delete(int taskId, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			successed = noticeService.Delete(noticeId);
+			successed = taskService.Delete(taskId);
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "删除成功");
@@ -180,5 +180,4 @@ public class NoticeController {
 			return mav;
 		}
 	}
-	
 }
