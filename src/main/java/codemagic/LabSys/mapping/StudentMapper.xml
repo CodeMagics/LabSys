@@ -89,15 +89,12 @@
   </select>
   
   <update id="updateByStudUserId" parameterType="java.lang.Integer" >
-    update student,user
-    set stud_num = #{studNum,jdbcType=INTEGER},
-      stud_class = #{studClass,jdbcType=VARCHAR},
-      stud_major = #{studMajor,jdbcType=VARCHAR},
-      user_realname = #{userRealname,jdbcType=VARCHAR},
-      user_phone = #{userPhone,jdbcType=VARCHAR},
-      user_e-mail = #{userEMail,jdbcType=VARCHAR}
-    where stud_userId = #{studId,jdbcType=INTEGER} and 
-    user.user_id=#{studId,jdbcType=INTEGER}
+    update student
+    set stud_num = #{param3,jdbcType=INTEGER},
+      stud_class = #{param5,jdbcType=VARCHAR},
+      stud_major = #{param4,jdbcType=VARCHAR}
+    where stud_userId = #{param1,jdbcType=INTEGER} 
+ 
   </update>
   
 </mapper>

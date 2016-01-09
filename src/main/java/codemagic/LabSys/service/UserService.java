@@ -15,4 +15,6 @@ public interface UserService {
 	public User login(String loginName, String passWord);
 	
 	public  void EditInfoByUserId(int userId,String password );
+	
+	public boolean updateUser(User user);
 }

@@ -90,6 +90,68 @@ public class StudentController {
 				return mav;
 			}
 		}
+		
+		@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
+		@RequestMapping("/updateStudent")
+		public ModelAndView updateStudent(String name,String num,
+			String major,String studClass,
+				String email,String phone,
+				HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			MappingJacksonJsonView view = new MappingJacksonJsonView();
+			Map map = new HashMap();
+			User user = new User();
+			HttpSession session = request.getSession();// 获取session
+			user = (User) session.getAttribute("user");
+            
+			try {if (user == null) {
+				map.put("result", Boolean.FALSE);
+				map.put("message", "用户已经退出！请重新登录");
+
+			} else {
+				if (user.getUserType() == 1) {
+					boolean result;
+					result=true;
+					int number=0;
+					if(num!=""){
+						number= Integer.parseInt(num);
+					}
+						
+					
+					result= studentService.updateStuByUserId(user
+						.getUserId(),name,number,major,studClass,email,phone);
+					user.setUserEMail(email);
+					user.setUserPhone(phone);
+					user.setUserRealname(name);
+					
+					boolean result2=userService.updateUser(user);
+					if(result&&result2){
+						map.put("result", Boolean.TRUE);
+						map.put("message", "执行成功！");
+					}else{
+						map.put("result", Boolean.FALSE);
+						map.put("message", "更新失败！");
+					}
+						
+					
+				
+					
+				}
+					
+					
+			}
+			} catch (Exception e) {
+				map.put("result", Boolean.FALSE);
+				map.put("message", "执行出现出错！");
+				e.printStackTrace();
+			} finally {
+				view.setAttributesMap(map);
+				mav.setView(view);
+				return mav;
+			}
+		}
+
 
 		@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 		@RequestMapping("/updateInfo")

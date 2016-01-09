@@ -15,7 +15,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     
-    int updateByUserid(Integer userId,String userPassword);
+    int updateByUserid(String userPassword,Integer userId);
     /*
      * 输入用户信息
      * return 判断用户是否存在
