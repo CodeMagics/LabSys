@@ -20,4 +20,6 @@ public interface TaskMapper {
     List<Task> selectAll();
     
     List<Task> selectByPublisher(Integer userId);
+    
+    String selectPublisher(Integer taskId);
 }

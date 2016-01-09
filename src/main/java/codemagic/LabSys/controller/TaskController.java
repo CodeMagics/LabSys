@@ -49,7 +49,7 @@ public class TaskController {
 			if(!tasks.isEmpty()){
 				int recordCount = tasks.size();// 总记录数
 				int pageCount;// 总页数
-				int temp = recordCount % 5;// 10条记录一页
+				int temp = recordCount % 5;// 5条记录一页
 				if (temp == 0) {
 					pageCount = recordCount / 5;
 				} else {
@@ -128,10 +128,7 @@ public class TaskController {
 			Task task = taskService.SelectByid(Integer.parseInt(id));
 			if(task!=null){
 			map.put("result", Boolean.TRUE);
-			map.put("task", task);
-			
-	
-			
+			map.put("task", task);	
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
@@ -148,6 +145,33 @@ public class TaskController {
 		}
 	}
 	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
+	@RequestMapping("/SelectPublisher")
+	public ModelAndView SelectPublisher(String id, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		MappingJacksonJsonView view = new MappingJacksonJsonView();
+		Map map = new HashMap();
+		try {
+			String publisher = taskService.SelectPublisher(Integer.parseInt(id));
+			if(publisher!=null){
+			map.put("result", Boolean.TRUE);
+			map.put("publisher", publisher);
+			} else {
+				map.put("result", Boolean.FALSE);
+				map.put("message", "获取失败！");
+			}
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		} finally {
+			view.setAttributesMap(map);
+			mav.setView(view);
+			return mav;
+		}
+	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/Publish")
@@ -228,7 +252,6 @@ public class TaskController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		System.out.println(id+"////////////////////");
 		try {
 			boolean successed;
 			

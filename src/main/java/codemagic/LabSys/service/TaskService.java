@@ -19,7 +19,19 @@ public interface TaskService {
 	 */
 	public List<Task> SelectList(int userId);
 	
+	/**
+	 * 根据taskid查询单个任务
+	 * @param taskId
+	 * @return
+	 */
 	public Task SelectByid(int taskId);
+	
+	/**
+	 * 根据taskid查询发布者
+	 * @param taskId
+	 * @return
+	 */
+	public String SelectPublisher(int taskId);
 	
 	/**
 	 * 发布任务

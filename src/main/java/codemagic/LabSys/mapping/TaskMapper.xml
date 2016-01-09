@@ -94,4 +94,10 @@
     where task_publisher = #{taskPublisher,jdbcType=INTEGER}
     ORDER BY task_id DESC
   </select>
+    <select id="selectPublisher" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select user_realname
+    from task,user
+    where task_id = #{taskId,jdbcType=INTEGER}
+    and task.task_publisher = user.user_id
+  </select>
 </mapper>

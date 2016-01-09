@@ -62,6 +62,19 @@ public class TaskServiceImpl implements TaskService{
 			return task;
 		}
 	}
+	
+	@SuppressWarnings("finally")
+	public String SelectPublisher(int taskId) {
+		// TODO Auto-generated method stub4Task task = null;
+		String publisher = null;
+		try{
+			publisher = taskMapper.selectPublisher(taskId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return publisher;
+		}
+	}
 
 	public boolean Publish(Task task) {
 		// TODO Auto-generated method stub
