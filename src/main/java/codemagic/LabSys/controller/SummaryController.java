@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import codemagic.LabSys.model.Summary;
+import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.SummaryService;
 
 @Controller
@@ -39,15 +41,17 @@ public class SummaryController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/publishsummary")
-	public ModelAndView PublishSummary(int sumPubliser,String sumTitle,String sumDetails, 
+	public ModelAndView PublishSummary(String sumTitle,String sumDetails, 
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
+		HttpSession session = request.getSession();
+		User sumPubliser = (User) session.getAttribute("user");
 		try {
 			boolean successed;
 			Summary record = new Summary();
-			record.setSumPubliser(sumPubliser);
+			record.setSumPubliser(sumPubliser.getUserId());
 			record.setSumTitle(sumTitle);
 			record.setSumDetails(sumDetails);
 			successed = summaryService.AddSummary(record);
@@ -184,13 +188,14 @@ public class SummaryController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView ShowList(int userId,
-			HttpServletRequest request) {
+	public ModelAndView ShowList(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 		try {
-			List<Summary> summarys = summaryService.ShowList(userId);
+			List<Summary> summarys = summaryService.ShowList(user.getUserId());
 			if(summarys != null){
 			map.put("result", Boolean.TRUE);
 			map.put("summarys", summarys);
