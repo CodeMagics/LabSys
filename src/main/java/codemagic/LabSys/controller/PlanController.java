@@ -81,7 +81,7 @@ public class PlanController {
 			record.setPlanTitle(planTitle);
 			record.setPlanDetails(planDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			//record.setPlanDate(df.format(new Date()));
+			record.setPlanDate(df.format(new Date()));
 			successed = planService.AddPlan(record);
 			if(successed != true){
 			map.put("result", Boolean.TRUE);
@@ -153,7 +153,7 @@ public class PlanController {
 			record.setPlanTitle(planTitle);
 			record.setPlanDetails(planDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			//record.setPlanDate(df.format(new Date()));
+			record.setPlanDate(df.format(new Date()));
 			successed = planService.UpdatePlan(record);
 			if(successed == true){
 			map.put("result", Boolean.TRUE);

@@ -120,7 +120,7 @@ public class SummaryController {
 			record.setSumTitle(sumTitle);
 			record.setSumDetails(sumDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			//record.setSumDate(df.format(new Date()));
+			record.setSumDate(df.format(new Date()));
 			successed = summaryService.UpdateSummary(record);
 			if(successed == true){
 			map.put("result", Boolean.TRUE);
