@@ -3,6 +3,7 @@ package codemagic.LabSys.service;
 import java.util.List;
 
 import codemagic.LabSys.model.Notice;
+import codemagic.LabSys.model.Task;
 
 public interface NoticeService {
 	/**
@@ -16,7 +17,7 @@ public interface NoticeService {
 	 * @param userid
 	 * @return
 	 */
-	public List<Notice> SelectList(int userid);
+	public List<Notice> SelectList(int userId);
 	
 	/**
 	 * 发布公告
@@ -27,9 +28,20 @@ public interface NoticeService {
 	
 	/**
 	 * 修改公告
-	 * @param noticeid
 	 * @param notice
 	 * @return
 	 */
-	public boolean Updata(int noticeid, Notice notice);
+	public boolean Updata(Notice notice);
+	
+	public boolean Delete(int noticeId);
+	
+	
+    public Notice SelectByid(int noticeId);
+	
+	/**
+	 * 根据taskid查询发布者
+	 * @param Id
+	 * @return
+	 */
+	public String SelectPublisher(int noticeId);
 }

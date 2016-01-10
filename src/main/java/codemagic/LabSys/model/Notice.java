@@ -9,7 +9,16 @@ public class Notice {
 
     private String noticeTitle;
 
-    public Integer getNoticeId() {
+    private String noticeDate;
+    public String getNoticeDate() {
+		return noticeDate;
+	}
+
+	public void setNoticeDate(String noticeDate) {
+		this.noticeDate = noticeDate;
+	}
+
+	public Integer getNoticeId() {
         return noticeId;
     }
 
@@ -40,4 +49,15 @@ public class Notice {
     public void setNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle == null ? null : noticeTitle.trim();
     }
+    
+    private String userRealname;
+    
+    public String getUserRealname() {
+		return userRealname;
+	}
+
+	public void setUserRealname(String userRealname) {
+		this.userRealname = userRealname;
+	}
+
 }

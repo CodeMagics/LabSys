@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="shortcut icon" href="../images/favicon.png">
+
+		<title>实验室学习与交流系统</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="../css/bootstrap.css" rel="stylesheet">
+		<!-- Bootstrap theme -->
+		<link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="../css/theme.css" rel="stylesheet">
+		<link href="../css/docs.css" rel="stylesheet">
+		<link href="../css/bootstrap.css" rel="stylesheet">
+		<link href="../css/github.min.css" rel="stylesheet">
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="../javascript/jPaginate/css/style.css" media="screen" />
+		<link rel="stylesheet" href="../css/plan.css" />
+
+		<script src="../javascript/jquery.min.js"></script>
+		<script src="../javascript/bootstrap.min.js"></script>
+		<script src="../javascript/holder.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript" src="../javascript/jPaginate/jquery.paginate.js"></script>
+		<script src="../js/showTasks.js"></script>
+	</head>
+
+	<body>
+
+		<!-- Fixed navbar -->
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">实验室学习与交流系统</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span id="current_user">学生用户</span>
+						</a>
+							<ul class="dropdown-menu">
+								<li class="divider"></li>
+								<li class="dropdown-header">系统帮助</li>
+								<li><a href="about.html"><span class="glyphicon glyphicon-book"></span>关于系统</a></li>
+								<li><a href="help.html"><span class="glyphicon glyphicon-print"></span>使用说明</a></li>
+								<li class="divider"></li>
+								<li class="dropdown-header">基本功能</li>
+								<li><a href="#" data-toggle="modal" data-target="#changePassword"><span class="glyphicon glyphicon-cog"></span>修改密码</a></li>
+								<li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+		<div class="container theme-showcase">
+			<div class="col-md-12">
+				<div class="col-md-12">
+
+					<div class="page-header">
+						<small><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;&nbsp;当前位置导航：&nbsp;&nbsp;&nbsp;&nbsp;
+						<span id="location">
+							<a href="#">首页</a>&gt;<a href="#">使用说明</a>&gt;<a href="#">学生信息</a>
+						</span>
+					</small>
+					</div>
+				</div>
+
+				<!-- 左侧导航栏    -->
+				<div class="col-md-3">
+					<div class="bs-example">
+						<div id="navigation" class="panel-group">
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="bs-Shaozhou">
+						<h2 align="center">任务列表</h2>
+						<form class="form-inline">
+							<div class="col-md-5">
+								<div class="form-group">
+									<b>条&nbsp;&nbsp;&nbsp;件：</b>
+								</div>
+								<div class="form-group">
+									<select style="text-align: center; width: 200px;" class="form-control" id="type"></select>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<button id="Query" style="width: 215px;" class="btn btn-info" type="button">筛选</button>
+								</div>
+
+							</div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<button id="addTask" style="width: 100px;" class="btn btn-info" type="button">添加</button>
+								</div>
+							</div>
+						</form>
+						<br />
+						<table class="table table-hover">
+							<thead>
+								<tr>
+								    <th>序号</th>
+									<th>标题</th>
+									<th>时间</th>
+									<th>操作</th>
+									<
+
+								</tr>
+							</thead>
+							<tbody id="announcements">
+
+							</tbody>
+						</table>
+						<div class="col-md-12" align="left" id="announcementList"></div>
+						<!-- 分页 -->
+						<br />
+						<br />
+						<br />
+						<br />
+						<button onclick="javascript: history.go(-1);" class="btn btn-info" type="button">
+							<span class="glyphicon glyphicon-arrow-left"></span> 返回
+						</button>
+					</div>
+				</div>
+
+			</div>
+			<!-- 修改密码的模态对话框 Modal -->
+			<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title">修改用户密码</h4>
+						</div>
+						<div class="modal-body">
+							<!-- 对话框里面的内容   -->
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-4 control-label">当前密码：</label>
+									<div class="col-sm-6">
+										<input type="password" class="form-control" id="inputPassword1" placeholder="原始密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword3" class="col-sm-4 control-label">新密码：</label>
+									<div class="col-sm-6">
+										<input type="password" class="form-control" id="inputPassword2" placeholder="新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword3" class="col-sm-4 control-label">再次输入新密码：</label>
+									<div class="col-sm-6">
+										<input type="password" class="form-control" id="inputPassword3" placeholder="重复新密码">
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button Id="changePWD" type="button" class="btn btn-primary">保存</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="bs-footer" role="contentinfo">
+			<p class="pull-right">
+				<a href="#">回到页面顶部</a>
+			</p>
+			<div class="container" id="copyright">
+
+			</div>
+		</footer>
+	</body>
+
+</html>

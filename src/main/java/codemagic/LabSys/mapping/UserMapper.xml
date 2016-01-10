@@ -99,7 +99,7 @@
         user_phone = #{userPhone,jdbcType=VARCHAR},
       </if>
       <if test="userEMail != null" >
-        user_e-mail = #{userEMail,jdbcType=VARCHAR},
+        user_email = #{userEMail,jdbcType=VARCHAR},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
@@ -111,7 +111,7 @@
       user_realname = #{userRealname,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=INTEGER},
       user_phone = #{userPhone,jdbcType=VARCHAR},
-      user_e-mail = #{userEMail,jdbcType=VARCHAR}
+      user_email = #{userEMail,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
   
@@ -135,4 +135,35 @@
 		where user_account = #{userAccount,jdbcType=VARCHAR}
 		and user_password = #{userPassword,jdbcType=VARCHAR}
 	</select>
+	
+	<update id="updateByUserid"  >
+     update user
+   
+      set user_password = #{param1,jdbcType=VARCHAR}
+  
+    where user_id = #{param2,jdbcType=INTEGER}
+    </update>
+	    
+    <update id="updatePassword"  >
+     update user
+      set user_password = #{param1,jdbcType=VARCHAR}
+  
+    where user_account = #{param2,jdbcType=INTEGER}
+    </update>
+    
+    <select id="ShowList" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+    </select>
+    
+    <select id="SelectByType" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_type = #{userType,jdbcType=INTEGER}
+    </select>
+	
 </mapper>

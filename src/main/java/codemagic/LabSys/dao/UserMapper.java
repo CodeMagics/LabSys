@@ -1,5 +1,7 @@
 package codemagic.LabSys.dao;
 
+import java.util.List;
+
 import codemagic.LabSys.model.User;
 
 public interface UserMapper {
@@ -14,6 +16,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    int updateByUserid(String userPassword,Integer userId);
     /*
      * 输入用户信息
      * return 判断用户是否存在
@@ -24,4 +28,10 @@ public interface UserMapper {
      * @return 用户
      */
    	User selectByNameAndPwd(User record);
+   	
+   	int updatePassword(String userPassword, String userAccount);
+   	
+	List<User> ShowList();
+	
+	List<User> SelectByType(Integer type);
 }

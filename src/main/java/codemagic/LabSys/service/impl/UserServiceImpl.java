@@ -1,5 +1,8 @@
 package codemagic.LabSys.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,4 +64,95 @@ public class UserServiceImpl implements UserService {
 	}
 	
 
+    @SuppressWarnings("finally")
+    public void EditInfoByUserId(int userId, String password) {
+        User user = new User();
+        try {
+            user = userMapper.selectByPrimaryKey(userId);
+            user.setUserPassword(password);
+            //userMapper.updateByPrimaryKeySelective(user);
+            userMapper.updateByUserid(password,userId);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return;
+        }
+
+    }
+    
+    @SuppressWarnings("finally")
+    public boolean updateUser(User user){
+    	boolean result=false;
+    	 try {
+             int temp= userMapper.updateByPrimaryKey(user);
+             if(temp==1){
+            	 result=true;
+             }
+            
+         } catch (Exception e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         } finally {
+             return result;
+         }
+    	
+    }
+    
+    @SuppressWarnings("finally")
+	public boolean addUser(User user) {
+		// TODO Auto-generated method stub
+    	boolean result=false;
+    	try {
+   		 	userMapper.insert(user);
+           	result=true;        
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+   	
+	}
+    
+    @SuppressWarnings("finally")
+	public boolean resetPassword(String account) {
+		// TODO Auto-generated method stub
+    	boolean result=false;
+    	try {
+   		 	userMapper.updatePassword("123456", account);
+           	result=true;        
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+	}
+    
+    @SuppressWarnings("finally")
+	public List<User> ShowList() {
+		// TODO Auto-generated method stub
+    	List<User> list = new ArrayList<User>();
+		try{
+			list = userMapper.ShowList();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return list;
+		}
+	}
+    
+    @SuppressWarnings("finally")
+	public List<User> SelectByType(int type) {
+		// TODO Auto-generated method stub
+    	List<User> list = new ArrayList<User>();
+		try{
+			list = userMapper.SelectByType(type);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return list;
+		}
+	}
 }

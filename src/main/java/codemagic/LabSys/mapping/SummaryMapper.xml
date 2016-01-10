@@ -6,9 +6,10 @@
     <result column="sum_title" property="sumTitle" jdbcType="VARCHAR" />
     <result column="sum_publiser" property="sumPubliser" jdbcType="INTEGER" />
     <result column="sum_details" property="sumDetails" jdbcType="VARCHAR" />
+    <result column="sum_date" property="sumDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sum_id, sum_title, sum_publiser, sum_details
+    sum_id, sum_title, sum_publiser, sum_details, sum_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Summary" >
     insert into summary (sum_id, sum_title, sum_publiser, 
-      sum_details)
+      sum_details, sum_date)
     values (#{sumId,jdbcType=INTEGER}, #{sumTitle,jdbcType=VARCHAR}, #{sumPubliser,jdbcType=INTEGER}, 
-      #{sumDetails,jdbcType=VARCHAR})
+      #{sumDetails,jdbcType=VARCHAR}, #{sumDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Summary" >
     insert into summary
@@ -75,8 +76,15 @@
   <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.Summary" >
     update summary
     set sum_title = #{sumTitle,jdbcType=VARCHAR},
-      sum_publiser = #{sumPubliser,jdbcType=INTEGER},
-      sum_details = #{sumDetails,jdbcType=VARCHAR}
+      sum_details = #{sumDetails,jdbcType=VARCHAR},
+      sum_date = #{sumDate,jdbcType=VARCHAR}
     where sum_id = #{sumId,jdbcType=INTEGER}
   </update>
+  <select id="selectByPublisherID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from summary
+    where sum_publiser = #{sumPubliser,jdbcType=INTEGER}
+    ORDER BY sum_id DESC
+  </select>
 </mapper>
