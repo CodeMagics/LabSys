@@ -391,7 +391,16 @@ public class UserController {
 	        MappingJacksonJsonView view = new MappingJacksonJsonView();
 	        Map map = new HashMap();
 	        try {
-	        	List<User> users = userService.SelectByType(Integer.parseInt(type));
+	        	int type_int = Integer.parseInt(type);
+	        	List<User> users;
+	        	if(type_int == 0)
+	        	{
+	        		users = userService.ShowList();
+	        	}
+	        	else
+	        	{
+	        		users = userService.SelectByType(Integer.parseInt(type));
+	        	}
 	            if (!users.isEmpty()) 
 	            { 
 	            	map.put("result", Boolean.TRUE);
@@ -401,6 +410,34 @@ public class UserController {
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "没有用户");
+	            }
+	        
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/Delete")
+	    public ModelAndView Delete(String id, HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        try {
+	        	boolean successed = userService.Delete(Integer.parseInt(id));
+	            if (successed) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("message", "删除成功");	                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "删除失败");
 	            }
 	        
 	        } catch (Exception e) {

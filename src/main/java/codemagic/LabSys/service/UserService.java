@@ -27,4 +27,6 @@ public interface UserService {
 	public List<User> ShowList();
 	
 	public List<User> SelectByType(int type);
+	
+	public boolean Delete(int userId);
 }
