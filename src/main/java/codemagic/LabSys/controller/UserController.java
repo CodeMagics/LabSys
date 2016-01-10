@@ -355,4 +355,60 @@ public class UserController {
 	            return mav;
 	        }
 	    }
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/ShowList")
+	    public ModelAndView ShowList(HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        try {
+	        	List<User> users = userService.ShowList();
+	            if (!users.isEmpty()) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("users", users);	                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "没有用户");
+	            }
+	        
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/SelectByType")
+	    public ModelAndView SelectByType(String type, HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        try {
+	        	List<User> users = userService.SelectByType(Integer.parseInt(type));
+	            if (!users.isEmpty()) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("users", users);	                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "没有用户");
+	            }
+	        
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
 }

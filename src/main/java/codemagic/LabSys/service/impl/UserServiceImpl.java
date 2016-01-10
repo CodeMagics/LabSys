@@ -1,5 +1,8 @@
 package codemagic.LabSys.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -126,5 +129,30 @@ public class UserServiceImpl implements UserService {
             return result;
         }
 	}
-
+    
+    @SuppressWarnings("finally")
+	public List<User> ShowList() {
+		// TODO Auto-generated method stub
+    	List<User> list = new ArrayList<User>();
+		try{
+			list = userMapper.ShowList();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return list;
+		}
+	}
+    
+    @SuppressWarnings("finally")
+	public List<User> SelectByType(int type) {
+		// TODO Auto-generated method stub
+    	List<User> list = new ArrayList<User>();
+		try{
+			list = userMapper.SelectByType(type);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return list;
+		}
+	}
 }

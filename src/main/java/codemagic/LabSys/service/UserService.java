@@ -1,5 +1,7 @@
 package codemagic.LabSys.service;
 
+import java.util.List;
+
 import codemagic.LabSys.model.User;
 
 public interface UserService {
@@ -21,4 +23,8 @@ public interface UserService {
 	public boolean addUser(User user);
 	
 	public boolean resetPassword(String account);
+	
+	public List<User> ShowList();
+	
+	public List<User> SelectByType(int type);
 }

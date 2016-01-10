@@ -1,5 +1,7 @@
 package codemagic.LabSys.dao;
 
+import java.util.List;
+
 import codemagic.LabSys.model.User;
 
 public interface UserMapper {
@@ -28,4 +30,8 @@ public interface UserMapper {
    	User selectByNameAndPwd(User record);
    	
    	int updatePassword(String userPassword, String userAccount);
+   	
+	List<User> ShowList();
+	
+	List<User> SelectByType(Integer type);
 }

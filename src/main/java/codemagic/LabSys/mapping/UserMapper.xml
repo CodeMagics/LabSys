@@ -150,5 +150,20 @@
   
     where user_account = #{param2,jdbcType=INTEGER}
     </update>
+    
+    <select id="ShowList" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+    </select>
+    
+    <select id="SelectByType" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_type = #{userType,jdbcType=INTEGER}
+    </select>
 	
 </mapper>
