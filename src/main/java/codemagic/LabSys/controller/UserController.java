@@ -1,6 +1,7 @@
 package codemagic.LabSys.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import codemagic.LabSys.model.Function;
 import codemagic.LabSys.model.Student;
+import codemagic.LabSys.model.Task;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.StudentService;
 import codemagic.LabSys.service.UserService;
@@ -358,14 +360,40 @@ public class UserController {
 	 
 	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
 	    @RequestMapping("/ShowList")
-	    public ModelAndView ShowList(HttpServletResponse response) {
+	    public ModelAndView ShowList(int page,String type,
+	    		HttpServletRequest request,HttpServletResponse response) {
 	        ModelAndView mav = new ModelAndView();
 	        MappingJacksonJsonView view = new MappingJacksonJsonView();
 	        Map map = new HashMap();
+	        HttpSession session = request.getSession();
+		    User user = (User) session.getAttribute("user");
 	        try {
 	        	List<User> users = userService.ShowList();
 	            if (!users.isEmpty()) 
 	            { 
+	            	int recordCount = users.size();// 总记录数
+					int pageCount;// 总页数
+					int temp = recordCount % 5;// 5条记录一页
+					if (temp == 0) {
+						pageCount = recordCount / 5;
+					} else {
+						pageCount = recordCount / 5 + 1;
+					}
+					
+					List<User> pageList=new ArrayList<User>();
+					int max=users.size()>page*5?page*5:users.size();
+					for (int i = (page - 1) * 5; i <max; i++) {
+						pageList.add(users.get(i));
+					}
+					map.put("pageList", pageList);
+					map.put("pageCount", pageCount);
+					map.put("page", page);
+					
+				    map.put("result", Boolean.TRUE);
+				    map.put("users", users);
+				    map.put("user", user);
+				
+				
 	            	map.put("result", Boolean.TRUE);
 	            	map.put("users", users);	                   
 	            }
@@ -386,58 +414,42 @@ public class UserController {
 	 
 	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
 	    @RequestMapping("/SelectByType")
-	    public ModelAndView SelectByType(String type, HttpServletResponse response) {
+	    public ModelAndView SelectByType(int page,String type,
+	    		HttpServletRequest request,HttpServletResponse response) {
 	        ModelAndView mav = new ModelAndView();
 	        MappingJacksonJsonView view = new MappingJacksonJsonView();
 	        Map map = new HashMap();
+	        HttpSession session = request.getSession();
+		    User user = (User) session.getAttribute("user");
 	        try {
-	        	int type_int = Integer.parseInt(type);
-	        	List<User> users;
-	        	if(type_int == 0)
-	        	{
-	        		users = userService.ShowList();
-	        	}
-	        	else
-	        	{
-	        		users = userService.SelectByType(Integer.parseInt(type));
-	        	}
+	        	List<User> users = userService.SelectByType(Integer.parseInt(type));
 	            if (!users.isEmpty()) 
 	            { 
+	            	int recordCount = users.size();// 总记录数
+					int pageCount;// 总页数
+					int temp = recordCount % 5;// 5条记录一页
+					if (temp == 0) {
+						pageCount = recordCount / 5;
+					} else {
+						pageCount = recordCount / 5 + 1;
+					}
+					
+					List<User> pageList=new ArrayList<User>();
+					int max=users.size()>page*5?page*5:users.size();
+					for (int i = (page - 1) * 5; i <max; i++) {
+						pageList.add(users.get(i));
+					}
+					map.put("pageList", pageList);
+					map.put("pageCount", pageCount);
+					map.put("page", page);
 	            	map.put("result", Boolean.TRUE);
-	            	map.put("users", users);	                   
+	            	map.put("users", users);
+	            	map.put("user", user);	
 	            }
 	            else 
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "没有用户");
-	            }
-	        
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        } finally {
-	            view.setAttributesMap(map);
-	            mav.setView(view);
-	            return mav;
-	        }
-	    }
-	 
-	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
-	    @RequestMapping("/Delete")
-	    public ModelAndView Delete(String id, HttpServletResponse response) {
-	        ModelAndView mav = new ModelAndView();
-	        MappingJacksonJsonView view = new MappingJacksonJsonView();
-	        Map map = new HashMap();
-	        try {
-	        	boolean successed = userService.Delete(Integer.parseInt(id));
-	            if (successed) 
-	            { 
-	            	map.put("result", Boolean.TRUE);
-	            	map.put("message", "删除成功");	                   
-	            }
-	            else 
-	            {
-	                map.put("result", Boolean.FALSE);
-	                map.put("message", "删除失败");
 	            }
 	        
 	        } catch (Exception e) {

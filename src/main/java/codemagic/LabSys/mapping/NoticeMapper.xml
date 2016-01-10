@@ -95,4 +95,19 @@
     where notice_publisher = #{noticePublisher,jdbcType=INTEGER}
     ORDER BY notice_id DESC
   </select>
+  
+  
+   <resultMap id="newtMap" type="codemagic.LabSys.model.Notice" >
+     <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="new_List" >
+    user_realname
+  </sql>
+    <select id="selectPublisher" resultMap="newtMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="new_List" />
+    from notice,user
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+    and notice.notice_publisher = user.user_id
+  </select>
 </mapper>

@@ -1,6 +1,7 @@
 package codemagic.LabSys.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import codemagic.LabSys.model.Plan;
+import codemagic.LabSys.model.Task;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.PlanService;
 import codemagic.LabSys.service.UserService;
@@ -47,26 +49,49 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView showList(HttpServletRequest request) {
+	public ModelAndView showList(int page,int type,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
+	    User user = (User) session.getAttribute("user");
 		try {
-			List<Plan> planList = planService.ShowList(user.getUserId());
-			if(planList != null){
-			map.put("result", Boolean.TRUE);
-			map.put("planList", planList);
+			List<Plan> plan = planService.ShowList(user.getUserId());
+			if(!plan.isEmpty()){
+				int recordCount = plan.size();// 总记录数
+				int pageCount;// 总页数
+				int temp = recordCount % 5;// 5条记录一页
+				if (temp == 0) {
+					pageCount = recordCount / 5;
+				} else {
+					pageCount = recordCount / 5 + 1;
+				}
+				
+				List<Plan> pageList=new ArrayList<Plan>();
+				int max=plan.size()>page*5?page*5:plan.size();
+				for (int i = (page - 1) * 5; i <max; i++) {
+					pageList.add(plan.get(i));
+				}
+				map.put("pageList", pageList);
+				map.put("pageCount", pageCount);
+				map.put("page", page);
+				
+			    map.put("result", Boolean.TRUE);
+			    map.put("plan", plan);
+			    map.put("user", user);
+			
+			
 			
 			} else {
 				map.put("result", Boolean.FALSE);
-				map.put("message", "没有任何学习计划！");
+				map.put("message", "没有任务！");
 			}
 			
 			
 		} catch (Exception e) {
-			
+			map.put("result", Boolean.FALSE);
+			map.put("message", "执行出现出错！");
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
