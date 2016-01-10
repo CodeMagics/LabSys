@@ -37,7 +37,7 @@ public class UserTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById1() {
+	public void testQuery1() {
 		userService.checkUser("111", "111");
 //		LOGGER.info(JSON.toJSON(userService));
 	}
@@ -45,28 +45,28 @@ public class UserTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById2() {
+	public void testQuery2() {
 		userService.resetPassword("111");
 	}
 	
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById3() {
+	public void testQuery3() {
 		userService.login("111", "123456");
 	}
 	
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById4() {
+	public void testQuery4() {
 		userService.EditInfoByUserId(3, "111");
 	}
 	
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById5() {
+	public void testQuery5() {
 		User user = new User();
 		user.setUserId(3);
 		user.setUserPassword("111");
@@ -76,7 +76,7 @@ public class UserTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById6() {
+	public void testQuery6() {
 		User user = new User();
 		user.setUserAccount("233");
 		user.setUserPassword("233");
@@ -88,7 +88,7 @@ public class UserTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById7() {
+	public void testQuery7() {
 		List<User> list = userService.ShowList();
 		LOGGER.info(JSON.toJSON(list));
 	}
@@ -96,7 +96,7 @@ public class UserTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById8() {
+	public void testQuery8() {
 		List<User> list = userService.SelectByType(2);
 		LOGGER.info(JSON.toJSON(list));
 	}
@@ -104,7 +104,7 @@ public class UserTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQueryById9() {
+	public void testQuery9() {
 		userService.Delete(12);
 	}
 }
