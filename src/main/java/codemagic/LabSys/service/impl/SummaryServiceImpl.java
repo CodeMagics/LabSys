@@ -24,10 +24,10 @@ public class SummaryServiceImpl implements SummaryService {
 		return false;
 	}
 	
-	public boolean DeleteSummary(int summaryId) {
+	public boolean DeleteSummary(int sumId) {
 		// TODO Auto-generated method stub
 		try{
-			summaryMapper.deleteByPrimaryKey(summaryId);
+			summaryMapper.deleteByPrimaryKey(sumId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,11 +46,11 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 
 	@SuppressWarnings("finally")
-	public Summary CheckSummary(int summaryId) {
+	public Summary CheckSummary(int sumId) {
 		// TODO Auto-generated method stub
 		Summary summary = new Summary();
 		try{
-			summary = summaryMapper.selectByPrimaryKey(summaryId);
+			summary = summaryMapper.selectByPrimaryKey(sumId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{

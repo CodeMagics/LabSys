@@ -18,19 +18,28 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import codemagic.LabSys.model.Summary;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.SummaryService;
+import codemagic.LabSys.service.UserService;
 
 @Controller
 @RequestMapping("/summaryController")
 public class SummaryController {
 	private SummaryService summaryService;
-
+	private UserService userService;
+	
 	public SummaryService getsummaryService() {
 		return summaryService;
 	}
+	public UserService getuserService() {
+		return userService;
+	}
 	@Autowired
-	public void setUserService(SummaryService summaryService) {
+	public void setsummaryService(SummaryService summaryService) {
 		this.summaryService = summaryService;
 	}
+	public void setuserServiceService(UserService userService) {
+		this.userService = userService;
+	}
+	
 	/**
 	 * 创建新的学习总结
 	 * @param userId  用户编号
@@ -76,19 +85,19 @@ public class SummaryController {
 	
 	/**
 	 * 删除一个学习总结
-	 * @param summaryid 学习总结编号
+	 * @param sumId 学习总结编号
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/deletesummary")
-	public ModelAndView DeleteSummary(int summaryId,
+	public ModelAndView DeleteSummary(String sumId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			boolean result = summaryService.DeleteSummary(summaryId);
+			boolean result = summaryService.DeleteSummary(Integer.parseInt(sumId));
 			if(result == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "删除成功！");
@@ -109,13 +118,13 @@ public class SummaryController {
 	
 	/**
 	 * 修改一个学习计划
-	 * @param summaryid 学习总结编号
+	 * @param sumid 学习总结编号
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/updatesummary")
-	public ModelAndView UpdateSummary(int sumId, String sumTitle,String sumDetails, 
+	public ModelAndView UpdateSummary(String sumId, String sumTitle,String sumDetails, 
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
@@ -123,7 +132,7 @@ public class SummaryController {
 		try {
 			boolean successed;
 			Summary record = new Summary();
-			record.setSumId(sumId);
+			record.setSumId(Integer.parseInt(sumId));
 			record.setSumTitle(sumTitle);
 			record.setSumDetails(sumDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -149,24 +158,28 @@ public class SummaryController {
 	
 	/**
 	 * 查看一个学习计划
-	 * @param summaryid 学习计划编号
+	 * @param sumId 学习计划编号
 	 * @param request
 	 * @return
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/checksummary")
-	public ModelAndView CheckSummary(int summaryId,
+	public ModelAndView CheckSummary(String sumId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
 			Summary summary = new Summary();
-			summary = summaryService.CheckSummary(summaryId);
+			summary = summaryService.CheckSummary(Integer.parseInt(sumId));
 			if(summary != null){
+				String publisher = userService.findUserById(summary.getSumPubliser()).getUserRealname();
+				if(publisher != null)
+				{
 			map.put("result", Boolean.TRUE);
 			map.put("summary", summary);
-			
+			map.put("sumpublisher", publisher);
+				}
 			} else {
 				map.put("result", Boolean.FALSE);
 			}

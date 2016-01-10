@@ -7,7 +7,9 @@
     <result column="stud_class" property="studClass" jdbcType="VARCHAR" />
     <result column="stud_userId" property="studUserid" jdbcType="INTEGER" />
     <result column="stud_major" property="studMajor" jdbcType="VARCHAR" />
+    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
     stud_id, stud_num, stud_class, stud_userId,stud_major
   </sql>
@@ -93,8 +95,18 @@
     set stud_num = #{param3,jdbcType=INTEGER},
       stud_class = #{param5,jdbcType=VARCHAR},
       stud_major = #{param4,jdbcType=VARCHAR}
-    where stud_userId = #{param1,jdbcType=INTEGER} 
- 
+    where stud_userId = #{param1,jdbcType=INTEGER}
   </update>
+  
+  <sql id="New_List" >
+    stud_id, stud_num, stud_class, stud_userId,stud_major, user_realname
+  </sql>
+  
+    <select id="showList" resultMap="BaseResultMap">
+    select 
+    <include refid="New_List" />
+    from student, user
+    where student.stud_userId=user.user_id
+  </select>
   
 </mapper>

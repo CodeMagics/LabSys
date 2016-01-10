@@ -11,7 +11,17 @@ public class Student {
     
     private String studMajor;
 
-    public Integer getStudId() {
+    private String userRealname;
+    
+    public String getUserRealname() {
+		return userRealname;
+	}
+
+	public void setUserRealname(String userRealname) {
+		this.userRealname = userRealname;
+	}
+
+	public Integer getStudId() {
         return studId;
     }
 
@@ -50,4 +60,5 @@ public class Student {
     public void setStudUserid(Integer studUserid) {
         this.studUserid = studUserid;
     }
+    
 }

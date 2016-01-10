@@ -36,5 +36,4 @@ public interface PlanService {
 	 * @return
 	 */
 	 boolean UpdatePlan(Plan record);
-
 }

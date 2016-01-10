@@ -136,13 +136,34 @@
 		and user_password = #{userPassword,jdbcType=VARCHAR}
 	</select>
 	
-	 <update id="updateByUserid"  >
+	<update id="updateByUserid"  >
      update user
    
       set user_password = #{param1,jdbcType=VARCHAR}
   
     where user_id = #{param2,jdbcType=INTEGER}
-  </update>
-	
+    </update>
+	    
+    <update id="updatePassword"  >
+     update user
+      set user_password = #{param1,jdbcType=VARCHAR}
+  
+    where user_account = #{param2,jdbcType=INTEGER}
+    </update>
+    
+    <select id="ShowList" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+    </select>
+    
+    <select id="SelectByType" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_type = #{userType,jdbcType=INTEGER}
+    </select>
 	
 </mapper>

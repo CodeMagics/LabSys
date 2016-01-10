@@ -20,22 +20,30 @@ import codemagic.LabSys.model.Plan;
 import codemagic.LabSys.model.Task;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.PlanService;
+import codemagic.LabSys.service.UserService;
 
 @Controller
 @RequestMapping("/planController")
 public class PlanController {
 	private PlanService planService;
-
+    private UserService userService;
+    
 	public PlanService getPlanService() {
 		return planService;
 	}
+	public UserService getuserService() {
+		return userService;
+	}
 	@Autowired
-	public void setUserService(PlanService planService) {
+	public void setPlanService(PlanService planService) {
 		this.planService = planService;
 	}
+	public void setuserServiceService(UserService userService) {
+		this.userService = userService;
+	}
+	
 	/**
 	 * 根据当前用户ID查看该用户的学习计划列表
-	 * @param userId 用户ID
 	 * @param request
 	 * @return
 	 */
@@ -143,16 +151,21 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/checkplan")
-	public ModelAndView checkplan(int planId,
+	public ModelAndView checkplan(String planId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Plan plan=planService.CheckPlan(planId);
+			Plan plan=planService.CheckPlan(Integer.parseInt(planId));
 			if(plan != null){
+				String publisher = userService.findUserById(plan.getPlanPubliser()).getUserRealname();
+				if(publisher!=null){
+					
+				}
 			map.put("result", Boolean.TRUE);
 			map.put("plan", plan);
+			map.put("publisher", publisher);
 			
 			} else {
 				map.put("result", Boolean.FALSE);
@@ -174,7 +187,7 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/updateplan")
-	public ModelAndView updateplan(int planId, String planTitle, String planDetails,
+	public ModelAndView updateplan(String planId, String planTitle, String planDetails,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
@@ -182,7 +195,7 @@ public class PlanController {
 		try {
 			boolean successed;
 			Plan record = new Plan();
-			record.setPlanId(planId);
+			record.setPlanId(Integer.parseInt(planId));
 			record.setPlanTitle(planTitle);
 			record.setPlanDetails(planDetails);
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -213,13 +226,13 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "finally", "unchecked", "rawtypes" })
 	@RequestMapping("/deleteplan")
-	public ModelAndView deleteplan(int planId,
+	public ModelAndView deleteplan(String planId,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			boolean result = planService.DeletePlan(planId);
+			boolean result = planService.DeletePlan(Integer.parseInt(planId));
 			if(result == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "删除成功！");
