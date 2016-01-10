@@ -39,6 +39,7 @@ public class SummaryServiceImpl implements SummaryService {
 		// TODO Auto-generated method stub
 		try{
 			summaryMapper.deleteByPrimaryKey(sumId);
+			return true;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

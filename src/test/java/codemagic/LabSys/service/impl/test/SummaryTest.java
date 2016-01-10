@@ -13,51 +13,51 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
+import codemagic.LabSys.model.Summary;
+import codemagic.LabSys.service.SummaryService;
 
-import codemagic.LabSys.model.Plan;
-import codemagic.LabSys.service.PlanService;
+import com.alibaba.fastjson.JSON;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml","classpath:spring-mybatis.xml" })
-public class PlanTest {
+public class SummaryTest {
 	private static final Logger LOGGER = Logger
-			.getLogger(PlanTest.class);
+			.getLogger(SummaryTest.class);
 
-	private PlanService planService;
+	private SummaryService summaryService;
 
-	public PlanService getPlanService() {
-		return planService;
+	public SummaryService getSummaryService() {
+		return summaryService;
 	}
 	@Autowired
-	public void setPlanService(PlanService planService) {
-		this.planService = planService;
+	public void setSummaryService(SummaryService summaryService) {
+		this.summaryService = summaryService;
 	}
 	
 	@Test
 	@Transactional    
     @Rollback(true)
 	public void testQuery1() {
-		Plan plan = new Plan();
-		plan.setPlanPubliser(3);
-		plan.setPlanTitle("ck");
-		plan.setPlanDetails("test");
-		plan.setPlanDate("test");
-		planService.AddPlan(plan);
+		Summary summary = new Summary();
+		summary.setSumPubliser(3);
+		summary.setSumTitle("ck");
+		summary.setSumDetails("test");
+		summary.setSumDate("test");
+		summaryService.AddSummary(summary);
 	}
 	@Test
 	@Transactional    
     @Rollback(true)
 	public void testQuery2() {
-		Plan plan = planService.CheckPlan(4);
-		LOGGER.info(JSON.toJSON(plan));
+		Summary summary = summaryService.CheckSummary(1);
+		LOGGER.info(JSON.toJSON(summary));
 	}
 	
 	@Test
 	@Transactional    
     @Rollback(true)
 	public void testQuery3() {
-		boolean tmp = planService.DeletePlan(4);
+		boolean tmp = summaryService.DeleteSummary(5);
 		Assert.assertEquals(true, tmp);
 	}
 	
@@ -65,20 +65,20 @@ public class PlanTest {
 	@Transactional    
     @Rollback(true)
 	public void testQuery4() {
-		List<Plan> plans = planService.ShowList(2);
-		LOGGER.info(JSON.toJSON(plans));
+		List<Summary> summarys = summaryService.ShowList(3);
+		LOGGER.info(JSON.toJSON(summarys));
 	}
 	
 	@Test
 	@Transactional    
     @Rollback(true)
 	public void testQuery5() {
-		Plan plan = new Plan();
-		plan.setPlanId(4);
-		plan.setPlanTitle("ck");
-		plan.setPlanDetails("test");
-		plan.setPlanDate("test");
-		boolean tmp = planService.UpdatePlan(plan);
+		Summary summary = new Summary();
+		summary.setSumId(7);
+		summary.setSumTitle("ck");
+		summary.setSumDetails("test");
+		summary.setSumDate("test");
+		boolean tmp = summaryService.UpdateSummary(summary);
 		Assert.assertEquals(true, tmp);
 	}
 }

@@ -22,9 +22,9 @@
     where plan_id = #{planId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Plan" >
-    insert into plan (plan_id, plan_title, plan_publiser, 
+    insert into plan (plan_title, plan_publiser, 
       plan_details, plan_date)
-    values (#{planId,jdbcType=INTEGER}, #{planTitle,jdbcType=VARCHAR}, #{planPubliser,jdbcType=INTEGER}, 
+    values (#{planTitle,jdbcType=VARCHAR}, #{planPubliser,jdbcType=INTEGER}, 
       #{planDetails,jdbcType=VARCHAR}, #{planDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Plan" >

@@ -22,9 +22,9 @@
     where sum_id = #{sumId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Summary" >
-    insert into summary (sum_id, sum_title, sum_publiser, 
+    insert into summary (sum_title, sum_publiser, 
       sum_details, sum_date)
-    values (#{sumId,jdbcType=INTEGER}, #{sumTitle,jdbcType=VARCHAR}, #{sumPubliser,jdbcType=INTEGER}, 
+    values (#{sumTitle,jdbcType=VARCHAR}, #{sumPubliser,jdbcType=INTEGER}, 
       #{sumDetails,jdbcType=VARCHAR}, #{sumDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Summary" >
