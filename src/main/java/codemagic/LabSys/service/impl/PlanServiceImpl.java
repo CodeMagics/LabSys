@@ -3,6 +3,7 @@ package codemagic.LabSys.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import codemagic.LabSys.dao.PlanMapper;
@@ -12,6 +13,15 @@ import codemagic.LabSys.service.PlanService;
 @Service("/planService")
 public class PlanServiceImpl implements PlanService {
 	private PlanMapper planMapper;
+	
+	public PlanMapper getPlanMapper() {
+		return planMapper;
+	}
+
+	@Autowired
+	public void setPlanMapper(PlanMapper planMapper) {
+		this.planMapper = planMapper;
+	}
 	
 	public boolean AddPlan(Plan record) {
 		// TODO Auto-generated method stub
@@ -74,4 +84,6 @@ public class PlanServiceImpl implements PlanService {
 		}
 		return false;
 	}
+
+
 }

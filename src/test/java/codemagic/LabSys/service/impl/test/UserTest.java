@@ -1,4 +1,4 @@
-package codemagic.LabSys.test;
+package codemagic.LabSys.service.impl.test;
 
 import java.util.List;
 

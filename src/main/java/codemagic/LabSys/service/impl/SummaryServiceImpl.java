@@ -3,6 +3,7 @@ package codemagic.LabSys.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import codemagic.LabSys.dao.SummaryMapper;
@@ -13,6 +14,16 @@ import codemagic.LabSys.service.SummaryService;
 public class SummaryServiceImpl implements SummaryService {
 
 	private SummaryMapper summaryMapper;
+	
+	public SummaryMapper getSummaryMapper() {
+		return summaryMapper;
+	}
+
+	@Autowired
+	public void setSummaryMapper(SummaryMapper summaryMapper) {
+		this.summaryMapper = summaryMapper;
+	}
+	
 	public boolean AddSummary(Summary record) {
 		// TODO Auto-generated method stub
 		try{

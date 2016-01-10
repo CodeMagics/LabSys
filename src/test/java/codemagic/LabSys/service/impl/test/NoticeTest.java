@@ -1,4 +1,4 @@
-package codemagic.LabSys.test;
+package codemagic.LabSys.service.impl.test;
 
 import jxl.common.Logger;
 
@@ -43,7 +43,7 @@ public class NoticeTest {
 		noticeService.SelectList(3);
 	}
 	
-	/*@Test
+	@Test
 	@Transactional    
     @Rollback(true)
 	public void testQuery3() {
@@ -55,7 +55,7 @@ public class NoticeTest {
     @Rollback(true)
 	public void testQuery4() {
 		noticeService.SelectPublisher(14);
-	}*/
+	}
 	
 	@Test
 	@Transactional    
