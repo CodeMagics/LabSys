@@ -49,4 +49,15 @@ public class Notice {
     public void setNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle == null ? null : noticeTitle.trim();
     }
+    
+    private String userRealname;
+    
+    public String getUserRealname() {
+		return userRealname;
+	}
+
+	public void setUserRealname(String userRealname) {
+		this.userRealname = userRealname;
+	}
+
 }

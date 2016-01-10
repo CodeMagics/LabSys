@@ -3,6 +3,7 @@ package codemagic.LabSys.dao;
 import java.util.List;
 
 import codemagic.LabSys.model.Notice;
+import codemagic.LabSys.model.Task;
 
 public interface NoticeMapper {
     int deleteByPrimaryKey(Integer noticeId);
@@ -20,4 +21,6 @@ public interface NoticeMapper {
     List<Notice> selectAll();
     
     List<Notice> selectByPublisher(Integer userId);
+    
+    Notice selectPublisher(Integer noticeId);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import codemagic.LabSys.dao.NoticeMapper;
 import codemagic.LabSys.model.Notice;
+import codemagic.LabSys.model.Task;
 import codemagic.LabSys.service.NoticeService;
 
 @Service("/noticeService")
@@ -82,6 +83,39 @@ public class NoticeServiceImpl implements NoticeService{
 		}
 		return false;
 	}
+	
+	@SuppressWarnings("finally")
+	public Notice SelectByid(int noticeId) {
+		// TODO Auto-generated method stub
+		Notice notice = null;
+		try{
+			notice = noticeMapper.selectByPrimaryKey(noticeId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			
+			System.out.println("////"+notice.getNoticeTitle());
+			return notice;
+			
+		}
+	}
+	
+	@SuppressWarnings("finally")
+	public String SelectPublisher(int noticeId) {
+		// TODO Auto-generated method stub4Task task = null;
+		String publisher = null;
+		try{
+			Notice notice=null;
+			notice= noticeMapper.selectPublisher(noticeId);
+			publisher=notice.getUserRealname();
+			System.out.println(publisher+"/////////////////////////////");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			return publisher;
+		}
+	}
+
 
 	
 }
