@@ -48,9 +48,9 @@ public class PlanServiceImpl implements PlanService {
 	@SuppressWarnings("finally")
 	public Plan CheckPlan(int planId) {
 		// TODO Auto-generated method stub
-		Plan plan = new Plan();
+		Plan plan = null;
 		try{
-			planMapper.selectByPrimaryKey(planId);
+			plan = planMapper.selectByPrimaryKey(planId);
 
 		}catch (Exception e) {
 			e.printStackTrace();
