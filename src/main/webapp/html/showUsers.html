@@ -108,7 +108,7 @@
 
 							<div class="col-md-3">
 								<div class="form-group">
-									<button id="addTask" style="width: 100px;" class="btn btn-info" type="button">添加</button>
+									<button id="addUser" style="width: 100px;" class="btn btn-info" type="button">添加</button>
 								</div>
 							</div>
 						</form>
@@ -154,35 +154,40 @@
 						<!-- 对话框里面的内容   -->
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-4 control-label">用户名：</label>
+								<label for="addUserName" class="col-sm-4 control-label">用户名：</label>
 								<div class="col-sm-6">
-									<input type="password" class="form-control" id="inputPassword1"
-										>
+									<input type="text" style=" width: 200px;" class="form-control" id="AccountName">
+										
 								</div>
 							</div>
 							
 							<div class="form-group">
-							<select style="text-align: center; width: 200px;" class="form-control" id="type">
+								<label for="addUserName" class="col-sm-4 control-label">类型：</label>
+								<div class="col-sm-6">
+									<select style="text-align: center; width: 200px;" class="form-control" id="addType">
 									<option selected='selected' value='1'>学生</option>
 									<option value='2'>老师</option>
 									<option value='3'>管理员</option>
-									</select>
-								<label for="inputPassword3" class="col-sm-4 control-label">类型：</label>
-								<div class="col-sm-6">
-									<input type="password" class="form-control" id="inputPassword2"
-										placeholder="新密码">
+								</select>
+										
 								</div>
 							</div>
+							
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button Id="changePWD" type="button" class="btn btn-primary">保存</button>
+						<button Id="Add" type="button" class="btn btn-primary">保存</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	
 			<!-- 修改密码的模态对话框 Modal -->
 			<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">

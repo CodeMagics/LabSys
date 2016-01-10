@@ -300,6 +300,38 @@ public class UserController {
 	        }
 	    }
 	 
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/Delete")
+	    public ModelAndView Delete(int userId, HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        try {
+	        	
+	        	
+	            if (userService.Delete(userId)) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("message", "删除成功");
+	            		                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "删除失败");
+	            }
+	        
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
+	 
+	 
 	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
 	    @RequestMapping("/addUser")
 	    public ModelAndView addUser(String account, String type, HttpServletResponse response) {
@@ -314,6 +346,7 @@ public class UserController {
 	            if (userService.addUser(user)) 
 	            { 
 	            	map.put("result", Boolean.TRUE);
+	            	map.put("message", "添加用户成功");
 	            	map.put("user", user);	                   
 	            }
 	            else 
@@ -422,7 +455,15 @@ public class UserController {
 	        HttpSession session = request.getSession();
 		    User user = (User) session.getAttribute("user");
 	        try {
-	        	List<User> users = userService.SelectByType(Integer.parseInt(type));
+	        	List<User> users;
+	        	if(Integer.parseInt(type)==0){
+	        		users=userService.ShowList();
+	        	}
+	        	else{
+	        		users = userService.SelectByType(Integer.parseInt(type));
+	        		
+	        	}
+	        	
 	            if (!users.isEmpty()) 
 	            { 
 	            	int recordCount = users.size();// 总记录数

@@ -1,8 +1,48 @@
 $(document).ready(function (){
 	onload();
+	$("#AccountName").val("");
 	$("#addUser").click(function(){
+		$('#addUserModal').modal('show');
+		$("#Add").click(function(){
+			var name=$("#AccountName").val();
+		    var type=$('#addType option:selected').val();
+		    
+		    $.ajax({
+				type : "post",
+				contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+				url : '/LabSys/userController/addUser.do',
+				async : false,
+				data : {
+					account:name,
+					type:type
+					
+				},
+				dataType : 'json',
+				success : function(msg) {
+					if(msg.result ==true){		
+						alert(msg.message);
+						$('#addUserModal').modal('hide');
+						onload();
+						
+
+					}else{
+						alert(msg.message);
+						
+					}
+				},error: function(msg){
+				    alert("网络超时！");
+				}
+			});
+		});
 		
-	});
+			$("#name").val("");	
+		});
+		
+	
+	
+	
+	
+	
 	
 	$("#Query").click(function(){
 		var page=1;
@@ -20,10 +60,12 @@ $(document).ready(function (){
 			},
 			dataType : 'json',
 			success : function(msg) {
+				var num=0;
 				if(msg.result ==true){		
 					var content="";
 					$.each(msg.pageList,function(key,val){
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
+						num=num%5+1;
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
 						"<span class='form-group'><button onclick='deleteOne("+val.userId+")' type='button' class='btn btn-success btn-xs' style='display:inline-block;margin-right: 10px;'>删除</button></span>"+
 						"<span class='form-group'><button onclick='Reset("+val.userAccount+")' type='button' class='btn btn-success btn-xs'>重置密码</button></span>"
 						+"</td></tr>";
@@ -73,11 +115,11 @@ function  showOnePageAnnouncement(page,type){
 		success : function(msg) {
 			if(msg.result ==true){						
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
-					type=(type)%5+1;
+					num=(num)%5+1;
 					if(msg.user.userType==3){
-						 content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
+						 content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
 							"<span class='form-group'><button onclick='deleteOne("+val.userId+")' type='button' class='btn btn-success btn-xs' style='display:inline-block;margin-right: 10px;'>删除</button></span>"+
 							"<span class='form-group'><button onclick='Reset("+val.userAccount+")' type='button' class='btn btn-success btn-xs'>重置密码</button></span>"
 							+"</td></tr>";
@@ -93,22 +135,19 @@ function  showOnePageAnnouncement(page,type){
 	});
 }
 
-function showDetail(id){
-	window.location.href = "seeuserDetail.html?id="+id;
-}
+
 
 
 
 function deleteOne(id){
 	if(window.confirm('你确定要删除吗？')){
-		alert(id);
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 			url : '/LabSys/userController/Delete.do',
 			async : false,
 			data : {
-				id:id
+				userId:id
 			},
 			dataType : 'json',
 			success : function(msg) {
@@ -175,11 +214,11 @@ function onload(){
 		success : function(msg) {
 			if(msg.result ==true){		
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
 					if(msg.user.userType==3){
-					   type=type%5+1;
-					   content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
+					   num=num%5+1;
+					   content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
 						"<span class='form-group'><button onclick='deleteOne("+val.userId+")' type='button' class='btn btn-success btn-xs' style='display:inline-block;margin-right: 10px;'>删除</button></span>"+
 						"<span class='form-group'><button onclick='Reset("+val.userAccount+")' type='button' class='btn btn-success btn-xs'>重置密码</button></span>"
 						+"</td></tr>";
