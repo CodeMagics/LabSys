@@ -17,4 +17,8 @@ public interface UserService {
 	public  void EditInfoByUserId(int userId,String password );
 	
 	public boolean updateUser(User user);
+	
+	public boolean addUser(User user);
+	
+	public boolean resetPassword(String account);
 }

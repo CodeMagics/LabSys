@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import codemagic.LabSys.model.Function;
+import codemagic.LabSys.model.Student;
 import codemagic.LabSys.model.User;
+import codemagic.LabSys.service.StudentService;
 import codemagic.LabSys.service.UserService;
 import codemagic.LabSys.service.FunctionService;
 
@@ -25,7 +27,15 @@ import codemagic.LabSys.service.FunctionService;
 public class UserController {
 	private UserService userService;
 	private FunctionService functionService;
+	private StudentService studentService;
 
+	public StudentService getStudentService() {
+		return studentService;
+	}
+	@Autowired
+	public void setStudentService(StudentService studentService) {
+		this.studentService = studentService;
+	}
 	public FunctionService getFunctionService() {
 		return functionService;
 	}
@@ -251,6 +261,93 @@ public class UserController {
 	        } catch (Exception e) {
 	            map.put("result", Boolean.FALSE);
 	            map.put("message", "执行出现出错！");
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/showStudentList")//显示学生列表
+	    public ModelAndView showStudentList(HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        List<Student> students = studentService.showList();
+ 	        try {
+	        	
+	            if (!students.isEmpty()) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("students", students);	                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "没有学生");
+	            }
+	        
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/addUser")
+	    public ModelAndView addUser(String account, String type, HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        try {
+	        	User user = new User();
+	        	user.setUserAccount(account);
+	        	user.setUserPassword("123456");
+	        	user.setUserType(Integer.parseInt(type));
+	            if (userService.addUser(user)) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("user", user);	                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "添加用户失败");
+	            }
+	        
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            view.setAttributesMap(map);
+	            mav.setView(view);
+	            return mav;
+	        }
+	    }
+	 
+	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
+	    @RequestMapping("/resetPassword")
+	    public ModelAndView resetPassword(String account, HttpServletResponse response) {
+	        ModelAndView mav = new ModelAndView();
+	        MappingJacksonJsonView view = new MappingJacksonJsonView();
+	        Map map = new HashMap();
+	        try {
+	            if (userService.resetPassword(account)) 
+	            { 
+	            	map.put("result", Boolean.TRUE);
+	            	map.put("message", "重置密码成功");	                   
+	            }
+	            else 
+	            {
+	                map.put("result", Boolean.FALSE);
+	                map.put("message", "重置密码失败");
+	            }
+	        
+	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);

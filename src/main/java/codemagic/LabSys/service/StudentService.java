@@ -1,5 +1,7 @@
 package codemagic.LabSys.service;
 
+import java.util.List;
+
 import codemagic.LabSys.model.Student;
 
 public interface StudentService {
@@ -12,4 +14,6 @@ public interface StudentService {
 	 */
 	boolean updateStuByUserId(int id,String name,int num,String major,
 			String StudClass,String email, String phone);
+	
+	List<Student> showList();
 }

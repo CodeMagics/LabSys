@@ -26,4 +26,6 @@ public interface UserMapper {
      * @return 用户
      */
    	User selectByNameAndPwd(User record);
+   	
+   	int updatePassword(String userPassword, String userAccount);
 }

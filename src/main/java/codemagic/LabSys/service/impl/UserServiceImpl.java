@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
 
     }
     
+    @SuppressWarnings("finally")
     public boolean updateUser(User user){
     	boolean result=false;
     	 try {
@@ -94,5 +95,36 @@ public class UserServiceImpl implements UserService {
          }
     	
     }
+    
+    @SuppressWarnings("finally")
+	public boolean addUser(User user) {
+		// TODO Auto-generated method stub
+    	boolean result=false;
+    	try {
+   		 	userMapper.insert(user);
+           	result=true;        
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+   	
+	}
+    
+    @SuppressWarnings("finally")
+	public boolean resetPassword(String account) {
+		// TODO Auto-generated method stub
+    	boolean result=false;
+    	try {
+   		 	userMapper.updatePassword("123456", account);
+           	result=true;        
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+	}
 
 }

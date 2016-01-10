@@ -1,5 +1,7 @@
 package codemagic.LabSys.dao;
 
+import java.util.List;
+
 import codemagic.LabSys.model.Student;
 
 public interface StudentMapper {
@@ -23,4 +25,6 @@ public interface StudentMapper {
      */
     int updateByStudUserId(Integer studId,String userRealname,Integer studNum,String studMajor,
 			String studClass,String userEMail, String userPhone);
+    
+    List<Student> showList();
 }
