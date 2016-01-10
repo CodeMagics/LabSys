@@ -36,5 +36,6 @@ public interface PlanService {
 	 * @return
 	 */
 	 boolean UpdatePlan(Plan record);
+	String SelectPublisher(int parseInt);
 
 }

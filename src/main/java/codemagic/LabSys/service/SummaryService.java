@@ -18,7 +18,7 @@ public interface SummaryService {
      * @param summaryId 学习总结编号
      * @return true/false 是否删除成功
      */
-	boolean DeleteSummary(int summaryId);
+	boolean DeleteSummary(int sumId);
 
     /**
      * 修改一条学习总结
@@ -32,7 +32,7 @@ public interface SummaryService {
      * @param summaryid 学习总结编号
      * @return summary 一条总结记录
      */
-	Summary CheckSummary(int summaryId);
+	Summary CheckSummary(int sumId);
 
 	 /**
      * 显示一位用户的学习总结列表
