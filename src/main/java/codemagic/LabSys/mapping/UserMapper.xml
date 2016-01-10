@@ -148,7 +148,7 @@
      update user
       set user_password = #{param1,jdbcType=VARCHAR}
   
-    where user_account = #{param2,jdbcType=INTEGER}
+    where user_account = #{param2,jdbcType=VARCHAR}
     </update>
     
     <select id="ShowList" resultMap="BaseResultMap"
@@ -165,5 +165,10 @@
         from user
         where user_type = #{userType,jdbcType=INTEGER}
     </select>
-	
+    
+	<insert id="addUser" parameterType="codemagic.LabSys.model.User" >
+    insert into user (user_account, user_password, user_type)
+    values (#{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+    #{userType,jdbcType=INTEGER})
+  </insert>
 </mapper>

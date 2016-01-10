@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
     	boolean result=false;
     	try {
-   		 	userMapper.insert(user);
+   		 	userMapper.addUser(user);
            	result=true;        
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -154,5 +154,20 @@ public class UserServiceImpl implements UserService {
 		}finally{
 			return list;
 		}
+	}
+    
+    @SuppressWarnings("finally")
+	public boolean Delete(int userId) {
+		// TODO Auto-generated method stub
+    	boolean result=false;
+    	try {
+   		 	userMapper.deleteByPrimaryKey(userId);
+           	result=true;        
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
 	}
 }

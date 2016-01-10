@@ -34,4 +34,6 @@ public interface UserMapper {
 	List<User> ShowList();
 	
 	List<User> SelectByType(Integer type);
+	
+	int addUser(User user);
 }
