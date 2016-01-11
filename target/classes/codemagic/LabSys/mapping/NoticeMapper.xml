@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codemagic.LabSys.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="codemagic.LabSys.model.Notice" >
+    <id column="notice_id" property="noticeId" jdbcType="INTEGER" />
+    <result column="notice_publisher" property="noticePublisher" jdbcType="INTEGER" />
+    <result column="notice_details" property="noticeDetails" jdbcType="VARCHAR" />
+    <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+     <result column="notice_date" property="noticeDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    notice_id, notice_publisher, notice_details, notice_title, notice_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="codemagic.LabSys.model.Notice" >
+    insert into notice (notice_id, notice_publisher, notice_details, 
+      notice_title,notice_date)
+    values (#{noticeId,jdbcType=INTEGER}, #{noticePublisher,jdbcType=INTEGER}, #{noticeDetails,jdbcType=VARCHAR}, 
+      #{noticeTitle,jdbcType=VARCHAR},#{noticeDate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="codemagic.LabSys.model.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        notice_id,
+      </if>
+      <if test="noticePublisher != null" >
+        notice_publisher,
+      </if>
+      <if test="noticeDetails != null" >
+        notice_details,
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="noticePublisher != null" >
+        #{noticePublisher,jdbcType=INTEGER},
+      </if>
+      <if test="noticeDetails != null" >
+        #{noticeDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTitle != null" >
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="codemagic.LabSys.model.Notice" >
+    update notice
+    <set >
+      <if test="noticePublisher != null" >
+        notice_publisher = #{noticePublisher,jdbcType=INTEGER},
+      </if>
+      <if test="noticeDetails != null" >
+        notice_details = #{noticeDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.Notice" >
+    update notice
+    set notice_details = #{noticeDetails,jdbcType=VARCHAR},
+      notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_date = #{noticeDate,jdbcType=VARCHAR}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    ORDER BY notice_id DESC
+  </select>
+  <select id="selectByPublisher" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where notice_publisher = #{noticePublisher,jdbcType=INTEGER}
+    ORDER BY notice_id DESC
+  </select>
+  
+  
+   <resultMap id="newtMap" type="codemagic.LabSys.model.Notice" >
+     <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="new_List" >
+    user_realname
+  </sql>
+    <select id="selectPublisher" resultMap="newtMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="new_List" />
+    from notice,user
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+    and notice.notice_publisher = user.user_id
+  </select>
+</mapper>

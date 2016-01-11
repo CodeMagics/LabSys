@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codemagic.LabSys.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="codemagic.LabSys.model.User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+    <result column="user_realname" property="userRealname" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEMail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_account, user_password, user_realname, user_type, user_phone, user_email
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="codemagic.LabSys.model.User" >
+    insert into user (user_id, user_account, user_password, 
+      user_realname, user_type, user_phone, 
+      user_e-mail)
+    values (#{userId,jdbcType=INTEGER}, #{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userRealname,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userEMail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="codemagic.LabSys.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userAccount != null" >
+        user_account,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userRealname != null" >
+        user_realname,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userEMail != null" >
+        user_e-mail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userAccount != null" >
+        #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealname != null" >
+        #{userRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEMail != null" >
+        #{userEMail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="codemagic.LabSys.model.User" >
+    update user
+    <set >
+      <if test="userAccount != null" >
+        user_account = #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealname != null" >
+        user_realname = #{userRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEMail != null" >
+        user_email = #{userEMail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="codemagic.LabSys.model.User" >
+    update user
+    set user_account = #{userAccount,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_realname = #{userRealname,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_email = #{userEMail,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 自己的sql代码 -->
+  
+  
+	<select id="checkUser" resultMap="BaseResultMap"
+		parameterType="codemagic.LabSys.model.User">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where user_account = #{userAccount,jdbcType=VARCHAR}
+		and user_password = #{userPassword,jdbcType=VARCHAR}
+	</select>
+	
+		<select id="selectByNameAndPwd" resultMap="BaseResultMap"
+		parameterType="codemagic.LabSys.model.User">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where user_account = #{userAccount,jdbcType=VARCHAR}
+		and user_password = #{userPassword,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updateByUserid"  >
+     update user
+   
+      set user_password = #{param1,jdbcType=VARCHAR}
+  
+    where user_id = #{param2,jdbcType=INTEGER}
+    </update>
+	    
+    <update id="updatePassword"  >
+     update user
+      set user_password = #{param1,jdbcType=VARCHAR}
+  
+    where user_account = #{param2,jdbcType=VARCHAR}
+    </update>
+    
+    <select id="ShowList" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+    </select>
+    
+    <select id="SelectByType" resultMap="BaseResultMap"
+        parameterType="codemagic.LabSys.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_type = #{userType,jdbcType=INTEGER}
+    </select>
+    
+	<insert id="addUser" parameterType="codemagic.LabSys.model.User" >
+    insert into user (user_account, user_password, user_type)
+    values (#{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+    #{userType,jdbcType=INTEGER})
+  </insert>
+</mapper>
