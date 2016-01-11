@@ -79,12 +79,14 @@ public class TaskController {
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "没有任务！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
 			map.put("result", Boolean.FALSE);
 			map.put("message", "执行出现出错！");
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -110,11 +112,12 @@ public class TaskController {
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "没有任务！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -142,11 +145,12 @@ public class TaskController {
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -171,11 +175,12 @@ public class TaskController {
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -190,12 +195,11 @@ public class TaskController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		session = request.getSession();
-	    User user = (User) session.getAttribute("user");
-		int taskPublisher=user.getUserId();
 		try {
+			session = request.getSession();
+		    User user = (User) session.getAttribute("user");
+			int taskPublisher=user.getUserId();
 			boolean successed;
-			Task task = new Task();
 			task.setTaskPubliser(taskPublisher);
 			task.setTaskDetails(content);
 			task.setTaskTitle(title);
@@ -209,11 +213,12 @@ public class TaskController {
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "发布失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -243,11 +248,12 @@ public class TaskController {
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "更新失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -277,11 +283,12 @@ public class TaskController {
 	          
 				map.put("result", Boolean.FALSE);
 				map.put("message", "删除失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);

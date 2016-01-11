@@ -215,4 +215,27 @@ public class TaskControllerTest {
 		 test.SelectById("1", request);
 	     assertEquals("false",test.message);  
 	    }
+	 @Test 
+	    public void test19() {  
+		 test.SelectPublisher("1", request);
+	    	assertEquals("error",test.message); 
+	    } 
+	 
+	 @Test 
+	    public void test20() {  
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 Task task = new Task();
+		 when(taskService.SelectPublisher(1)).thenReturn("1");
+		 test.SelectPublisher("1", request);
+	     assertEquals("true",test.message); 
+	    }
+	 @Test 
+	    public void test21() {  
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 Task task = null;
+		 test.SelectPublisher("1", request);
+	     assertEquals("false",test.message);  
+	    }
 }
