@@ -22,9 +22,9 @@
     where task_id = #{taskId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Task" >
-    insert into task (task_id, task_title, task_publiser, 
+    insert into task (task_title, task_publiser, 
       task_details, task_date)
-    values (#{taskId,jdbcType=INTEGER}, #{taskTitle,jdbcType=VARCHAR}, #{taskPubliser,jdbcType=INTEGER}, 
+    values (#{taskTitle,jdbcType=VARCHAR}, #{taskPubliser,jdbcType=INTEGER}, 
       #{taskDetails,jdbcType=VARCHAR}, #{taskDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Task" >

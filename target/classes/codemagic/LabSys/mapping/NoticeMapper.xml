@@ -22,9 +22,9 @@
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="codemagic.LabSys.model.Notice" >
-    insert into notice (notice_id, notice_publisher, notice_details, 
+    insert into notice (notice_publisher, notice_details, 
       notice_title,notice_date)
-    values (#{noticeId,jdbcType=INTEGER}, #{noticePublisher,jdbcType=INTEGER}, #{noticeDetails,jdbcType=VARCHAR}, 
+    values (#{noticePublisher,jdbcType=INTEGER}, #{noticeDetails,jdbcType=VARCHAR}, 
       #{noticeTitle,jdbcType=VARCHAR},#{noticeDate,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="codemagic.LabSys.model.Notice" >
