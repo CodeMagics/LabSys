@@ -45,7 +45,7 @@ public class StudentController {
 
 		@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 		@RequestMapping("/readStudentByStudNumber")
-		public ModelAndView readStudentByStudNumber(HttpServletRequest request,
+		public ModelAndView readStudentByStudNumber(int id,HttpServletRequest request,
 				HttpServletResponse response) throws Exception {
 			ModelAndView mav = new ModelAndView();
 			MappingJacksonJsonView view = new MappingJacksonJsonView();
@@ -53,30 +53,65 @@ public class StudentController {
 			User user = new User();
 			HttpSession session = request.getSession();// 获取session
 			user = (User) session.getAttribute("user");
-            
-			try {// 查reuserrol 判断角色
+			
+		
+			try {
 				if (user == null) {
+					
 					map.put("result", Boolean.FALSE);
 					map.put("message", "用户已经退出！请重新登录");
 
 				} else {
-					if (user.getUserType() == 1) {
+					    int UserId;
+					    if(id==-1){
+					    	UserId=user.getUserId();
+					    	
+					    }else{
+					    	UserId=id;
+					    	user=userService.findUserById(UserId);
+					    }
+					
 						Student student;
-						student = studentService.selectStuByUserId(user
-								.getUserId());
+						student = studentService.selectStuByUserId(UserId);
+						
 						StudentDetailInfo studentInfo=new StudentDetailInfo();
-						studentInfo.setStudClass(student.getStudClass());
+						String StudClass="未填写";
+		             
+						if(student.getStudClass()!=null){
+							StudClass=student.getStudClass();
+						}
+		                
+						studentInfo.setStudClass(StudClass);
+						
 						studentInfo.setStudNum(student.getStudNum());
+						
 						studentInfo.setUserEMail(user.getUserEMail());
+						
 						studentInfo.setUserPhone(user.getUserPhone());
-						studentInfo.setUserRealname(user.getUserRealname());
-						studentInfo.setStudMajor(student.getStudMajor());
+						
+						String name="未填写";
+						if(user.getUserRealname()!=null){
+							name=user.getUserRealname();
+						}
+						
+						studentInfo.setUserRealname(name);
+							
+						String major="未填写";
+						if(student.getStudMajor()!=null){
+							
+							major=student.getStudMajor();
+						}
+						
+						studentInfo.setStudMajor(major);
+						
+						
 						map.put("result", Boolean.TRUE);
 						map.put("message", "执行成功！");
 						map.put("student",studentInfo);
+						map.put("user",user);
 						
 						
-					}
+				
 						
 						
 				}

@@ -220,14 +220,21 @@ public class SummaryController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView ShowList(int page, HttpServletRequest request) {
+	public ModelAndView ShowList(int id,int page, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
+		 int userId;
+		    if(id==-1){
+		    	userId=user.getUserId();
+		    	
+		    }else{
+		    	userId=id;
+		    }
 		try {
-			List<Summary> summarys = summaryService.ShowList(user.getUserId());
+			List<Summary> summarys = summaryService.ShowList(userId);
 			if (summarys != null) {
 				int recordCount = summarys.size();// 总记录数
 				int pageCount;// 总页数

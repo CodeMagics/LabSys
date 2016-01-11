@@ -5,13 +5,14 @@ $(document).ready(function (){
 	});
 });
 
-function  showOnePageAnnouncement(page){
+function  showOnePageAnnouncement(id,page){
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 		url : '/LabSys/summaryController/showList.do',
 		async : false,
 		data : {
+			id:id,
 			page:page
 		},
 		dataType : 'json',
@@ -86,12 +87,22 @@ function deleteOne(id){
 
 function onload(){
 	var page=1;
+	var Request = new Object();
+	Request = GetRequest();
+    var Userid=-1;
+	if (Request != null) {
+		Userid = Request['id'];
+	}
+	var id=Userid;
+	
+	var page=1;
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 		url : '/LabSys/summaryController/showList.do',
 		async : false,
 		data : {
+			id:id,
 			page:page
 		},
 		dataType : 'json',
@@ -130,7 +141,7 @@ function onload(){
 					images					: false,
 					mouse					: 'press',
 					onChange     			: function(page){
-						showOnePageAnnouncement(page);
+						showOnePageAnnouncement(id,page);
 					}
 				});
 			}else{
@@ -154,8 +165,6 @@ function GetRequest() {
 			theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
 		}
 	}
-	if (url.indexOf("type") == -1) {
-		theRequest = null;
-	}
+
 	return theRequest;
 }

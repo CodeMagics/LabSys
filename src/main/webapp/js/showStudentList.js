@@ -80,10 +80,10 @@ function  showOnePageAnnouncement(page,type){
 				$.each(msg.pageList,function(key,val){
 					num=(num)%5+1;
 					if(msg.user.userType==2){
-						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
-						"<span class='form-group zs-list'><button onclick='deleteOne("+val.userId+")' type='button' class='btn btn-success btn-xs' >查看详情</button></span>"+
-						"<span class='form-group zs-list'><button onclick='Reset("+val.userAccount+")' type='button' class='btn btn-success btn-xs'>查看计划</button></span>"
-						+"<span class='form-group zs-list'><button onclick='Reset("+val.userAccount+")' type='button' class='btn btn-success btn-xs'>查看总结</button></span>"
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showStudentDetaile("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
+						"<span class='form-group zs-list'><button onclick='showStudentDetaile("+val.userId+")' type='button' class='btn btn-success btn-xs' >查看详情</button></span>"+
+						"<span class='form-group zs-list'><button onclick='showStuPlan("+val.userId+")' type='button' class='btn btn-success btn-xs'>查看计划</button></span>"
+						+"<span class='form-group zs-list'><button onclick='showStuSumma("+val.userId+")' type='button' class='btn btn-success btn-xs'>查看总结</button></span>"
 						+"</td></tr>";
 					 
 					}
@@ -105,9 +105,12 @@ function showStuPlan(id){
 }
 
 function showStuSumma(id){
-	window.location.href="showSummary?id="+id;
+	window.location.href="showSummary.html?id="+id;
 }
 
+function showStudentDetaile(id){
+	window.location.href="studentDetailInfo.html?id="+id;
+}
 
 
 
@@ -134,8 +137,8 @@ function onload(){
 					if(msg.user.userType==2){
 					   num=num%5+1;
 					   
-					   content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
-						"<span class='form-group zs-list'><button onclick='showStudentList("+val.userId+")' type='button' class='btn btn-success btn-xs' >查看详情</button></span>"+
+					   content+="<tr><td>"+num+"</td><td><a href='#' onclick='showStudentDetaile("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
+						"<span class='form-group zs-list'><button onclick='showStudentDetaile("+val.userId+")' type='button' class='btn btn-success btn-xs' >查看详情</button></span>"+
 						"<span class='form-group zs-list'><button onclick='showStuPlan("+val.userId+")' type='button' class='btn btn-success btn-xs'>查看计划</button></span>"
 						+"<span class='form-group zs-list'><button onclick='showStuSumma("+val.userId+")' type='button' class='btn btn-success btn-xs'>查看总结</button></span>"
 						+"</td></tr>";
@@ -182,8 +185,6 @@ function GetRequest() {
 			theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
 		}
 	}
-	if (url.indexOf("type") == -1) {
-		theRequest = null;
-	}
+	
 	return theRequest;
 }

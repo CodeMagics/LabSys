@@ -1,5 +1,4 @@
 $(document).ready(function (){
-//	var Request = new Object();
 	
 	onload();
 	$("#addPlan").click(function(){
@@ -96,6 +95,7 @@ function onload(){
 		Userid = Request['id'];
 	}
 	var id=Userid;
+	alert(id);
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
@@ -164,9 +164,6 @@ function GetRequest() {
 		for ( var i = 0; i < strs.length; i++) {
 			theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
 		}
-	}
-	if (url.indexOf("type") == -1) {
-		theRequest = null;
 	}
 	return theRequest;
 }
