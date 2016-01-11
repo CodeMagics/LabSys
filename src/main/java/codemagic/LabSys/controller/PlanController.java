@@ -52,15 +52,23 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView showList(int page,
+	public ModelAndView showList(int id,int page,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		HttpSession session = request.getSession();
 	    User user = (User) session.getAttribute("user");
+	    int planId;
+	    System.out.println("???????"+id);
+	    if(id==-1){
+	    	planId=user.getUserId();
+	    	
+	    }else{
+	    	planId=id;
+	    }
 		try {
-			List<Plan> plan = planService.ShowList(user.getUserId());
+			List<Plan> plan = planService.ShowList(planId);
 			if(!plan.isEmpty()){
 				int recordCount = plan.size();// 总记录数
 				int pageCount;// 总页数
@@ -253,4 +261,6 @@ public class PlanController {
 			return mav;
 		}
 	}
+	
+	
 }

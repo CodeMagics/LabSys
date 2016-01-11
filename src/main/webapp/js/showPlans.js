@@ -1,17 +1,20 @@
 $(document).ready(function (){
+//	var Request = new Object();
+	
 	onload();
 	$("#addPlan").click(function(){
 		window.location.href="publishPlanInfo.html";
 	});
 });
 
-function  showOnePageAnnouncement(page){
+function  showOnePageAnnouncement(id,page){
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 		url : '/LabSys/planController/showList.do',
 		async : false,
 		data : {
+			id:id,
 			page:page
 		},
 		dataType : 'json',
@@ -86,12 +89,20 @@ function deleteOne(id){
 
 function onload(){
 	var page=1;
+	var Request = new Object();
+	Request = GetRequest();
+    var Userid=-1;
+	if (Request != null) {
+		Userid = Request['id'];
+	}
+	var id=Userid;
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 		url : '/LabSys/planController/showList.do',
 		async : false,
 		data : {
+			id:id,
 			page:page
 		},
 		dataType : 'json',
@@ -130,7 +141,7 @@ function onload(){
 					images					: false,
 					mouse					: 'press',
 					onChange     			: function(page){
-						showOnePageAnnouncement(page,type);
+						showOnePageAnnouncement(id,page);
 					}
 				});
 			}else{

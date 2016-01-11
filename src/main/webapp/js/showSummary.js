@@ -1,19 +1,18 @@
 $(document).ready(function (){
 	onload();
-	$("#addNotice").click(function(){
-		window.location.href="publishNoticeInfo.html";
+	$("#addSummary").click(function(){
+		window.location.href="publishSummaryInfo.html";
 	});
 });
 
-function  showOnePageAnnouncement(page,type){
+function  showOnePageAnnouncement(page){
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		url : '/LabSys/noticeController/ShowList.do',
+		url : '/LabSys/summaryController/showList.do',
 		async : false,
 		data : {
-			page:page,
-			type:type
+			page:page
 		},
 		dataType : 'json',
 		success : function(msg) {
@@ -22,16 +21,16 @@ function  showOnePageAnnouncement(page,type){
 				var num=0;
 				$.each(msg.pageList,function(key,val){
 					num=(num)%5+1;
-					if(msg.user.userType==3){
-						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
-						"<div class='form-group'><button onclick='modify("+val.noticeId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
-						"<div class='form-group'><button onclick='deleteOne("+val.noticeId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
+					if(msg.user.userType==1){
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.sumId+")'>"+val.sumTitle+"</a></td><td>"+val.sumDate+"</td><td>"+
+						"<div class='form-group'><button onclick='modify("+val.sumId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
+						"<div class='form-group'><button onclick='deleteOne("+val.sumId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
 						num=num%5+1;
-						$("#addNotice").hide();
-						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
-						"<div class='form-group'><button onclick='showDetail("+val.noticeId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
+						$("#addsummary").hide();
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.sumId+")'>"+val.sumTitle+"</a></td><td>"+val.sumDate+"</td><td>"+
+						"<div class='form-group'><button onclick='showDetail("+val.sumId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
 				});
@@ -46,11 +45,11 @@ function  showOnePageAnnouncement(page,type){
 }
 
 function showDetail(id){
-	window.location.href = "seeNoticeDetail.html?id="+id;
+	window.location.href = "seeSummaryDetail.html?id="+id;
 }
 
 function modify(id){
-	window.location.href = "modifyNoticeInfo.html?id="+id;
+	window.location.href = "modifySummaryInfo.html?id="+id;
 }
 
 
@@ -59,10 +58,10 @@ function deleteOne(id){
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			url : '/LabSys/noticeController/Delete.do',
+			url : '/LabSys/summaryController/deletesummary.do',
 			async : false,
 			data : {
-				noticeId:id
+				summaryId:id
 			},
 			dataType : 'json',
 			success : function(msg) {
@@ -86,17 +85,14 @@ function deleteOne(id){
 }
 
 function onload(){
-	
-	var type=0;
 	var page=1;
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		url : '/LabSys/noticeController/ShowList.do',
+		url : '/LabSys/summaryController/showList.do',
 		async : false,
 		data : {
-			page:page,
-			type:type
+			page:page
 		},
 		dataType : 'json',
 		success : function(msg) {
@@ -104,18 +100,18 @@ function onload(){
 				var content="";
 				var num=0;
 				$.each(msg.pageList,function(key,val){
-					if(msg.user.userType==3){
+					if(msg.user.userType==1){
 						num=num%5+1;
 						
-						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
-						"<div class='form-group'><button onclick='modify("+val.noticeId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
-						"<div class='form-group'><button onclick='deleteOne("+val.noticeId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.sumId+")'>"+val.sumTitle+"</a></td><td>"+val.sumDate+"</td><td>"+
+						"<div class='form-group'><button onclick='modify("+val.sumId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
+						"<div class='form-group'><button onclick='deleteOne("+val.sumId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						$("#addNotice").hide();
+						$("#addsummary").hide();
 						num=num%5+1;
-						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
-						"<div class='form-group'><button onclick='showDetail("+val.noticeId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.sumId+")'>"+val.sumTitle+"</a></td><td>"+val.sumDate+"</td><td>"+
+						"<div class='form-group'><button onclick='showDetail("+val.sumId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
 				});
@@ -134,7 +130,7 @@ function onload(){
 					images					: false,
 					mouse					: 'press',
 					onChange     			: function(page){
-						showOnePageAnnouncement(page,type);
+						showOnePageAnnouncement(page);
 					}
 				});
 			}else{
@@ -158,6 +154,8 @@ function GetRequest() {
 			theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
 		}
 	}
-
+	if (url.indexOf("type") == -1) {
+		theRequest = null;
+	}
 	return theRequest;
 }
