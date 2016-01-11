@@ -28,6 +28,10 @@ public class PlanController {
 	private PlanService planService;
     private UserService userService;
     
+    public HttpSession session;
+    public String message;
+    public Plan record = new Plan();
+    
 	public PlanService getPlanService() {
 		return planService;
 	}
@@ -57,7 +61,7 @@ public class PlanController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 	    User user = (User) session.getAttribute("user");
 	    int planId;
 	    System.out.println("???????"+id);
@@ -91,18 +95,20 @@ public class PlanController {
 			    map.put("result", Boolean.TRUE);
 			    map.put("plan", plan);
 			    map.put("user", user);
-			
+			    message = "true";
 			
 			
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "没有任务！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
 			map.put("result", Boolean.FALSE);
 			map.put("message", "执行出现出错！");
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -124,10 +130,9 @@ public class PlanController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		User planPubliser = (User) session.getAttribute("user");
 		try {
-			Plan record = new Plan();
 			boolean successed;
 			record.setPlanPubliser(planPubliser.getUserId());
 			record.setPlanTitle(planTitle);
@@ -138,15 +143,16 @@ public class PlanController {
 			if(successed == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "创建成功！");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "创建失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -170,19 +176,17 @@ public class PlanController {
 		try {
 			Plan plan=planService.CheckPlan(Integer.parseInt(planId));
 			if(plan != null){
-				String publisher = userService.findUserById(plan.getPlanPubliser()).getUserRealname();
-				if(publisher!=null){
-					
-				}
+			String publisher = userService.findUserById(plan.getPlanPubliser()).getUserRealname();
 			map.put("result", Boolean.TRUE);
 			map.put("plan", plan);
 			map.put("publisher", publisher);
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
+				message = "false";
 			}
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -205,7 +209,6 @@ public class PlanController {
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Plan record = new Plan();
 			record.setPlanId(Integer.parseInt(planId));
 			record.setPlanTitle(planTitle);
 			record.setPlanDetails(planDetails);
@@ -215,13 +218,14 @@ public class PlanController {
 			if(successed == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "修改成功！");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "修改失败！");
+				message = "false";
 			}
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -247,13 +251,14 @@ public class PlanController {
 			if(result == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "删除成功！");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "删除失败！");
+				message = "false";
 			}
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);

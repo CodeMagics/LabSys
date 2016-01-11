@@ -28,6 +28,9 @@ public class SummaryController {
 	private SummaryService summaryService;
 	private UserService userService;
 
+	public HttpSession session;
+	public String message;
+	public Summary record = new Summary();
 	public SummaryService getsummaryService() {
 		return summaryService;
 	}
@@ -65,11 +68,10 @@ public class SummaryController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		User sumPubliser = (User) session.getAttribute("user");
 		try {
 			boolean successed;
-			Summary record = new Summary();
 			record.setSumPubliser(sumPubliser.getUserId());
 			record.setSumTitle(sumTitle);
 			record.setSumDetails(sumDetails);
@@ -79,14 +81,15 @@ public class SummaryController {
 			if (successed) {
 				map.put("result", Boolean.TRUE);
 				map.put("message", "创建成功！");
-
+				message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "创建失败！");
+				message = "false";
 			}
 
 		} catch (Exception e) {
-
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -115,13 +118,14 @@ public class SummaryController {
 			if (result == true) {
 				map.put("result", Boolean.TRUE);
 				map.put("message", "删除成功！");
-
+				message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "删除失败！");
+				message = "false";
 			}
 		} catch (Exception e) {
-
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -147,7 +151,6 @@ public class SummaryController {
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Summary record = new Summary();
 			record.setSumId(Integer.parseInt(sumId));
 			record.setSumTitle(sumTitle);
 			record.setSumDetails(sumDetails);
@@ -157,13 +160,14 @@ public class SummaryController {
 			if (successed == true) {
 				map.put("result", Boolean.TRUE);
 				map.put("message", "修改成功！");
-
+				message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "修改失败！");
+				message = "false";
 			}
 		} catch (Exception e) {
-
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -187,8 +191,7 @@ public class SummaryController {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Summary summary = new Summary();
-			summary = summaryService.CheckSummary(Integer.parseInt(sumId));
+			Summary summary = summaryService.CheckSummary(Integer.parseInt(sumId));
 			if (summary != null) {
 				String publisher = userService.findUserById(
 						summary.getSumPubliser()).getUserRealname();
@@ -196,12 +199,14 @@ public class SummaryController {
 					map.put("result", Boolean.TRUE);
 					map.put("summary", summary);
 					map.put("sumpublisher", publisher);
+					message = "true";
 				}
 			} else {
 				map.put("result", Boolean.FALSE);
+				message = "false";
 			}
 		} catch (Exception e) {
-
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
@@ -224,7 +229,7 @@ public class SummaryController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		 int userId;
 		    if(id==-1){
@@ -235,7 +240,7 @@ public class SummaryController {
 		    }
 		try {
 			List<Summary> summarys = summaryService.ShowList(userId);
-			if (summarys != null) {
+			if (!summarys.isEmpty()) {
 				int recordCount = summarys.size();// 总记录数
 				int pageCount;// 总页数
 				int temp = recordCount % 5;// 5条记录一页
@@ -258,13 +263,14 @@ public class SummaryController {
 
 				map.put("result", Boolean.TRUE);
 				map.put("summarys", summarys);
-
+				message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "没有任何学习计划！");
+				message = "false";
 			}
 		} catch (Exception e) {
-
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
