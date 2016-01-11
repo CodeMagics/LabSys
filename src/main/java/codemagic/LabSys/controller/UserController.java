@@ -62,8 +62,7 @@ public class UserController {
 				user=userService.login(loginname,password);
 				if(user!=null){
 					session.setAttribute("user", user);
-					//System.out.println("*****"+user.getUserAccount());
-					//System.out.println("*****"+((User) session.getAttribute("user")).getUserAccount());
+				
 					
 					map.put("result", Boolean.TRUE);
 					map.put("message", "成功！");
@@ -83,7 +82,6 @@ public class UserController {
 			}finally{
 				view.setAttributesMap(map);
 				mav.setView(view);
-				mav.setViewName(message);
 				return mav;
 			}
 		}
@@ -123,7 +121,6 @@ public class UserController {
 			
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -160,7 +157,6 @@ public class UserController {
 			
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -183,7 +179,6 @@ public class UserController {
 	        } finally {
 	        	view.setAttributesMap(map);
 				mav.setView(view);
-				mav.setViewName(message);
 				return mav;
 	        }
 	    }
@@ -211,7 +206,6 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -237,7 +231,6 @@ public class UserController {
 			}finally{
 				view.setAttributesMap(map);
 				mav.setView(view);
-				mav.setViewName(message);
 				return mav;
 			}
 		}
@@ -281,7 +274,6 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -317,7 +309,6 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -353,7 +344,6 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -384,7 +374,7 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
+	       
 	            return mav;
 	        }
 	    }
@@ -442,7 +432,7 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
+	           
 	            return mav;
 	        }
 	    }
@@ -503,7 +493,7 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
-	            mav.setViewName(message);
+	           
 	            return mav;
 	        }
 	    }

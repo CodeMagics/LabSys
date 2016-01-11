@@ -89,7 +89,7 @@ public class NoticeController {
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
+			
 			return mav;
 		}
 	}
@@ -119,7 +119,7 @@ public class NoticeController {
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
+			
 			return mav;
 		}
 	}
@@ -159,7 +159,7 @@ public class NoticeController {
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
+		
 			return mav;
 		}
 	}
@@ -195,7 +195,6 @@ public class NoticeController {
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -206,7 +205,6 @@ public class NoticeController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		System.out.println(noticeId+"////////////////");
 		try {
 			boolean successed;
 			successed = noticeService.Delete(noticeId);
@@ -227,7 +225,6 @@ public class NoticeController {
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -261,7 +258,6 @@ public class NoticeController {
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
-			mav.setViewName(message);
 			return mav;
 		}
 	}
