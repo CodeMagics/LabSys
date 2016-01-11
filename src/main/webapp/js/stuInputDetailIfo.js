@@ -113,11 +113,11 @@
 //
 //
 //function check() {
-////
-////		if (checkPhone() && checkEmail())
-////			return true;
-////		else
-////			return false;
+//
+//		if (checkPhone() && checkEmail())
+//			return true;
+//		else
+//			return false;
 //	return true;
 //	
 //}

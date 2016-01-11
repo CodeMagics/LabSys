@@ -197,6 +197,15 @@ function check() {
 		alert("新密码不能空");
 		return false;
 	}
+	if(newPassword.length>16||newPassword.length<6){
+		alert("新密码必须为6到16位");
+		return false;
+	}
+	var reg=/[0-9|A-Z|a-z]{6,16}/;
+	if(!reg.test(newPassword)){
+		alert("新密码必须为数字或者字母");
+		return false;
+	}
 	if (sureNewPWD == "") {
 		alert("确认密码不能空");
 		return false;

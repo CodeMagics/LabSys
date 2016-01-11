@@ -159,35 +159,39 @@ var email = $("#email").val();
 var phone = $("#phone").val();
 
 
+      
+    	  $.ajax({
+  			type : "post",
+  			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+  			url : '/LabSys/studentController/updateStudent.do',
+  			async : false,
+  			data : {
+  				name:name,
+  				num : num,
+  				major:major,
+  				studClass:studClass,
+  				email : email,
+  				phone : phone
 
-		$.ajax({
-			type : "post",
-			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			url : '/LabSys/studentController/updateStudent.do',
-			async : false,
-			data : {
-				name:name,
-				num : num,
-				major:major,
-				studClass:studClass,
-				email : email,
-				phone : phone
-
-			},
-			dataType : 'json',
-			success : function(msg) {
-				if (msg.result == true) {
-					
-					alert(msg.message);
-					window.location.href = 'studentDetailInfo.html';
-					
-				} else {
-					alert("保存失败！");
-				}
-			},
-			error : function(msg) {
-				alert("网络超时！");
-			}
-		});
+  			},
+  			dataType : 'json',
+  			success : function(msg) {
+  				if (msg.result == true) {
+  					
+  					
+  					window.location.href = 'studentDetailInfo.html';
+  					
+  				} else {
+  					alert("保存失败！");
+  				}
+  			},
+  			error : function(msg) {
+  				alert("网络超时！");
+  			}
+  		});
+     
+		
  
 }
+
+
