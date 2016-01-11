@@ -100,7 +100,7 @@ public class PlanController {
 			
 			} else {
 				map.put("result", Boolean.FALSE);
-				map.put("message", "没有任务！");
+				map.put("message", "没有计划！");
 				message = "false";
 			}
 			

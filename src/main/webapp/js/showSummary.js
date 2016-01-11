@@ -37,7 +37,8 @@ function  showOnePageAnnouncement(id,page){
 				});
 				$("#announcements").empty().append(content);
 			}else{
-				alert(msg.message);
+				content="暂无总结";;
+				$("#announcements").empty().append(content);
 			}
 		},error: function(msg){
 		    alert("网络超时！");
@@ -145,7 +146,8 @@ function onload(){
 					}
 				});
 			}else{
-				alert(msg.message);
+				content="暂无总结";;
+				$("#announcements").empty().append(content);
 			}
 		},error: function(msg){
 		    alert("网络超时！");

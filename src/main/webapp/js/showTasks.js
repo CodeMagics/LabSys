@@ -19,23 +19,24 @@ function  showOnePageAnnouncement(page,type){
 		success : function(msg) {
 			if(msg.result ==true){						
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
-					type=(type)%5+1;
+					num=(num)%5+1;
 					if(msg.user.userType==2){
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
 						"<div class='form-group'><button onclick='modify("+val.taskId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
 						"<div class='form-group'><button onclick='deleteOne("+val.taskId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.taskId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
 				});
 				$("#announcements").empty().append(content);
 			}else{
-				alert(msg.message);
+				content="暂无任务";;
+				$("#announcements").empty().append(content);
 			}
 		},error: function(msg){
 		    alert("网络超时！");
@@ -100,16 +101,18 @@ function onload(){
 		success : function(msg) {
 			if(msg.result ==true){		
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
 					if(msg.user.userType==2){
-					   type=type%5+1;
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
+						num=num%5+1;
+					
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
 						"<div class='form-group'><button onclick='modify("+val.taskId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
 						"<div class='form-group'><button onclick='deleteOne("+val.taskId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
+						num=num%5+1;
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.taskId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
@@ -133,7 +136,8 @@ function onload(){
 					}
 				});
 			}else{
-				alert(msg.message);
+				content="暂无任务";;
+				$("#announcements").empty().append(content);
 			}
 		},error: function(msg){
 		    alert("网络超时！");

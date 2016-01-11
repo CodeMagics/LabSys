@@ -265,7 +265,8 @@ function onload(){
 			  	$("#firstNotice").empty().append(content);
 				
 			}else{
-				alert(msg.message);
+				content+="没有任务";
+				$("#firstNotice").empty().append(content);
 			}
 		},error: function(msg){
 		    alert("网络超时！");
