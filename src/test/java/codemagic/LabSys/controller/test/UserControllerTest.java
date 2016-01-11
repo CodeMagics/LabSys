@@ -42,16 +42,8 @@ public class UserControllerTest{
       
     public UserService userService;
 	public FunctionService functionService;
-	public StudentService studentService;
 	public HttpSession session;
 
-	public StudentService getStudentService() {
-		return studentService;
-	}
-	@Autowired
-	public void setStudentService(StudentService studentService) {
-		this.studentService = studentService;
-	}
 	public FunctionService getFunctionService() {
 		return functionService;
 	}
@@ -83,7 +75,7 @@ public class UserControllerTest{
     @Test 
     public void test2() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         User user = new User();
         user.setUserAccount("233");
 		user.setUserPassword("233");
@@ -93,7 +85,7 @@ public class UserControllerTest{
     @Test 
     public void test3() {
         userService = mock(UserService.class);
-        test.userService = userService;
+        test.setUserService(userService);
         User user = new User();
         user.setUserAccount("233");
 		user.setUserPassword("233");
@@ -116,7 +108,7 @@ public class UserControllerTest{
 		session = request.getSession();
 		session.putValue("user", user);
         functionService = mock(FunctionService.class);
-        test.functionService = functionService;
+        test.setFunctionService(functionService);
         session = mock(HttpSession.class);
         test.session = session;  
 		assertEquals("true",test.showAuthorityList(request, response).getViewName()); 
@@ -170,7 +162,7 @@ public class UserControllerTest{
     @Test 
     public void test12() {   
     	userService = mock(UserService.class);
-        test.userService = userService;
+        test.setUserService(userService);
         User user = new User();
         user.setUserAccount("233");
 		user.setUserPassword("233");
@@ -225,7 +217,7 @@ public class UserControllerTest{
         session = mock(HttpSession.class);
         test.session = session; 
         userService = mock(UserService.class);
-        test.userService = userService;
+        test.setUserService(userService);
     	assertEquals("true1",test.EditPassword("111", request, response).getViewName());
     }
     
@@ -241,7 +233,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test18() {   
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         when(userService.Delete(12)).thenReturn(true);
     	assertEquals("true",test.Delete(12, response).getViewName());
     }
@@ -251,7 +243,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test19() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         when(userService.Delete(12)).thenReturn(false);
     	assertEquals("false",test.Delete(12, response).getViewName());
     }
@@ -268,8 +260,11 @@ public class UserControllerTest{
     @Rollback(true)
     public void test21() {
     	userService = mock(UserService.class);
-        test.userService = userService;
-        when(userService.addUser(new User())).thenReturn(true);
+    	test.setUserService(userService);
+    	User user = new User();
+    	user = mock(User.class);
+    	test.user = user;
+        when(userService.addUser(user)).thenReturn(true);
         assertEquals("true",test.addUser("1", "1", response).getViewName());
     }
     
@@ -278,7 +273,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test22() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         when(userService.addUser(new User())).thenReturn(false);
         assertEquals("false",test.addUser("1", "1", response).getViewName());
     }
@@ -294,7 +289,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test24() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         when(userService.resetPassword("111")).thenReturn(true);
         assertEquals("true",test.resetPassword("111", response).getViewName());
     }
@@ -304,7 +299,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test25() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         when(userService.resetPassword("111")).thenReturn(false);
         assertEquals("false",test.resetPassword("111", response).getViewName());
     }
@@ -321,7 +316,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test27() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         User user = new User();
 		user.setUserAccount("233");
 		user.setUserPassword("233");
@@ -337,7 +332,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test28() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         List<User> list = new ArrayList<User>();
         when(userService.ShowList()).thenReturn(list);
         assertEquals("false",test.ShowList(1, "1", request, response).getViewName());
@@ -355,7 +350,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test30() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         User user = new User();
 		user.setUserAccount("233");
 		user.setUserPassword("233");
@@ -371,7 +366,7 @@ public class UserControllerTest{
     @Rollback(true)
     public void test31() {
     	userService = mock(UserService.class);
-        test.userService = userService;
+    	test.setUserService(userService);
         List<User> list = new ArrayList<User>();
         when(userService.ShowList()).thenReturn(list);
         assertEquals("false",test.SelectByType(1, "1", request, response).getViewName());

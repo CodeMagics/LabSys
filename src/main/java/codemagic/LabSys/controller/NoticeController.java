@@ -27,7 +27,10 @@ import codemagic.LabSys.service.NoticeService;
 @RequestMapping("/noticeController")
 public class NoticeController {
 	private NoticeService noticeService;
+	public String message = null;
 
+	public	Notice notice = new Notice();
+	public HttpSession session;
 	public NoticeService getNoticeService() {
 		return noticeService;
 	}
@@ -46,7 +49,7 @@ public class NoticeController {
 	    User user = (User) session.getAttribute("user");
 		try {
 			List<Notice> notices = noticeService.ShowList();
-			if(notices!=null){
+			if(!notices.isEmpty()){
 				int recordCount = notices.size();// 总记录数
 				int pageCount;// 总页数
 				int temp = recordCount % 5;// 5条记录一页
@@ -68,22 +71,25 @@ public class NoticeController {
 			    map.put("result", Boolean.TRUE);
 			    map.put("notices", notices);
 			    map.put("user", user);
-			
+			    message = "true";
 			
 			
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "没有公告！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
 			map.put("result", Boolean.FALSE);
 			map.put("message", "执行出现出错！");
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -99,19 +105,21 @@ public class NoticeController {
 			if(!notices.isEmpty()){
 			map.put("result", Boolean.TRUE);
 			map.put("notices", notices);
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "没有公告！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -124,11 +132,10 @@ public class NoticeController {
 		Map map = new HashMap();
 		try {
 		
-			HttpSession session = request.getSession();
+			session = request.getSession();
 		    User user = (User) session.getAttribute("user");
 			int noticePublisher=user.getUserId();
 			boolean successed;
-			Notice notice = new Notice();
 			notice.setNoticePublisher(noticePublisher);
 			notice.setNoticeDetails(noticeDetails);
 			notice.setNoticeTitle(noticeTitle);
@@ -138,19 +145,21 @@ public class NoticeController {
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "发布成功");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "发布失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -163,7 +172,6 @@ public class NoticeController {
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Notice notice = new Notice();
 			notice.setNoticeId(noticeId);
 			notice.setNoticeDetails(noticeDetails);
 			notice.setNoticeTitle(noticeTitle);
@@ -173,19 +181,21 @@ public class NoticeController {
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "更新成功");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "更新失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -203,19 +213,21 @@ public class NoticeController {
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "删除成功");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "删除失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -227,7 +239,7 @@ public class NoticeController {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
 		try {
-			Notice notice = noticeService.SelectByid(Integer.parseInt(id));
+			notice = noticeService.SelectByid(Integer.parseInt(id));
 			if(notice!=null){
 			String publisher = noticeService.SelectPublisher(Integer.parseInt(id));
 			if(publisher!=null){
@@ -235,18 +247,21 @@ public class NoticeController {
 			}
 			map.put("result", Boolean.TRUE);
 			map.put("notice", notice);	
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
+				message = "false";
 			}
 			
 			
 		} catch (Exception e) {
-			
+			message = "error";
 			e.printStackTrace();
 		} finally {
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}

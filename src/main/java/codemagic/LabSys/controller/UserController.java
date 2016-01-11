@@ -27,19 +27,11 @@ import codemagic.LabSys.service.FunctionService;
 @Controller
 @RequestMapping("/userController")
 public class UserController {
-	public UserService userService;
-	public FunctionService functionService;
-	public StudentService studentService;
+	private UserService userService;
+	private FunctionService functionService;
 	public HttpSession session;
 	public String message = null;
-
-	public StudentService getStudentService() {
-		return studentService;
-	}
-	@Autowired
-	public void setStudentService(StudentService studentService) {
-		this.studentService = studentService;
-	}
+	public User user = new User();
 	public FunctionService getFunctionService() {
 		return functionService;
 	}
@@ -338,7 +330,6 @@ public class UserController {
 	        MappingJacksonJsonView view = new MappingJacksonJsonView();
 	        Map map = new HashMap();
 	        try {
-	        	User user = new User();
 	        	user.setUserAccount(account);
 	        	user.setUserPassword("123456");
 	        	user.setUserType(Integer.parseInt(type));
