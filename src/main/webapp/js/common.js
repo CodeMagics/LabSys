@@ -29,6 +29,7 @@ $(document).ready(
 							alert("用户已经退出，请重新登录！");
 							window.location.href = "login.html";
 						} else {
+							onload();
 							$("#current_user").empty().append(msg.user.userAccount);
 						}
 						
@@ -59,6 +60,7 @@ $(document).ready(
 					alert("网络超时！");
 				}
 			});
+			onload();
 
 			$("#inputPassword1").val("");// 上面出现的当前密码清空
 
@@ -221,4 +223,46 @@ function GetRequest1() {
 		theRequest = null;
 	}
 	return theRequest;
+}
+
+function onload(){
+	
+	var type=0;
+	var page=1;
+	$.ajax({
+		type : "post",
+		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		url : '/LabSys/noticeController/ShowList.do',
+		async : false,
+		data : {
+			page:page,
+			type:type
+		},
+		dataType : 'json',
+		success : function(msg) {
+			if(msg.result ==true){		
+				var content="";
+				var type=0;
+				if(msg.pageList.length>5){
+					msg.pageList.length=5;
+				}
+				for(var i=0;i<msg.pageList.length;i++){
+					content+="<li><a href='seeNoticeDetail.html?id="
+						+msg.pageList[i].noticeId+" '><span class='glyphicon glyphicon-folder-close'></span>"
+						+msg.pageList[i].noticeTitle+"</a>"
+						+"</li>";
+					
+				}
+			
+			  	$("#firstNotice").empty().append(content);
+				
+			}else{
+				alert(msg.message);
+			}
+		},error: function(msg){
+		    alert("网络超时！");
+		}
+	});
+	
+	$("#moreNotice").attr("href","showNotice.html");
 }

@@ -1,6 +1,7 @@
 package codemagic.LabSys.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
+import codemagic.LabSys.model.Plan;
 import codemagic.LabSys.model.Summary;
 import codemagic.LabSys.model.User;
 import codemagic.LabSys.service.SummaryService;
@@ -201,7 +203,7 @@ public class SummaryController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView ShowList(HttpServletRequest request) {
+	public ModelAndView ShowList(int page,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
@@ -210,6 +212,25 @@ public class SummaryController {
 		try {
 			List<Summary> summarys = summaryService.ShowList(user.getUserId());
 			if(summarys != null){
+				int recordCount = summarys.size();// 总记录数
+				int pageCount;// 总页数
+				int temp = recordCount % 5;// 5条记录一页
+				if (temp == 0) {
+					pageCount = recordCount / 5;
+				} else {
+					pageCount = recordCount / 5 + 1;
+				}
+				
+				List<Summary> pageList=new ArrayList<Summary>();
+				int max=summarys.size()>page*5?page*5:summarys.size();
+				for (int i = (page - 1) * 5; i <max; i++) {
+				pageList.add(summarys.get(i));
+				}
+				map.put("pageList", pageList);
+				map.put("pageCount", pageCount);
+				map.put("page", page);
+				
+				
 			map.put("result", Boolean.TRUE);
 			map.put("summarys", summarys);
 			

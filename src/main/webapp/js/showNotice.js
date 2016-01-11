@@ -19,16 +19,18 @@ function  showOnePageAnnouncement(page,type){
 		success : function(msg) {
 			if(msg.result ==true){						
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
-					type=(type)%5+1;
+					num=(num)%5+1;
 					if(msg.user.userType==3){
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
 						"<div class='form-group'><button onclick='modify("+val.noticeId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
 						"<div class='form-group'><button onclick='deleteOne("+val.noticeId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
+						num=num%5+1;
+						$("#addNotice").hide();
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.noticeId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
@@ -100,16 +102,19 @@ function onload(){
 		success : function(msg) {
 			if(msg.result ==true){		
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
 					if(msg.user.userType==3){
-					   type=type%5+1;
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
+						num=num%5+1;
+						
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
 						"<div class='form-group'><button onclick='modify("+val.noticeId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
 						"<div class='form-group'><button onclick='deleteOne("+val.noticeId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
+						$("#addNotice").hide();
+						num=num%5+1;
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.noticeId+")'>"+val.noticeTitle+"</a></td><td>"+val.noticeDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.noticeId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
@@ -146,7 +151,7 @@ function GetRequest() {
 	var url = location.search; // 获取url中"?"符后的字串
 	var theRequest = new Object();
 
-	if (url.indexOf("?") != -1) {
+	if (url.indexOf("?") != -1) 
 		var str = url.substr(1);
 		strs = str.split("&");
 		for ( var i = 0; i < strs.length; i++) {

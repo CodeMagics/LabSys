@@ -31,6 +31,7 @@ public class PlanController {
 	public PlanService getPlanService() {
 		return planService;
 	}
+	
 	public UserService getuserService() {
 		return userService;
 	}
@@ -38,6 +39,8 @@ public class PlanController {
 	public void setPlanService(PlanService planService) {
 		this.planService = planService;
 	}
+	
+	@Autowired
 	public void setuserServiceService(UserService userService) {
 		this.userService = userService;
 	}
@@ -49,7 +52,7 @@ public class PlanController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "finally" })
 	@RequestMapping("/showList")
-	public ModelAndView showList(int page,int type,
+	public ModelAndView showList(int page,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
@@ -124,7 +127,7 @@ public class PlanController {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			record.setPlanDate(df.format(new Date()));
 			successed = planService.AddPlan(record);
-			if(successed != true){
+			if(successed == true){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "创建成功！");
 			

@@ -170,7 +170,7 @@ function deleteOne(id){
 }
 
 function Reset(account){
-	
+	    
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
@@ -191,14 +191,14 @@ function Reset(account){
 			    alert("网络超时！");
 			}
 		});
-		onload();
+		
 		
     
 }
 
 
 function onload(){
-	
+
 	var type='0';
 	var page=1;
 	$.ajax({
@@ -218,10 +218,12 @@ function onload(){
 				$.each(msg.pageList,function(key,val){
 					if(msg.user.userType==3){
 					   num=num%5+1;
+					   
 					   content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.userId+")'>"+val.userAccount+"</a></td><td>"+val.userRealname+"</td><td>"+
 						"<span class='form-group'><button onclick='deleteOne("+val.userId+")' type='button' class='btn btn-success btn-xs' style='display:inline-block;margin-right: 10px;'>删除</button></span>"+
 						"<span class='form-group'><button onclick='Reset("+val.userAccount+")' type='button' class='btn btn-success btn-xs'>重置密码</button></span>"
 						+"</td></tr>";
+					 
 					}
 				});
 				$("#announcements").empty().append(content);

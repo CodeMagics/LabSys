@@ -1,35 +1,36 @@
 $(document).ready(function (){
 	onload();
-	$("#addTask").click(function(){
-		window.location.href="publishInfo.html";
+	$("#addPlan").click(function(){
+		window.location.href="publishPlanInfo.html";
 	});
 });
 
-function  showOnePageAnnouncement(page,type){
+function  showOnePageAnnouncement(page){
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		url : '/LabSys/planController/ShowList.do',
+		url : '/LabSys/planController/showList.do',
 		async : false,
 		data : {
-			page:page,
-			type:type
+			page:page
 		},
 		dataType : 'json',
 		success : function(msg) {
 			if(msg.result ==true){						
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
-					type=(type)%5+1;
-					if(msg.user.userType==2){
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.taskTitle+"</a></td><td>"+val.planDate+"</td><td>"+
+					num=(num)%5+1;
+					if(msg.user.userType==1){
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
 						"<div class='form-group'><button onclick='modify("+val.planId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
 						"<div class='form-group'><button onclick='deleteOne("+val.planId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
-						"<div class='form-group'><button onclick='showDetail("+val.taskId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
+						num=num%5+1;
+						$("#addPlan").hide();
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
+						"<div class='form-group'><button onclick='showDetail("+val.planId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
 				});
@@ -44,24 +45,23 @@ function  showOnePageAnnouncement(page,type){
 }
 
 function showDetail(id){
-	window.location.href = "seeTaskDetail.html?id="+id;
+	window.location.href = "seePlanDetail.html?id="+id;
 }
 
 function modify(id){
-	window.location.href = "modifyInfo.html?id="+id;
+	window.location.href = "modifyPlanInfo.html?id="+id;
 }
 
 
 function deleteOne(id){
 	if(window.confirm('你确定要删除吗？')){
-		alert(id);
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			url : '/LabSys/taskController/Delete.do',
+			url : '/LabSys/planController/deleteplan.do',
 			async : false,
 			data : {
-				id:id
+				planId:id
 			},
 			dataType : 'json',
 			success : function(msg) {
@@ -74,18 +74,17 @@ function deleteOne(id){
 			},error: function(msg){
 			    alert("网络超时！");
 			}
-		});
-		onload();
+		});	
+		window.location.reload();
 		
         return true;
      }else{
+  
         return false;
     }
 }
 
 function onload(){
-	
-	var type=0;
 	var page=1;
 	$.ajax({
 		type : "post",
@@ -93,23 +92,25 @@ function onload(){
 		url : '/LabSys/planController/showList.do',
 		async : false,
 		data : {
-			page:page,
-			type:type
+			page:page
 		},
 		dataType : 'json',
 		success : function(msg) {
 			if(msg.result ==true){		
 				var content="";
-				var type=0;
+				var num=0;
 				$.each(msg.pageList,function(key,val){
 					if(msg.user.userType==1){
-					   type=type%5+1;
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
+						num=num%5+1;
+						
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
 						"<div class='form-group'><button onclick='modify("+val.planId+")' type='button' class='btn btn-warning btn-xs'>修改</button></div>"+
 						"<div class='form-group'><button onclick='deleteOne("+val.planId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						content+="<tr><td>"+type+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
+						$("#addPlan").hide();
+						num=num%5+1;
+						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.planId+")'>"+val.planTitle+"</a></td><td>"+val.planDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.planId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
 					}
@@ -150,7 +151,7 @@ function GetRequest() {
 		var str = url.substr(1);
 		strs = str.split("&");
 		for ( var i = 0; i < strs.length; i++) {
-			theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
 		}
 	}
 	if (url.indexOf("type") == -1) {
