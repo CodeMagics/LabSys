@@ -29,7 +29,7 @@ function  showOnePageAnnouncement(id,page){
 						+"</td></tr>";
 					}else{
 						num=num%5+1;
-						$("#addsummary").hide();
+						$("#addSummary").hide();
 						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.sumId+")'>"+val.sumTitle+"</a></td><td>"+val.sumDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.sumId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
 						+"</td></tr>";
@@ -51,7 +51,7 @@ function showDetail(id){
 }
 
 function modify(id){
-	window.location.href = "publishSummaryInfo.html?id="+id;
+	window.location.href = "modifySummaryInfo.html?id="+id;
 }
 
 
@@ -63,14 +63,14 @@ function deleteOne(id){
 			url : '/LabSys/summaryController/deletesummary.do',
 			async : false,
 			data : {
-				summaryId:id
+				sumId:id
 			},
 			dataType : 'json',
 			success : function(msg) {
 				if(msg.result ==true){
 					alert("删除成功！");
 				}else{
-					alert(msg.message);
+					alert("删除失败");
 					
 				}
 			},error: function(msg){

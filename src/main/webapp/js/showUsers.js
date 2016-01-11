@@ -49,7 +49,7 @@ $(document).ready(function (){
 	$("#Query").click(function(){
 		var page=1;
 		var type=$('#type option:selected') .val();
-		alert(type);
+	
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",

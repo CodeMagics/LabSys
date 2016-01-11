@@ -111,6 +111,7 @@ function onload(){
 						"<div class='form-group'><button onclick='deleteOne("+val.taskId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
+						$("#addTask").hide();
 						num=num%5+1;
 						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.taskId+")'>"+val.taskTitle+"</a></td><td>"+val.taskDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.taskId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"
