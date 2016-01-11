@@ -50,7 +50,7 @@ function showDetail(id){
 }
 
 function modify(id){
-	window.location.href = "modifySummaryInfo.html?id="+id;
+	window.location.href = "publishSummaryInfo.html?id="+id;
 }
 
 
@@ -87,8 +87,8 @@ function deleteOne(id){
 
 function onload(){
 	var page=1;
-	var Request = new Object();
-	Request = GetRequest();
+	
+	var Request = GetRequest();
     var Userid=-1;
 	if (Request != null) {
 		Userid = Request['id'];
@@ -156,7 +156,7 @@ function onload(){
 
 function GetRequest() {
 	var url = location.search; // 获取url中"?"符后的字串
-	var theRequest = new Object();
+	var theRequest=null;
 
 	if (url.indexOf("?") != -1) {
 		var str = url.substr(1);

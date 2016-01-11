@@ -54,7 +54,7 @@ function modify(id){
 
 function deleteOne(id){
 	if(window.confirm('你确定要删除吗？')){
-		alert(id);
+		
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded;charset=UTF-8",

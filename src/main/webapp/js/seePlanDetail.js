@@ -48,8 +48,6 @@ function GetRequest() {
 			theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
 		}
 	}
-	if (url.indexOf("id") == -1) {
-		theRequest = null;
-	}
+	
 	return theRequest;
 }

@@ -17,7 +17,7 @@ $(document).ready(function (){
 		dataType : 'json',
 		success : function(msg) {
 			if(msg.result ==true){
-				alert(msg.publisher);
+			
 				var detail="";
 				detail="<h4 align='center'><b>"+msg.task.taskTitle+"</b></h4>"
 								+"<div style='text-align: center'><br /><span>发布人：</span> <span>"+msg.publisher+"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "

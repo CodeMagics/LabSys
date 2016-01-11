@@ -1,9 +1,8 @@
-var copyright = "<span style=text-align:center>QQ在线交流：<a target=blank href='tencent://message/?uin=3076134635&Site=yige.org&Menu=yes'><img border='0' SRC='' alt='点击这里给我发消息'></a>" +
-		"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线信息反馈：<a href='userFeedBack.html'><img src='' alt='点击这里在线留言'></img></a></span>"
-	+"<p>系统版权由西南科技大学学生工作处（部）开发</p><p>版权所有&nbsp;&nbsp;&nbsp;©2014&nbsp;&nbsp;&nbsp;西南科技大学学生工作部（处）</p>"
-	+ "<ul class=\"footer-links\"><li>当前版本：&nbsp;&nbsp; v1.18 &nbsp;&nbsp;&nbsp;系统更新时间：2014年09月16日&nbsp;&nbsp;&nbsp;&nbsp;西南科技大学学生资助系统</li>"
+var copyright =
+	"<p>系统版权由软件卓越1301开发</p><p>版权所有&nbsp;&nbsp;&nbsp;©2015&nbsp;&nbsp;&nbsp;codimg magic</p>"
+	+ "<ul class=\"footer-links\"><li>当前版本：&nbsp;&nbsp; v1.18 &nbsp;&nbsp;&nbsp;系统更新时间：2016年01月08日&nbsp;&nbsp;&nbsp;&nbsp;实验室学习与交流系统</li>"
 	+ "<li class='muted'>·</li></ul>"
-	+"友情链接：<a href='http://xsc.swust.edu.cn/'>西南科技大学学生工作处（部）</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://xsc.swust.edu.cn/plus/list.php?tid=36'>勤工助学贷款办公室</a>";
+	+"友情链接：<a href='http://www.swust.edu.cn/'>西南科技大学</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://www.dean.swust.edu.cn/xml/index.xml'>西南科技大学教务处</a>";
 var pareid;
 var pareName;
 var funid;

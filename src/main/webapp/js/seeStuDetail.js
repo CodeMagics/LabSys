@@ -23,7 +23,7 @@ window.onload=function(){
 
 function GetRequest() {
 	var url = location.search; //获取url中"?"符后的字串
-	var theRequest = new Object();
+	var theRequest =null;
 	
 	if (url.indexOf("?") != -1) { 
 		var str = url.substr(1);
@@ -47,15 +47,14 @@ function checkValue(str) {
 
 
 function ShowPersonalInfo() {
-	var Request = new Object();
-	Request = GetRequest();
+	var Request = GetRequest();
     var Userid=-1;
 	if (Request != null) {
 		Userid = Request['id'];
 	}
 
     id=Userid;
-	alert(id);
+	
 	$.ajax({
 		type : "post",
 		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
