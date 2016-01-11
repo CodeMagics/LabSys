@@ -27,7 +27,12 @@ import codemagic.LabSys.service.TaskService;
 @RequestMapping("/taskController")
 public class TaskController {
 	private TaskService taskService;
+	
+	public HttpSession session;
+	
+	public String message;
 
+	public 	Task task = new Task();
 	public TaskService getTaskService() {
 		return taskService;
 	}
@@ -42,7 +47,7 @@ public class TaskController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 	    User user = (User) session.getAttribute("user");
 		try {
 			List<Task> tasks = taskService.ShowList();
@@ -68,7 +73,7 @@ public class TaskController {
 			    map.put("result", Boolean.TRUE);
 			    map.put("tasks", tasks);
 			    map.put("user", user);
-			
+			    message = "true";
 			
 			
 			} else {
@@ -99,7 +104,7 @@ public class TaskController {
 			if(!tasks.isEmpty()){
 			map.put("result", Boolean.TRUE);
 			map.put("tasks", tasks);
-			
+			message = "true";
 	
 			
 			} else {
@@ -132,7 +137,8 @@ public class TaskController {
 			map.put("publisher", publisher);
 			}
 			map.put("result", Boolean.TRUE);
-			map.put("task", task);	
+			map.put("task", task);
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
@@ -161,7 +167,7 @@ public class TaskController {
 			if(publisher!=null){
 			map.put("result", Boolean.TRUE);
 			map.put("publisher", publisher);
-			System.out.println(publisher+"********????/");
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "获取失败！");
@@ -184,7 +190,7 @@ public class TaskController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 	    User user = (User) session.getAttribute("user");
 		int taskPublisher=user.getUserId();
 		try {
@@ -199,7 +205,7 @@ public class TaskController {
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "发布成功");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "发布失败！");
@@ -224,7 +230,6 @@ public class TaskController {
 		Map map = new HashMap();
 		try {
 			boolean successed;
-			Task task = new Task();
 			task.setTaskId(Integer.parseInt(id));
 			task.setTaskDetails(content);
 			task.setTaskTitle(title);
@@ -234,7 +239,7 @@ public class TaskController {
 			if(successed){
 			map.put("result", Boolean.TRUE);
 			map.put("message", "更新成功");
-			
+			message = "true";
 			} else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "更新失败！");
@@ -264,6 +269,7 @@ public class TaskController {
 				if(successed){
 				map.put("result", Boolean.TRUE);
 				map.put("message", "删除成功");
+				message = "true";
 			}
 			
 			

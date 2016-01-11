@@ -19,30 +19,30 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import codemagic.LabSys.controller.NoticeController;
-import codemagic.LabSys.model.Notice;
+import codemagic.LabSys.controller.TaskController;
+import codemagic.LabSys.model.Task;
 import codemagic.LabSys.model.User;
-import codemagic.LabSys.service.NoticeService;
+import codemagic.LabSys.service.TaskService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml","classpath:spring-mybatis.xml" })
-public class NoticeControllerTest {
+public class TaskControllerTest {
 
     private MockHttpServletRequest request;  
 
     private MockHttpServletResponse response; 
 	public HttpSession session;
 	
-	public NoticeController test = new NoticeController();
+	public TaskController test = new TaskController();
 	
-	public NoticeService noticeService;
+	public TaskService taskService;
 
-	public NoticeService getNoticeService() {
-		return noticeService;
+	public TaskService getTaskService() {
+		return taskService;
 	}
 	@Autowired
-	public void setNoticeService(NoticeService noticeService) {
-		this.noticeService = noticeService;
+	public void setTaskService(TaskService taskService) {
+		this.taskService = taskService;
 	}
 	@Before    
 	    public void setUp(){    
@@ -54,27 +54,27 @@ public class NoticeControllerTest {
 	    public void test1() {  
 		    test.ShowList(1, 1, request);
 	    	assertEquals("error", test.message); 
-	    	test.getNoticeService();
+	    	test.getTaskService();
 	    } 
 	 
 	 @Test 
 	    public void test2() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 List<Notice> list = new ArrayList<Notice>();
-		 Notice notice = new Notice();
-		 notice.setNoticeTitle("1");
-		 list.add(notice);
-		 when(noticeService.ShowList()).thenReturn(list);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 List<Task> list = new ArrayList<Task>();
+		 Task task = new Task();
+		 task.setTaskTitle("1");
+		 list.add(task);
+		 when(taskService.ShowList()).thenReturn(list);
 		 test.ShowList(1, 1, request);
 	     assertEquals("true",test.message); 
 	    }
 	 @Test 
 	    public void test3() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 List<Notice> list = new ArrayList<Notice>();
-		 when(noticeService.ShowList()).thenReturn(list);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 List<Task> list = new ArrayList<Task>();
+		 when(taskService.ShowList()).thenReturn(list);
 		 test.ShowList(1, 1, request);
 	     assertEquals("false",test.message); 
 	    }
@@ -87,22 +87,22 @@ public class NoticeControllerTest {
 	 
 	 @Test 
 	    public void test5() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 List<Notice> list = new ArrayList<Notice>();
-		 Notice notice = new Notice();
-		 notice.setNoticeTitle("1");
-		 list.add(notice);
-		 when(noticeService.SelectList(1)).thenReturn(list);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 List<Task> list = new ArrayList<Task>();
+		 Task task = new Task();
+		 task.setTaskTitle("1");
+		 list.add(task);
+		 when(taskService.SelectList(1)).thenReturn(list);
 		 test.SelectList(1, request);
 	     assertEquals("true",test.message); 
 	    }
 	 @Test 
 	    public void test6() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 List<Notice> list = new ArrayList<Notice>();
-		 when(noticeService.SelectList(1)).thenReturn(list);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 List<Task> list = new ArrayList<Task>();
+		 when(taskService.SelectList(1)).thenReturn(list);
 		 test.SelectList(1, request);
 	     assertEquals("false",test.message);  
 	    }
@@ -114,80 +114,80 @@ public class NoticeControllerTest {
 	 
 	 @Test 
 	    public void test8() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
 		 User user = new User();
 		 user.setUserId(1);
 		 session = request.getSession();
 		 session.putValue("user", user);
 	     session = mock(HttpSession.class);
 	     test.session = session; 
-	     Notice notice = new Notice();
-	     notice = mock(Notice.class);
-	     test.notice=notice;
-		 when(noticeService.Publish(notice)).thenReturn(true);
+	     Task task = new Task();
+	     task = mock(Task.class);
+	     test.task=task;
+		 when(taskService.Publish(task)).thenReturn(true);
 		 test.Publish("1", "1", request);
 	     assertEquals("true",test.message); 
 	    }
 	 @Test 
 	    public void test9() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
 		 User user = new User();
 		 user.setUserId(1);
 		 session = request.getSession();
 		 session.putValue("user", user);
 	     session = mock(HttpSession.class);
 	     test.session = session;
-		 when(noticeService.Publish(new Notice())).thenReturn(false);
+		 when(taskService.Publish(new Task())).thenReturn(false);
 		 test.Publish("1", "1", request);
 	     assertEquals("false",test.message); 
 	    }
 	 @Test 
 	    public void test10() {  
-		 test.Updata(1, "1", "1", request);
+		 test.Updata("1", "1", "1", request);
 	    	assertEquals("error",test.message); 
 	    } 
 	 
 	 @Test 
 	    public void test11() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-	     Notice notice = new Notice();
-	     notice = mock(Notice.class);
-	     test.notice=notice;
-		 when(noticeService.Updata(notice)).thenReturn(true);
-		 test.Updata(1, "1", "1", request);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+	     Task task = new Task();
+	     task = mock(Task.class);
+	     test.task=task;
+		 when(taskService.Updata(task)).thenReturn(true);
+		 test.Updata("1", "1", "1", request);
 	     assertEquals("true",test.message); 
 	    }
 	 @Test 
 	    public void test12() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 when(noticeService.Updata(new Notice())).thenReturn(false);
-		 test.Updata(1, "1", "1", request);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 when(taskService.Updata(new Task())).thenReturn(false);
+		 test.Updata("1", "1", "1", request);
 	     assertEquals("false",test.message);  
 	    }
 	 @Test 
 	    public void test13() {  
-		 test.Delete(1, request);
+		 test.Delete("1", request , response);
 	    	assertEquals("error",test.message); 
 	    } 
 	 
 	 @Test 
 	    public void test14() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 when(noticeService.Delete(1)).thenReturn(true);
-		 test.Delete(1, request);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 when(taskService.Delete(1)).thenReturn(true);
+		 test.Delete("1", request, response);
 	     assertEquals("true",test.message); 
 	    }
 	 @Test 
 	    public void test15() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 when(noticeService.Delete(1)).thenReturn(false);
-		 test.Delete(1, request);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 when(taskService.Delete(1)).thenReturn(false);
+		 test.Delete("1", request , response);
 	     assertEquals("false",test.message);  
 	    }
 	 @Test 
@@ -198,20 +198,20 @@ public class NoticeControllerTest {
 	 
 	 @Test 
 	    public void test17() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 Notice notice = new Notice();
-		 when(noticeService.SelectByid(1)).thenReturn(notice);
-		 when(noticeService.SelectPublisher(1)).thenReturn("1");
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 Task task = new Task();
+		 when(taskService.SelectByid(1)).thenReturn(task);
+		 when(taskService.SelectPublisher(1)).thenReturn("1");
 		 test.SelectById("1", request);
 	     assertEquals("true",test.message); 
 	    }
 	 @Test 
 	    public void test18() {  
-		 noticeService = mock(NoticeService.class);
-		 test.setNoticeService(noticeService);
-		 Notice notice = null;
-		 when(noticeService.SelectByid(1)).thenReturn(notice);
+		 taskService = mock(TaskService.class);
+		 test.setTaskService(taskService);
+		 Task task = null;
+		 when(taskService.SelectByid(1)).thenReturn(task);
 		 test.SelectById("1", request);
 	     assertEquals("false",test.message);  
 	    }

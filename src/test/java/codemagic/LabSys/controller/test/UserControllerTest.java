@@ -67,8 +67,8 @@ public class UserControllerTest{
     }           
     @Test 
     public void test1() {  
-    	assertEquals("error",test.selectUserById("111","111", request, response).getViewName()); 
-    	test.setUserService(userService);
+    	test.selectUserById("111","111", request, response);
+    	assertEquals("error", test.message); 
     	test.getUserService();
     }  
     
@@ -80,7 +80,8 @@ public class UserControllerTest{
         user.setUserAccount("233");
 		user.setUserPassword("233");
 		user.setUserType(2);
-		assertEquals("false",test.selectUserById("111","111", request, response).getViewName());
+		test.selectUserById("111","111", request, response);
+		assertEquals("false",test.message);
     	}
     @Test 
     public void test3() {
@@ -91,11 +92,13 @@ public class UserControllerTest{
 		user.setUserPassword("233");
 		user.setUserType(2);
 		when(userService.login("111", "111")).thenReturn(user);
-		assertEquals("true",test.selectUserById("111","111", request, response).getViewName()); 
+		test.selectUserById("111","111", request, response);
+		assertEquals("true",test.message); 
     	}
     @Test 
     public void test4() {     
-    	assertEquals("false",test.showAuthorityList(request, response).getViewName()); 
+    	test.showAuthorityList(request, response);
+    	assertEquals("false",test.message); 
     	test.getFunctionService();
     	test.setFunctionService(functionService);
     } 
@@ -111,7 +114,8 @@ public class UserControllerTest{
         test.setFunctionService(functionService);
         session = mock(HttpSession.class);
         test.session = session;  
-		assertEquals("true",test.showAuthorityList(request, response).getViewName()); 
+        test.showAuthorityList(request, response);
+		assertEquals("true",test.message); 
     }
      @Test 
     public void test6() {    
@@ -123,12 +127,14 @@ public class UserControllerTest{
  		 session.putValue("user", user);
          session = mock(HttpSession.class);
          test.session = session;  
- 		assertEquals("error",test.showAuthorityList(request, response).getViewName()); 
+         test.showAuthorityList(request, response);
+ 		assertEquals("error",test.message); 
     }
     
     @Test 
-    public void test7() {     
-    	assertEquals("false",test.showStuDeatilInfo(request, response).getViewName());
+    public void test7() {   
+    	test.showStuDeatilInfo(request, response);
+    	assertEquals("false",test.message);
     }
     
     @Test 
@@ -141,22 +147,26 @@ public class UserControllerTest{
 		session.putValue("user", user);
         session = mock(HttpSession.class);
         test.session = session;  
-		assertEquals("true",test.showStuDeatilInfo(request, response).getViewName()); 
+        test.showStuDeatilInfo(request, response);
+		assertEquals("true",test.message); 
     }
     
     @Test 
     public void test9() {   
-    	assertEquals("true",test.logout(request, response).getViewName());
+    	test.logout(request, response).getViewName();
+    	assertEquals("true",test.message);
     }
     
     @Test 
     public void test10() {   
-    	assertEquals("true",test.CheckPassword(request, response).getViewName());
+    	test.CheckPassword(request, response);
+    	assertEquals("true",test.message);
     }
     
     @Test 
     public void test11() {   
-    	assertEquals("error",test.showUser(3, request).getViewName()); 
+    	test.showUser(3, request).getViewName();
+    	assertEquals("error",test.message); 
     }
     
     @Test 
@@ -168,12 +178,14 @@ public class UserControllerTest{
 		user.setUserPassword("233");
 		user.setUserType(2);
 		when(userService.findUserById(1)).thenReturn(user);
-		assertEquals("true",test.showUser(3, request).getViewName()); 
+		test.showUser(3, request);
+		assertEquals("true",test.message); 
     }
     
     @Test 
     public void test13() {   
-    	assertEquals("error",test.EditPassword("111", request, response).getViewName());
+    	test.EditPassword("111", request, response);
+    	assertEquals("error",test.message);
     }
     
     @Test 
@@ -185,7 +197,8 @@ public class UserControllerTest{
 		session.putValue("user", user);
         session = mock(HttpSession.class);
         test.session = session; 
-    	assertEquals("false",test.EditPassword("111", request, response).getViewName());
+        test.EditPassword("111", request, response);
+    	assertEquals("false",test.message);
     }
     
     @Test 
@@ -200,7 +213,8 @@ public class UserControllerTest{
 		session.putValue("user", user);
         session = mock(HttpSession.class);
         test.session = session; 
-    	assertEquals("true2",test.EditPassword("111", request, response).getViewName());
+        test.EditPassword("111", request, response);
+    	assertEquals("true2",test.message);
     }
     
     @Test 
@@ -218,14 +232,16 @@ public class UserControllerTest{
         test.session = session; 
         userService = mock(UserService.class);
         test.setUserService(userService);
-    	assertEquals("true1",test.EditPassword("111", request, response).getViewName());
+        test.EditPassword("111", request, response);
+    	assertEquals("true1",test.message);
     }
     
     @Test 
     @Transactional    
     @Rollback(true)
     public void test17() {   
-    	assertEquals("error",test.Delete(3, response).getViewName());
+    	test.Delete(3, response);
+    	assertEquals("error",test.message);
     }
     
     @Test 
@@ -235,7 +251,8 @@ public class UserControllerTest{
     	userService = mock(UserService.class);
     	test.setUserService(userService);
         when(userService.Delete(12)).thenReturn(true);
-    	assertEquals("true",test.Delete(12, response).getViewName());
+        test.Delete(12, response);
+    	assertEquals("true",test.message);
     }
     
     @Test 
@@ -245,14 +262,16 @@ public class UserControllerTest{
     	userService = mock(UserService.class);
     	test.setUserService(userService);
         when(userService.Delete(12)).thenReturn(false);
-    	assertEquals("false",test.Delete(12, response).getViewName());
+        test.Delete(12, response);
+    	assertEquals("false",test.message);
     }
     
     @Test 
     @Transactional    
     @Rollback(true)
     public void test20() {
-    	assertEquals("error",test.addUser("1", "1", response).getViewName());
+    	test.addUser("1", "1", response);
+    	assertEquals("error",test.message);
     }
     
     @Test 
@@ -265,7 +284,8 @@ public class UserControllerTest{
     	user = mock(User.class);
     	test.user = user;
         when(userService.addUser(user)).thenReturn(true);
-        assertEquals("true",test.addUser("1", "1", response).getViewName());
+        test.addUser("1", "1", response);
+        assertEquals("true",test.message);
     }
     
     @Test 
@@ -275,13 +295,15 @@ public class UserControllerTest{
     	userService = mock(UserService.class);
     	test.setUserService(userService);
         when(userService.addUser(new User())).thenReturn(false);
-        assertEquals("false",test.addUser("1", "1", response).getViewName());
+        test.addUser("1", "1", response);
+        assertEquals("false",test.message);
     }
     @Test 
     @Transactional    
     @Rollback(true)
     public void test23() {
-    	assertEquals("error",test.resetPassword("111", response).getViewName());
+    	test.resetPassword("111", response);
+    	assertEquals("error",test.message);
     }
     
     @Test 
@@ -291,7 +313,8 @@ public class UserControllerTest{
     	userService = mock(UserService.class);
     	test.setUserService(userService);
         when(userService.resetPassword("111")).thenReturn(true);
-        assertEquals("true",test.resetPassword("111", response).getViewName());
+        test.resetPassword("111", response);
+        assertEquals("true",test.message);
     }
     
     @Test 
@@ -301,14 +324,16 @@ public class UserControllerTest{
     	userService = mock(UserService.class);
     	test.setUserService(userService);
         when(userService.resetPassword("111")).thenReturn(false);
-        assertEquals("false",test.resetPassword("111", response).getViewName());
+        test.resetPassword("111", response);
+        assertEquals("false",test.message);
     }
     
     @Test 
     @Transactional    
     @Rollback(true)
     public void test26() {
-    	assertEquals("error",test.ShowList(1, "1", request, response).getViewName());
+    	test.ShowList(1, "1", request, response);
+    	assertEquals("error",test.message);
     }
     
     @Test 
@@ -324,7 +349,8 @@ public class UserControllerTest{
 		List<User> list = new ArrayList<User>();
 		list.add(user);
         when(userService.ShowList()).thenReturn(list);
-        assertEquals("true",test.ShowList(1, "1", request, response).getViewName());
+        test.ShowList(1, "1", request, response);
+        assertEquals("true",test.message);
     }
     
     @Test 
@@ -335,14 +361,16 @@ public class UserControllerTest{
     	test.setUserService(userService);
         List<User> list = new ArrayList<User>();
         when(userService.ShowList()).thenReturn(list);
-        assertEquals("false",test.ShowList(1, "1", request, response).getViewName());
+        test.ShowList(1, "1", request, response);
+        assertEquals("false",test.message);
     }
     
     @Test 
     @Transactional    
     @Rollback(true)
     public void test29() {
-    	assertEquals("error",test.SelectByType(1, "1", request, response).getViewName());
+    	test.SelectByType(1, "1", request, response);
+    	assertEquals("error",test.message);
     }
     
     @Test 
@@ -358,7 +386,8 @@ public class UserControllerTest{
 		List<User> list = new ArrayList<User>();
 		list.add(user);
         when(userService.ShowList()).thenReturn(list);
-        assertEquals("true",test.SelectByType(1, "0", request, response).getViewName());
+        test.SelectByType(1, "0", request, response);
+        assertEquals("true",test.message);
     }
     
     @Test 
@@ -369,6 +398,7 @@ public class UserControllerTest{
     	test.setUserService(userService);
         List<User> list = new ArrayList<User>();
         when(userService.ShowList()).thenReturn(list);
-        assertEquals("false",test.SelectByType(1, "1", request, response).getViewName());
+        test.SelectByType(1, "1", request, response);
+        assertEquals("false",test.message);
     }
 }
