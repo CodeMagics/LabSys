@@ -119,7 +119,7 @@ function onload(){
 						"<div class='form-group'><button onclick='deleteOne("+val.sumId+")' type='button' class='btn btn-danger btn-xs'>删除</button></div>"
 						+"</td></tr>";
 					}else{
-						$("#addsummary").hide();
+						$("#addSummary").hide();
 						num=num%5+1;
 						content+="<tr><td>"+num+"</td><td><a href='#' onclick='showDetail("+val.sumId+")'>"+val.sumTitle+"</a></td><td>"+val.sumDate+"</td><td>"+
 						"<div class='form-group'><button onclick='showDetail("+val.sumId+")' type='button' class='btn btn-success btn-xs'>查看详细信息</button></div>"

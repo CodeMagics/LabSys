@@ -8,6 +8,8 @@ window.onload=function(){
 	
 	ShowPersonalInfo();
 	$("#upadte").click(function(){
+
+		UpdateShowPersonalInfo();
 	
 	});
 	$("#saveIfo").click(function(){
@@ -76,9 +78,7 @@ function ShowPersonalInfo() {
 			if (msg.result == true) {
 				if(msg.user.userType==2){
 					
-					$("#look").hide();
-					$("#upadte").hide();
-					$("zl").hide();
+					
 					
 				}
 			
@@ -87,7 +87,56 @@ function ShowPersonalInfo() {
 				$(".personalStuNumber").html(msg.student.studNum);// 学号
 				$(".personalStuDepartment").html(msg.student.studMajor);// 专业
 				$(".personalStuPhone").html(msg.student.userPhone);// 电话
-				$(".personalStuEmail").text(msg.student.userEMail);// 邮箱
+				$(".personalStuEmail").html(msg.student.userEMail);// 邮箱
+
+				
+			
+			} else {
+				alert(msg.message);
+			}
+		},
+		error : function(msg) {
+			alert("网络超时！");
+		}
+	});
+}
+
+function UpdateShowPersonalInfo() {
+	var Request = GetRequest();
+	
+    var Userid=-1;
+   
+	if (Request != null) {
+		Userid = Request.studId;
+	}
+
+    var id=Userid;
+    
+	
+	$.ajax({
+		type : "post",
+		contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		url : '/LabSys/studentController/readStudentByStudNumber.do',
+		async : false,
+		data : {
+          id:id
+		},
+		dataType : 'json',
+		success : function(msg) {
+		    
+			if (msg.result == true) {
+				if(msg.user.userType==2){
+					
+					
+					
+				}
+			
+				$(".personalStuClass").val(msg.student.studClass);// 班级
+				$(".personalStuName").val(msg.student.userRealname);// 姓名
+				$(".personalStuNumber").val(msg.student.studNum);// 学号
+				$(".personalStuDepartment").val(msg.student.studMajor);// 专业
+				$(".personalStuPhone").val(msg.student.userPhone);// 电话
+				$(".personalStuEmail").val(msg.student.userEMail);// 邮箱
 
 				
 			

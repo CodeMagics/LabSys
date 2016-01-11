@@ -94,7 +94,7 @@ function onload(){
 		Userid = Request['id'];
 	}
 	var id=Userid;
-	alert(id);
+
 	
 	$.ajax({
 		type : "post",
