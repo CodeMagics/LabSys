@@ -22,17 +22,21 @@ window.onload=function(){
 
 
 function GetRequest() {
-	var url = location.search; //获取url中"?"符后的字串
-	var theRequest =null;
-	
-	if (url.indexOf("?") != -1) { 
+	var url = location.search; // 获取url中"?"符后的字串
+	var theRequest = null;
+
+	if (url.indexOf("?") != -1) {
+		theRequest={};
 		var str = url.substr(1);
 		strs = str.split("&");
-		for(var i = 0; i < strs.length; i ++) { 
-			theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
-			}
-		}
 		
+		for ( var i = 0; i < strs.length; i++) {
+			
+			theRequest.studId = strs[i].split("=")[1];
+			
+		}
+	}
+	
 	return theRequest;
 }
 
@@ -48,12 +52,15 @@ function checkValue(str) {
 
 function ShowPersonalInfo() {
 	var Request = GetRequest();
+	
     var Userid=-1;
+   
 	if (Request != null) {
-		Userid = Request['id'];
+		Userid = Request.studId;
 	}
 
-    id=Userid;
+    var id=Userid;
+    
 	
 	$.ajax({
 		type : "post",

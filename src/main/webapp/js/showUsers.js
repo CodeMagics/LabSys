@@ -1,5 +1,6 @@
 $(document).ready(function (){
-	onload();
+	var type='0';
+	onload(type);
 	$("#AccountName").val("");
 	$("#addUser").click(function(){
 		$('#addUserModal').modal('show');
@@ -22,7 +23,8 @@ $(document).ready(function (){
 					if(msg.result ==true){		
 						alert(msg.message);
 						$('#addUserModal').modal('hide');
-						onload();
+						
+						onload('0');
 						
 
 					}else{
@@ -161,7 +163,8 @@ function deleteOne(id){
 			    alert("网络超时！");
 			}
 		});
-		onload();
+		var type=$('#addType option:selected').val();
+		onload(type);
 		
         return true;
      }else{
@@ -197,9 +200,9 @@ function Reset(account){
 }
 
 
-function onload(){
+function onload(type){
 
-	var type='0';
+	//var type='0';
 	var page=1;
 	$.ajax({
 		type : "post",

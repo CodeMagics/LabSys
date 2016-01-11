@@ -109,7 +109,7 @@ function showStuSumma(id){
 }
 
 function showStudentDetaile(id){
-	window.location.href="studentDetailInfo.html?id="+id;
+	window.location.href="studentDetailInfo.html?stuId="+id;
 }
 
 

@@ -6,7 +6,7 @@ $(document).ready(function (){
 	if (Request != null) {
 		id = Request['id'];
 	}
-	alert(id);
+
 
 	$.ajax({
 		type : "post",
