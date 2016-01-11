@@ -25,6 +25,11 @@ public class StudentController {
 	
 	 private UserService userService;
 	 private StudentService studentService;
+	 
+	 public HttpSession session;
+	 public String message;
+	 public	User user = new User();
+	 
 		public UserService getUserService() {
 	        return userService;
 	    }
@@ -50,8 +55,7 @@ public class StudentController {
 			ModelAndView mav = new ModelAndView();
 			MappingJacksonJsonView view = new MappingJacksonJsonView();
 			Map map = new HashMap();
-			User user = new User();
-			HttpSession session = request.getSession();// 获取session
+			session = request.getSession();// 获取session
 			user = (User) session.getAttribute("user");
 			
 		
@@ -60,7 +64,7 @@ public class StudentController {
 					
 					map.put("result", Boolean.FALSE);
 					map.put("message", "用户已经退出！请重新登录");
-
+					message = "false";
 				} else {
 					    int UserId;
 					    if(id==-1){
@@ -109,15 +113,13 @@ public class StudentController {
 						map.put("message", "执行成功！");
 						map.put("student",studentInfo);
 						map.put("user",user);
-						
-						
-				
-						
+						message = "true";	
 						
 				}
 			} catch (Exception e) {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "执行出现出错！");
+				message = "error";
 				e.printStackTrace();
 			} finally {
 				view.setAttributesMap(map);
@@ -136,14 +138,13 @@ public class StudentController {
 			ModelAndView mav = new ModelAndView();
 			MappingJacksonJsonView view = new MappingJacksonJsonView();
 			Map map = new HashMap();
-			User user = new User();
-			HttpSession session = request.getSession();// 获取session
+			session = request.getSession();// 获取session
 			user = (User) session.getAttribute("user");
             
 			try {if (user == null) {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "用户已经退出！请重新登录");
-
+				message = "other";
 			} else {
 				if (user.getUserType() == 1) {
 					boolean result;
@@ -164,9 +165,11 @@ public class StudentController {
 					if(result&&result2){
 						map.put("result", Boolean.TRUE);
 						map.put("message", "执行成功！");
+						message = "true";
 					}else{
 						map.put("result", Boolean.FALSE);
 						map.put("message", "更新失败！");
+						message = "false";
 					}
 						
 					
@@ -179,6 +182,7 @@ public class StudentController {
 			} catch (Exception e) {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "执行出现出错！");
+				message = "error";
 				e.printStackTrace();
 			} finally {
 				view.setAttributesMap(map);
@@ -197,15 +201,13 @@ public class StudentController {
 			ModelAndView mav = new ModelAndView();
 			MappingJacksonJsonView view = new MappingJacksonJsonView();
 			Map map = new HashMap();
-			User user = new User();
-			HttpSession session = request.getSession();// 获取session
+			session = request.getSession();// 获取session
 			user = (User) session.getAttribute("user");
-            System.out.println("_______");
 			try {
 				if (user == null) {
 					map.put("result", Boolean.FALSE);
 					map.put("message", "用户已经退出！请重新登录");
-
+					message = "other";
 				} else {
 					if (user.getUserType() == 1) {
 						boolean result;
@@ -214,9 +216,11 @@ public class StudentController {
 						if(result){
 							map.put("result", Boolean.TRUE);
 							map.put("message", "执行成功！");
+							message = "true";
 						}else{
 							map.put("result", Boolean.TRUE);
 							map.put("message", "更新失败！");
+							message = "false";
 						}
 							
 						
@@ -229,6 +233,7 @@ public class StudentController {
 			} catch (Exception e) {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "执行出现出错！");
+				message = "error";
 				e.printStackTrace();
 			} finally {
 				view.setAttributesMap(map);
