@@ -81,4 +81,13 @@ public class SummaryTest {
 		boolean tmp = summaryService.UpdateSummary(summary);
 		Assert.assertEquals(true, tmp);
 	}
+	
+	@Test
+	public void testQuery6() {
+		Summary summary = new Summary();
+		String tmp = null;
+		summary.setSumDate(tmp);
+		summary.setSumDetails(tmp);
+		summary.setSumTitle(tmp);
+	}
 }

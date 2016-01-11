@@ -81,4 +81,13 @@ public class PlanTest {
 		boolean tmp = planService.UpdatePlan(plan);
 		Assert.assertEquals(true, tmp);
 	}
+	
+	@Test
+	public void testQuery6() {
+		Plan plan = new Plan();
+		String tmp = null;
+		plan.setPlanDate(tmp);
+		plan.setPlanDetails(tmp);
+		plan.setPlanTitle(tmp);
+	}
 }

@@ -52,8 +52,17 @@ public class StudentTest {
 	@Test
 	@Transactional    
     @Rollback(true)
-	public void testQuery() {
+	public void testQuery3() {
 		boolean tmp = studentService.updateStuByUserId(2, "test", 233, "111", "111", "111", "111");
 		Assert.assertEquals(true, tmp);
+	}
+	
+	@Test
+	public void testQuery4() {
+		Student student = new Student();
+		String tmp = null;
+		student.setStudClass(tmp);
+		student.setStudMajor(tmp);
+		student.setUserRealname(tmp);
 	}
 }

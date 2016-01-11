@@ -87,4 +87,16 @@ public class NoticeTest {
 	public void testQuery7() {
 		noticeService.Delete(14);
 	}
+	
+	@Test
+	@Transactional    
+    @Rollback(true)
+	public void testQuery8() {
+		String tmp = null;
+		Notice notice = new Notice();
+		notice.setNoticeDate(tmp);
+		notice.setNoticeDetails(tmp);
+		notice.setNoticeTitle(tmp);
+		notice.setUserRealname(tmp);
+	}
 }

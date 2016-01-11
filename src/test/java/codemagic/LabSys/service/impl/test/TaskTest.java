@@ -87,4 +87,14 @@ public class TaskTest {
 	public void testQuery7() {
 		taskService.Delete(14);
 	}
+	
+	@Test
+	public void testQuery8() {
+		Task task = new Task();
+		String tmp = null;
+		task.setTaskDate(tmp);
+		task.setTaskDetails(tmp);
+		task.setTaskTitle(tmp);
+		task.setUserRealname(tmp);
+	}
 }

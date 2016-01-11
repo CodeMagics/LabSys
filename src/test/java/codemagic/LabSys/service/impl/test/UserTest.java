@@ -107,4 +107,15 @@ public class UserTest {
 	public void testQuery9() {
 		userService.Delete(12);
 	}
+	
+	@Test
+	public void testQuery10() {
+		User user = new User();
+		String tmp = null;
+		user.setUserAccount(tmp);
+		user.setUserEMail(tmp);
+		user.setUserPassword(tmp);
+		user.setUserPhone(tmp);
+		user.setUserRealname(tmp);
+	}
 }

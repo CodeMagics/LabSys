@@ -27,9 +27,11 @@ import codemagic.LabSys.service.FunctionService;
 @Controller
 @RequestMapping("/userController")
 public class UserController {
-	private UserService userService;
-	private FunctionService functionService;
-	private StudentService studentService;
+	public UserService userService;
+	public FunctionService functionService;
+	public StudentService studentService;
+	public HttpSession session;
+	public String message = null;
 
 	public StudentService getStudentService() {
 		return studentService;
@@ -62,7 +64,7 @@ public class UserController {
 			MappingJacksonJsonView view = new MappingJacksonJsonView();
 			@SuppressWarnings("rawtypes")
 			Map map = new HashMap();
-			HttpSession session = request.getSession();
+			session = request.getSession();
 			try {
 				User user=new User();
 				user=userService.login(loginname,password);
@@ -74,18 +76,22 @@ public class UserController {
 					map.put("result", Boolean.TRUE);
 					map.put("message", "成功！");
 					map.put("user", user);
+					message = "true";
 				}
 				else{
 					map.put("result", Boolean.FALSE);
 					map.put("message", "用户名或者密码错误！");
+					message = "false";
 				}
 			} catch (Exception e) {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "执行出现出错！");
 				e.printStackTrace();
+				message = "error";
 			}finally{
 				view.setAttributesMap(map);
 				mav.setView(view);
+				mav.setViewName(message);
 				return mav;
 			}
 		}
@@ -97,9 +103,8 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 	    User user = (User) session.getAttribute("user");
-	   
 		try {
 			//业务逻辑
 
@@ -111,18 +116,22 @@ public class UserController {
 				map.put("user", user);
 				map.put("functionList", list);
 				map.put("message", "执行成功！");
+				message = "true";
 			}else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "用户已经退出！");
+				message = "false";
 			}
 		} catch (Exception e) {
 			map.put("result", Boolean.FALSE);
 			map.put("message", "执行出现出错！");
+			message = "error";
 			e.printStackTrace();
 		}finally{
 			
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -134,7 +143,7 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		Map map = new HashMap();
-		HttpSession session = request.getSession();
+		session = request.getSession();
 	    User user = (User) session.getAttribute("user");
 	   
 		try {
@@ -145,9 +154,11 @@ public class UserController {
 				map.put("result", Boolean.TRUE);
 				map.put("user", user);	
 				map.put("message", "执行成功！");
+				message = "true";
 			}else {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "用户已经退出！");
+				message = "false";
 			}
 		} catch (Exception e) {
 			map.put("result", Boolean.FALSE);
@@ -157,6 +168,7 @@ public class UserController {
 			
 			view.setAttributesMap(map);
 			mav.setView(view);
+			mav.setViewName(message);
 			return mav;
 		}
 	}
@@ -168,16 +180,18 @@ public class UserController {
 			MappingJacksonJsonView view = new MappingJacksonJsonView();
 			Map map = new HashMap();
 	    	// 清空的session对象
-	        HttpSession session = request.getSession();
+	        session = request.getSession();
 	        try {
 	                                   // session = null; 使session对象为空
 	            session.invalidate(); // 此时的退出只是使session对象失效 
 	            map.put("result", Boolean.TRUE);
+	            message = "true";
 	        } catch (Exception e) {
 	        	map.put("result", Boolean.FALSE);
 	        } finally {
 	        	view.setAttributesMap(map);
 				mav.setView(view);
+				mav.setViewName(message);
 				return mav;
 	        }
 	    }
@@ -191,11 +205,12 @@ public class UserController {
 	        Map map = new HashMap();
 	        try {
 	            
-	            HttpSession session = request.getSession();
+	            session = request.getSession();
 	            User user = (User) session.getAttribute("user");
 	            map.put("result", Boolean.TRUE);
 	            map.put("message", "success");
 	            map.put("user",user);//返回user信息，用于比较与输入的当前密码是否一致
+	            message = "true";
 	           
 	        } catch (Exception e) {
 	            map.put("result", Boolean.FALSE);
@@ -204,6 +219,7 @@ public class UserController {
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -220,13 +236,16 @@ public class UserController {
 				map.put("result", Boolean.TRUE);
 				map.put("message", "success");
 				map.put("user", user);
+				message = "true";
 			} catch (Exception e) {
 				map.put("result", Boolean.FALSE);
 				map.put("message", "执行出现出错！");
+				message = "error";
 				e.printStackTrace();
 			}finally{
 				view.setAttributesMap(map);
 				mav.setView(view);
+				mav.setViewName(message);
 				return mav;
 			}
 		}
@@ -239,66 +258,43 @@ public class UserController {
 	        ModelAndView mav = new ModelAndView();
 	        MappingJacksonJsonView view = new MappingJacksonJsonView();
 	        Map map = new HashMap();
+	        session = request.getSession();
+            User user = (User) session.getAttribute("user");
 	        try {
-	            // 业务逻辑
-	            HttpSession session = request.getSession();
-	            User user = (User) session.getAttribute("user");                                  
-	            if (user.getUserType() != null) {
-	                     int userId= user.getUserId();     
+	            // 业务逻辑	                                              
+	            if (user.getUserType() != null) {    
 	                    if (user.getUserId() != null) {
-	                        userService.EditInfoByUserId(userId,password); 
+	                        userService.EditInfoByUserId(user.getUserId(),password); 
 	                        map.put("result", Boolean.TRUE);
 	                        map.put("message", "success");
+	                        message = "true1";
 	                     //   session.setAttribute("user",user.getUserPassword());//改变密码后重新设置session的值
 	                    } else {
 	                        map.put("result", Boolean.TRUE);
 	                        map.put("message", "未找到信息");
+	                        message = "true2";
 	                    }
 	                 
 	            } else {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "该用户没有可操作的权限！");
+	                message = "false";
 	            }
 	        
 	        } catch (Exception e) {
 	            map.put("result", Boolean.FALSE);
 	            map.put("message", "执行出现出错！");
+	            message = "error";
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
 	 
-	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
-	    @RequestMapping("/showStudentList")//显示学生列表
-	    public ModelAndView showStudentList(HttpServletResponse response) {
-	        ModelAndView mav = new ModelAndView();
-	        MappingJacksonJsonView view = new MappingJacksonJsonView();
-	        Map map = new HashMap();
-	        List<Student> students = studentService.showList();
- 	        try {
-	        	
-	            if (!students.isEmpty()) 
-	            { 
-	            	map.put("result", Boolean.TRUE);
-	            	map.put("students", students);	                   
-	            }
-	            else 
-	            {
-	                map.put("result", Boolean.FALSE);
-	                map.put("message", "没有学生");
-	            }
-	        
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        } finally {
-	            view.setAttributesMap(map);
-	            mav.setView(view);
-	            return mav;
-	        }
-	    }
+	
 	 
 	 
 	 @SuppressWarnings({ "unchecked", "finally", "rawtypes" })
@@ -314,19 +310,22 @@ public class UserController {
 	            { 
 	            	map.put("result", Boolean.TRUE);
 	            	map.put("message", "删除成功");
-	            		                   
+	            	message = "true";	                   
 	            }
 	            else 
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "删除失败");
+	                message = "false";
 	            }
 	        
 	        } catch (Exception e) {
+	        	message = "error";
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -347,19 +346,23 @@ public class UserController {
 	            { 
 	            	map.put("result", Boolean.TRUE);
 	            	map.put("message", "添加用户成功");
-	            	map.put("user", user);	                   
+	            	map.put("user", user);
+	            	message = "true";
 	            }
 	            else 
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "添加用户失败");
+	                message = "false";
 	            }
 	        
 	        } catch (Exception e) {
+	        	message = "error";
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -374,19 +377,23 @@ public class UserController {
 	            if (userService.resetPassword(account)) 
 	            { 
 	            	map.put("result", Boolean.TRUE);
-	            	map.put("message", "重置密码成功");	                   
+	            	map.put("message", "重置密码成功");
+	            	message = "true";
 	            }
 	            else 
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "重置密码失败");
+	                message = "false";
 	            }
 	        
 	        } catch (Exception e) {
+	        	message = "error";
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -428,19 +435,23 @@ public class UserController {
 				
 				
 	            	map.put("result", Boolean.TRUE);
-	            	map.put("users", users);	                   
+	            	map.put("users", users);	
+	            	message = "true";
 	            }
 	            else 
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "没有用户");
+	                message = "false";
 	            }
 	        
 	        } catch (Exception e) {
+	        	message = "error";
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
@@ -485,19 +496,23 @@ public class UserController {
 					map.put("page", page);
 	            	map.put("result", Boolean.TRUE);
 	            	map.put("users", users);
-	            	map.put("user", user);	
+	            	map.put("user", user);
+	            	message = "true";
 	            }
 	            else 
 	            {
 	                map.put("result", Boolean.FALSE);
 	                map.put("message", "没有用户");
+	                message = "false";
 	            }
 	        
 	        } catch (Exception e) {
+	        	message = "error";
 	            e.printStackTrace();
 	        } finally {
 	            view.setAttributesMap(map);
 	            mav.setView(view);
+	            mav.setViewName(message);
 	            return mav;
 	        }
 	    }
